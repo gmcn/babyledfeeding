@@ -325,77 +325,6 @@ table {
 /*--------------------------------------------------------------
 # Forms
 --------------------------------------------------------------*/
-button,
-input[type="button"],
-input[type="reset"],
-input[type="submit"] {
-  border: 1px solid;
-  border-color: #ccc #ccc #bbb;
-  border-radius: 3px;
-  background: #e6e6e6;
-  color: rgba(0, 0, 0, 0.8);
-  font-size: 12px;
-  font-size: 0.75rem;
-  line-height: 1;
-  padding: .6em 1em .4em; }
-  button:hover,
-  input[type="button"]:hover,
-  input[type="reset"]:hover,
-  input[type="submit"]:hover {
-    border-color: #ccc #bbb #aaa; }
-  button:active, button:focus,
-  input[type="button"]:active,
-  input[type="button"]:focus,
-  input[type="reset"]:active,
-  input[type="reset"]:focus,
-  input[type="submit"]:active,
-  input[type="submit"]:focus {
-    border-color: #aaa #bbb #bbb; }
-
-input[type="text"],
-input[type="email"],
-input[type="url"],
-input[type="password"],
-input[type="search"],
-input[type="number"],
-input[type="tel"],
-input[type="range"],
-input[type="date"],
-input[type="month"],
-input[type="week"],
-input[type="time"],
-input[type="datetime"],
-input[type="datetime-local"],
-input[type="color"],
-textarea {
-  color: #666;
-  border: 1px solid #ccc;
-  border-radius: 3px;
-  padding: 3px; }
-  input[type="text"]:focus,
-  input[type="email"]:focus,
-  input[type="url"]:focus,
-  input[type="password"]:focus,
-  input[type="search"]:focus,
-  input[type="number"]:focus,
-  input[type="tel"]:focus,
-  input[type="range"]:focus,
-  input[type="date"]:focus,
-  input[type="month"]:focus,
-  input[type="week"]:focus,
-  input[type="time"]:focus,
-  input[type="datetime"]:focus,
-  input[type="datetime-local"]:focus,
-  input[type="color"]:focus,
-  textarea:focus {
-    color: #111; }
-
-select {
-  border: 1px solid #ccc; }
-
-textarea {
-  width: 100%; }
-
 /*--------------------------------------------------------------
 # Navigation
 --------------------------------------------------------------*/
@@ -594,12 +523,163 @@ a {
 /*--------------------------------------------------------------
 # Footer
 --------------------------------------------------------------*/
-footer {
-  background: #000;
-  padding: 5px;
-  color: #fff; }
-  footer a {
-    color: pink; }
+footer .footer_newsletter__main {
+  text-align: center;
+  background: #E36386;
+  color: #fff;
+  padding: 30px 15px; }
+  @media screen and (min-width: 992px) {
+    footer .footer_newsletter__main {
+      padding: 40px 15px; } }
+  @media screen and (min-width: 1200px) {
+    footer .footer_newsletter__main {
+      padding: 60px 15px; } }
+  footer .footer_newsletter__main ::placeholder {
+    color: #000;
+    font-weight: 700; }
+  footer .footer_newsletter__main h3 {
+    font-family: "fatfrank", sans-serif;
+    font-weight: 400;
+    font-size: 32px;
+    margin-top: 0; }
+    @media screen and (min-width: 992px) {
+      footer .footer_newsletter__main h3 {
+        color: #FFB71E;
+        font-size: 50px; } }
+  footer .footer_newsletter__main p {
+    font-size: 22px;
+    font-weight: 700; }
+    @media screen and (min-width: 992px) {
+      footer .footer_newsletter__main p {
+        font-size: 28px; } }
+    footer .footer_newsletter__main p:last-of-type {
+      font-size: 18px; }
+      @media screen and (min-width: 992px) {
+        footer .footer_newsletter__main p:last-of-type {
+          font-size: 20px; } }
+  footer .footer_newsletter__main form {
+    margin: 25px 0; }
+    footer .footer_newsletter__main form .form-control {
+      width: 75%;
+      margin: 0 auto; }
+      @media screen and (min-width: 768px) {
+        footer .footer_newsletter__main form .form-control {
+          width: 50%; } }
+      @media screen and (min-width: 992px) {
+        footer .footer_newsletter__main form .form-control {
+          width: 40%; } }
+      @media screen and (min-width: 1200px) {
+        footer .footer_newsletter__main form .form-control {
+          width: 25%; } }
+  footer .footer_newsletter__main .button {
+    color: #fff;
+    background: #FFB71B;
+    border: 0;
+    padding: 5px 25px;
+    transition: .5s; }
+    footer .footer_newsletter__main .button:hover {
+      background: #000; }
+footer .footer_insta {
+  padding: 50px 0;
+  color: #000;
+  text-align: center; }
+  footer .footer_insta h3 {
+    color: #E36386;
+    font-family: "fatfrank", sans-serif;
+    font-weight: 400;
+    font-size: 28px;
+    margin: 0;
+    margin-top: 0; }
+    @media screen and (min-width: 992px) {
+      footer .footer_insta h3 {
+        font-size: 42px; } }
+  footer .footer_insta p {
+    font-size: 22px;
+    margin-bottom: 25px;
+    font-weight: 700; }
+    @media screen and (min-width: 992px) {
+      footer .footer_insta p {
+        font-size: 28px; } }
+  footer .footer_insta .sbi_follow_btn {
+    margin-top: 15px; }
+    footer .footer_insta .sbi_follow_btn a {
+      border-radius: 0 !important;
+      padding: 5px 25px !important;
+      transition: .5s !important; }
+      footer .footer_insta .sbi_follow_btn a:hover {
+        background: #000 !important; }
+      footer .footer_insta .sbi_follow_btn a svg {
+        display: none !important; }
+footer .sig_brand {
+  text-align: center;
+  padding: 20px 15px; }
+  @media screen and (min-width: 992px) {
+    footer .sig_brand {
+      text-align: left;
+      padding: 0 15px; } }
+footer .sig p {
+  font-weight: 700;
+  margin-bottom: 25px;
+  font-size: 22px;
+  margin-top: 0; }
+footer .sig .button {
+  color: #fff;
+  background: #FFB71B;
+  border: 0;
+  padding: 5px 25px;
+  transition: .5s;
+  float: right; }
+  footer .sig .button:hover {
+    background: #000; }
+footer .sig_social {
+  padding: 20px 15px 25px;
+  text-align: center;
+  font-weight: 700; }
+  footer .sig_social p {
+    font-weight: 700; }
+  @media screen and (min-width: 992px) {
+    footer .sig_social {
+      padding: 0 15px; } }
+  footer .sig_social img {
+    height: 50px; }
+footer .sig_disclaimer {
+  font-weight: 700;
+  background: #E2E2E2;
+  padding: 25px; }
+  @media screen and (min-width: 768px) {
+    footer .sig_disclaimer {
+      background: #fff;
+      padding: 15px 15px; } }
+  footer .sig_disclaimer p {
+    font-size: 14px; }
+  footer .sig_disclaimer span {
+    color: #E36386; }
+  footer .sig_disclaimer .clear {
+    text-align: center;
+    margin-top: 25px; }
+  footer .sig_disclaimer a {
+    text-align: center;
+    color: #000;
+    font-weight: 700;
+    width: 50%;
+    display: inline; }
+    footer .sig_disclaimer a:hover {
+      color: #E36386; }
+footer .sig_credit {
+  color: #E36386; }
+  footer .sig_credit a {
+    color: #E36386; }
+    footer .sig_credit a:hover {
+      color: #000; }
+  footer .sig_credit p {
+    font-size: 14px;
+    font-weight: 700; }
+  footer .sig_credit__copyright {
+    text-align: left; }
+  footer .sig_credit__byline {
+    text-align: right; }
+    footer .sig_credit__byline img {
+      margin-right: 5px; }
 
 /*--------------------------------------------------------------
 # Homepage
@@ -706,7 +786,7 @@ footer {
   from {
     transform: scale3d(1, 1, 1); }
   50% {
-    transform: scale3d(1.05, 1.05, 1.05); }
+    transform: scale3d(1.15, 1.15, 1.15); }
   to {
     transform: scale3d(1, 1, 1); } }
 .pulse {
@@ -2768,10 +2848,10 @@ textarea {
 
 a {
   color: #337ab7;
-  text-decoration: none; }
+  text-decoration: none;
+  transition: .5s; }
   a:hover, a:focus {
-    color: #23527c;
-    text-decoration: underline; }
+    color: #23527c; }
   a:focus {
     outline: 5px auto -webkit-focus-ring-color;
     outline-offset: -2px; }
@@ -4132,7 +4212,6 @@ output {
   background-color: #fff;
   background-image: none;
   border: 1px solid #ccc;
-  border-radius: 4px;
   -webkit-box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075);
   box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075);
   -webkit-transition: border-color ease-in-out 0.15s, box-shadow ease-in-out 0.15s;
@@ -4310,8 +4389,7 @@ select[multiple].input-sm,
   height: 33px;
   padding: 5px 10px;
   font-size: 14px;
-  line-height: 1.5;
-  border-radius: 3px; }
+  line-height: 1.5; }
 .form-group-sm select.form-control {
   height: 33px;
   line-height: 33px; }
@@ -4353,8 +4431,7 @@ select[multiple].input-lg,
   height: 49px;
   padding: 10px 16px;
   font-size: 20px;
-  line-height: 1.33333;
-  border-radius: 6px; }
+  line-height: 1.33333; }
 .form-group-lg select.form-control {
   height: 49px;
   line-height: 49px; }

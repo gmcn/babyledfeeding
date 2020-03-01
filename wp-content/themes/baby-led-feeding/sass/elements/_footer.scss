@@ -1,0 +1,199 @@
+footer {
+  .footer {
+    &_newsletter__main {
+      text-align: center;
+      background: #E36386;
+      color: #fff;
+      padding: 30px 15px;
+      @include md {
+        padding: 40px 15px;
+      }
+      @include lg {
+        padding: 60px 15px;
+      }
+      ::placeholder {
+        color: #000;
+        font-weight: $soleilBd;
+      }
+      h3 {
+        font-family: $font__headings;
+        font-weight: $fatfrankWeight;
+        font-size: 32px;
+        @include md {
+          color: #FFB71E;
+          font-size: 50px;
+        }
+        margin-top: 0;
+      }
+      p {
+        font-size: 22px;
+        @include md {
+          font-size: 28px;
+        }
+        font-weight: $soleilBd;
+        &:last-of-type {
+          font-size: 18px;
+          @include md {
+            font-size: 20px;
+          }
+        }
+      }
+      form {
+        margin: 25px 0;
+        .form-control {
+          width: 75%;
+          @include sm {
+            width: 50%;
+          }
+          @include md {
+            width: 40%;
+          }
+          @include lg {
+            width: 25%;
+          }
+          margin: 0 auto;
+        }
+      }
+      .button {
+        color: #fff;
+        background: #FFB71B;
+        border: 0;
+        padding: 5px 25px;
+        transition: .5s;
+        &:hover {
+          background: #000;
+        }
+      }
+    }
+    &_insta {
+      padding: 50px 0;
+      color: #000;
+      text-align: center;
+      h3 {
+        color: #E36386;
+        font-family: $font__headings;
+        font-weight: $fatfrankWeight;
+        font-size: 28px;
+        margin: 0;
+        @include md {
+          font-size: 42px;
+        }
+        margin-top: 0;
+      }
+      p {
+        font-size: 22px;
+        margin-bottom: 25px;
+        @include md {
+          font-size: 28px;
+        }
+        font-weight: $soleilBd;
+      }
+      .sbi_follow_btn {
+        margin-top: 15px;
+        a {
+          border-radius: 0 !important;
+          padding: 5px 25px !important;
+          transition: .5s !important;
+          &:hover {
+            background: #000 !important;
+          }
+          svg {
+            display: none !important;
+          }
+        }
+      }
+    }
+  }
+  .sig {
+    &_brand {
+      text-align: center;
+      padding: 20px 15px;
+      @include md {
+        text-align: left;
+        padding: 0 15px;
+      }
+    }
+    p {
+      font-weight: $soleilBd;
+      margin-bottom: 25px;
+      font-size: 22px;
+      margin-top: 0;
+    }
+    .button {
+      color: #fff;
+      background: #FFB71B;
+      border: 0;
+      padding: 5px 25px;
+      transition: .5s;
+      float: right;
+      &:hover {
+        background: #000;
+      }
+    }
+    &_social {
+      padding: 20px 15px 25px;
+      text-align: center;
+      font-weight: $soleilBd;
+      p {
+        font-weight: $soleilBd;
+      }
+      @include md {
+        padding: 0 15px;
+      }
+      img {
+        height: 50px;
+      }
+    }
+    &_disclaimer {
+      font-weight: $soleilBd;
+      background: #E2E2E2;
+      padding: 25px;
+      @include sm {
+        background: #fff;
+        padding: 15px 15px;
+      }
+      p {
+        font-size: 14px;
+      }
+      span {
+        color: #E36386;
+      }
+      .clear {
+        text-align: center;
+        margin-top: 25px;
+      }
+      a {
+        text-align: center;
+        color: #000;
+        font-weight: $soleilBd;
+        width: 50%;
+        display: inline;
+        &:hover {
+          color: #E36386;
+        }
+      }
+    }
+    &_credit {
+      color: #E36386;
+      a {
+        color: #E36386;
+        &:hover {
+          color: #000;
+        }
+      }
+      p {
+        font-size: 14px;
+        font-weight: $soleilBd;
+      }
+      &__copyright {
+        text-align: left;
+      }
+      &__byline {
+        img {
+          margin-right: 5px;
+        }
+        text-align: right;
+      }
+    }
+  }
+}

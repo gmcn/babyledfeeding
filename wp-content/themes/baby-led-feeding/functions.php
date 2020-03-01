@@ -305,6 +305,10 @@ add_action('login_head', 'my_custom_login');
 //
 // }
 
+if( function_exists('acf_add_options_page') ) {
+	acf_add_options_page();
+}
+
 // Move Yoast to bottom
 function yoasttobottom() {
 	return 'low';
