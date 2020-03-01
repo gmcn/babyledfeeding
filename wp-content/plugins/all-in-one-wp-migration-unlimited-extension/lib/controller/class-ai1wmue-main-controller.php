@@ -1,6 +1,6 @@
 <?php
 /**
- * Copyright (C) 2014-2019 ServMask Inc.
+ * Copyright (C) 2014-2020 ServMask Inc.
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -149,16 +149,15 @@ class Ai1wmue_Main_Controller {
 	 * @return void
 	 */
 	public function ai1wm_commands() {
-		// Add export commands
-		add_filter( 'ai1wm_export', 'Ai1wmue_Export_Retention::execute', 270 );
-
-		// Add import commands
-		add_filter( 'ai1wm_import', 'Ai1wmue_Import_Settings::execute', 290 );
-		add_filter( 'ai1wm_import', 'Ai1wmue_Import_Database::execute', 310 );
+		if ( ai1wmue_is_running() ) {
+			add_filter( 'ai1wm_export', 'Ai1wmue_Export_Retention::execute', 270 );
+			add_filter( 'ai1wm_import', 'Ai1wmue_Import_Settings::execute', 290 );
+			add_filter( 'ai1wm_import', 'Ai1wmue_Import_Database::execute', 310 );
+		}
 	}
 
 	/**
-	 * Check whether All in One WP Migration is loaded
+	 * Check whether All-in-One WP Migration is loaded
 	 *
 	 * @return void
 	 */
@@ -197,7 +196,7 @@ class Ai1wmue_Main_Controller {
 	}
 
 	/**
-	 * Display All in One WP Migration notice
+	 * Display All-in-One WP Migration notice
 	 *
 	 * @return void
 	 */

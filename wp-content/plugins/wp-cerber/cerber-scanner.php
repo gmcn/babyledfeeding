@@ -1,7 +1,7 @@
 <?php
 /*
-	Copyright (C) 2015-19 CERBER TECH INC., https://cerber.tech
-	Copyright (C) 2015-19 CERBER TECH INC., https://wpcerber.com
+	Copyright (C) 2015-20 CERBER TECH INC., https://cerber.tech
+	Copyright (C) 2015-20 CERBER TECH INC., https://wpcerber.com
 
     Licenced under the GNU GPL.
 
@@ -339,7 +339,7 @@ function cerber_scanner( $control, $mode ) {
 
 	if ( function_exists( 'wp_raise_memory_limit' ) ) {
 		if ( ! wp_raise_memory_limit( 'admin' ) ) {
-			$m = 'ERROR: Unable to raise memory limit';
+			$m = 'WARNING: Unable to raise memory limit';
 			crb_scan_debug( $m );
 			$errors[] = $m;
 		}
@@ -508,7 +508,8 @@ function cerber_step_scanning() {
         case 4:
 			if ( crb_get_settings( 'scan_sess' ) ) {
 				$another_dir = session_save_path();
-				if ( is_dir( $another_dir ) && $result = cerber_scan_directory( $another_dir, null, '_crb_save_file_names' ) ) {
+				if ( @is_dir( $another_dir )
+				     && $result = cerber_scan_directory( $another_dir, null, '_crb_save_file_names' ) ) {
 					//$update['total']['folders'] += $result[0];
 				}
 				$update['total']['files'] = cerber_get_num_files( $scan['id'] );
@@ -3637,7 +3638,7 @@ function cerber_scan_directory( $root, $pattern = null, $function ) {
  */
 function cerber_glob_brace( $dir, $patterns, $flags = 0 ) {
 
-	if ( $patterns{0} != '{' ) { // No GLOB_BRACE is needed
+	if ( $patterns[0] != '{' ) { // No GLOB_BRACE is needed
 		return glob( $dir . $patterns, $flags );
 	}
 
@@ -4225,7 +4226,8 @@ function cerber_scheduled_hash( $zip_file = '' ) {
  */
 function cerber_need_for_hash( $zip_file = '', $delete = true, $expires = 0 ) {
 	$folder     = cerber_get_tmp_file_folder();
-	$zip_folder = $folder . 'zip' . DIRECTORY_SEPARATOR;
+	$tmp_folder1 = $folder . 'zip' . DIRECTORY_SEPARATOR;
+	$tmp_folder2 = $folder . 'nested_zip' . DIRECTORY_SEPARATOR;
 
 	if ( ! $zip_file ) {
 		if ( ! $files = glob( $folder . '*.zip' ) ) {
@@ -4242,6 +4244,7 @@ function cerber_need_for_hash( $zip_file = '', $delete = true, $expires = 0 ) {
 	}
 
 	$fs = cerber_init_wp_filesystem();
+	$result = true;
 
 	foreach ( $files as $zip_file ) {
 
@@ -4249,68 +4252,123 @@ function cerber_need_for_hash( $zip_file = '', $delete = true, $expires = 0 ) {
 			continue;
 		}
 
-		if ( file_exists( $zip_folder ) && ! $fs->delete( $zip_folder, true ) ) {
-			return new WP_Error( 'cerber-zip', 'Unable to clean up temporary zip folder ' . $zip_folder );
-		}
+		crb_scan_debug( 'Processing ZIP: ' . basename( $zip_file ) );
 
-		$result = cerber_unzip( $zip_file, $zip_folder );
+		$result = crb_hash_maker( $zip_file, $tmp_folder1, false, $expires );
+
+		if ( is_wp_error( $result ) ) {
+
+			crb_scan_debug( 'Processing ZIP: ' . $result->get_error_message() );
+
+		    // It's possible that there is a nested ZIP archive
+
+			if ( $nested_zip_list = glob( $tmp_folder1 . '*.zip' ) ) {
+
+			    crb_scan_debug( 'Processing ZIP: trying to find the reference code in the nested zip archive' );
+
+				foreach ( $nested_zip_list as $nested_zip ) {
+					$result = crb_hash_maker( $nested_zip, $tmp_folder2, true, $expires );
+					if ( ! is_wp_error( $result ) ) {
+						break; // Yay, we found it!
+					}
+				}
+			}
+
+		}
+		else {
+			crb_scan_debug( 'Processing ZIP: ' . basename( $zip_file ) . ' - OK!' );
+		}
 
 		if ( $delete ) {
 			unlink( $zip_file );
 		}
 
 		if ( is_wp_error( $result ) ) {
-			return new WP_Error( 'cerber-zip', 'Unable to unzip file ' . $zip_file . ' ' . $result->get_error_message() );
+			break;
 		}
 
-		if ( ! $obj = cerber_detect_object( $zip_folder ) ) {
-			return new WP_Error( 'cerber-file', 'File ' . basename( $zip_file ) . ' can not be used. Proper program code not found or version mismatch. Please upload another file.' );
-		}
-
-		$dir = $obj['src'] . DIRECTORY_SEPARATOR;
-		$len = mb_strlen( $dir );
-
-		global $the_file_list;
-		$the_file_list = array();
-
-		cerber_scan_directory( $dir, null, function ($list){
-		    global $the_file_list;
-			$the_file_list = array_merge( $the_file_list, $list );
-        } );
-
-		if ( empty( $the_file_list ) ) {
-			return new WP_Error( 'cerber-dir', 'No files found in ' . $zip_file );
-		}
-
-		$hash = array();
-
-		foreach ( $the_file_list as $file_name ) {
-			$hash[ mb_substr( $file_name, $len ) ] = hash_file( 'sha256', $file_name );
-		}
-
-		if ( !$obj['single'] ) {
-			$b = $obj['src'];
-		}
-		else {
-			$b = $obj['file'];
-		}
-
-		//$key = $obj['type'] . sha1( $obj['name'] . basename( $obj['src'] ) );
-		$key = $obj['type'] . sha1( $obj['name'] . basename( $b ) );
-
-        if ( ! cerber_update_set( $key, array(
-			'name' => $obj['name'],
-			'ver'  => $obj['ver'],
-			'hash' => $hash,
-			'time' => time()
-		), 0, true, $expires )
-		) {
-			return new WP_Error( 'cerber-zip', 'Database error occurred while saving hash' );
-		}
 	}
 
-	$fs->delete( $zip_folder, true );
-    unset($the_file_list);
+	$fs->delete( $tmp_folder1, true );
+	$fs->delete( $tmp_folder2, true );
+
+	crb_scan_debug( 'Processing ZIP: Completed' );
+
+	return $result;
+}
+
+/**
+ * @param string $zip_file ZIP file to process
+ * @param string $zip_folder Temporary folder for unpacking ZIP
+ * @param bool $delete If true, the temp folder will be deleted afterward
+ * @param int $expires HASH expiration time, Unix timestamp, 0 = never
+ *
+ * @return bool|WP_Error
+ */
+function crb_hash_maker( $zip_file, $zip_folder, $delete = true, $expires = 0 ) {
+
+    $fs = cerber_init_wp_filesystem();
+
+	if ( file_exists( $zip_folder ) && ! $fs->delete( $zip_folder, true ) ) {
+		return new WP_Error( 'cerber-zip', 'Unable to clean up temporary zip folder ' . $zip_folder );
+	}
+
+	$result = cerber_unzip( $zip_file, $zip_folder );
+
+	if ( is_wp_error( $result ) ) {
+		return new WP_Error( 'cerber-zip', 'Unable to unzip file ' . $zip_file . ' ' . $result->get_error_message() );
+	}
+
+	if ( ! $obj = cerber_detect_object( $zip_folder ) ) {
+		return new WP_Error( 'cerber-file', 'File ' . basename( $zip_file ) . ' cannot be used. Proper program code not found or version mismatch. Please upload another file.' );
+	}
+
+	$dir = $obj['src'] . DIRECTORY_SEPARATOR;
+	$len = mb_strlen( $dir );
+
+	global $the_file_list;
+	$the_file_list = array();
+
+	cerber_scan_directory( $dir, null, function ($list){
+		global $the_file_list;
+		$the_file_list = array_merge( $the_file_list, $list );
+	} );
+
+	if ( empty( $the_file_list ) ) {
+		return new WP_Error( 'cerber-dir', 'No files found in ' . $zip_file );
+	}
+
+	$hash = array();
+
+	foreach ( $the_file_list as $file_name ) {
+		$hash[ mb_substr( $file_name, $len ) ] = hash_file( 'sha256', $file_name );
+	}
+
+	if ( !$obj['single'] ) {
+		$b = $obj['src'];
+	}
+	else {
+		$b = $obj['file'];
+	}
+
+	//$key = $obj['type'] . sha1( $obj['name'] . basename( $obj['src'] ) );
+	$key = $obj['type'] . sha1( $obj['name'] . basename( $b ) );
+
+	if ( ! cerber_update_set( $key, array(
+		'name' => $obj['name'],
+		'ver'  => $obj['ver'],
+		'hash' => $hash,
+		'time' => time()
+	), 0, true, $expires )
+	) {
+		return new WP_Error( 'cerber-zip', 'Database error occurred while saving hash' );
+	}
+
+	if ( $delete ) {
+		$fs->delete( $zip_folder, true );
+	}
+
+	unset( $the_file_list );
 
 	return true;
 }
@@ -5682,7 +5740,10 @@ function cerber_show_quarantine() {
 
 		$moved   = strtotime( $file['date'] ) - $ofs;
 		$will    = cerber_auto_date( $file['scan_id'] + DAY_IN_SECONDS * crb_get_settings( 'scan_qcleanup' ) );
-		$rows[] = '<td><span title="' . cerber_date( $file['scan_id'] ) . '">' . cerber_auto_date( $file['scan_id'] ) . '</span></td><td><span title="' . cerber_date( $moved ) . '">' . cerber_auto_date( $moved ) . '</span></td><td>' . $will . '</td><td>' . $file['size'] . '</td><td>' . $file['source'] . '</td><td style="white-space: pre;">' . $delete . $restore . '</td>';
+
+		$file_name = str_replace( DIRECTORY_SEPARATOR, '<wbr>' . DIRECTORY_SEPARATOR, $file['source'] );
+
+		$rows[] = '<td><span title="' . cerber_date( $file['scan_id'] ) . '">' . cerber_auto_date( $file['scan_id'] ) . '</span></td><td><span title="' . cerber_date( $moved ) . '">' . cerber_auto_date( $moved ) . '</span></td><td>' . $will . '</td><td>' . $file['size'] . '</td><td>' . $file_name . '</td><td style="white-space: pre;">' . $delete . $restore . '</td>';
 	}
 
 	$heading = array(
@@ -5697,7 +5758,7 @@ function cerber_show_quarantine() {
 
 	$titles = '<tr><th>' . implode( '</th><th>', $heading ) . '</th></tr>';
 
-	$table = '<table class="widefat crb-table cerber-margin"><thead>' . $titles . '</thead><tfoot>' . $titles . '</tfoot>' . implode( '</tr><tr>', $rows ) . '</tr></table>';
+	$table = '<table id="crb-quarantine" class="widefat crb-table cerber-margin"><thead>' . $titles . '</thead><tfoot>' . $titles . '</tfoot>' . implode( '</tr><tr>', $rows ) . '</tr></table>';
 
 	$table .= cerber_page_navi( $count, $per_page );
 

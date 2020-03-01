@@ -1,11 +1,10 @@
 === Cerber Security, Antispam & Malware Scan ===
 Contributors: gioni
-Donate link: https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=SR8RJXFU35EW8
 Tags: security, malware scanner, antispam, firewall, limit login attempts, custom login url, login, recaptcha, captcha, activity, log, logging, whitelist, blacklist, access list
 Requires at least: 4.9
-Requires PHP: 5.4
+Requires PHP: 5.5
 Tested up to: 5.3
-Stable tag: 8.5.5
+Stable tag: 8.5.9
 License: GPLv2
 
 Protection against hacker attacks and bots. Malware scanner & integrity checker. User activity log. Antispam reCAPTCHA. Limit login attempts.
@@ -120,6 +119,14 @@ It’s compatible with virtually any form you have. Tested with Caldera Forms, G
 * WordPress register form
 * WordPress lost password form
 * WordPress comment form
+
+**Stay in compliance with GDPR**
+
+How to get full control of personal data to be in compliance with data privacy laws such as GDPR in Europe or CCPA in California.
+
+* [Personal data export feature](https://wpcerber.com/export-personal-data/)
+* [Personal data erase feature](https://wpcerber.com/delete-personal-data/)
+* [How WP Cerber processes browser cookies](https://wpcerber.com/browser-cookies-set-by-wp-cerber/)
 
 **Documentation & Tutorials**
 
@@ -319,6 +326,32 @@ To get access to your dashboard you need to copy the WP Cerber Reset folder to t
 
 == Changelog ==
 
+= 8.5.9 =
+* New: On the Live Traffic log, now you can find requests with software errors if they occurred.
+* Update: The code of WP Cerber has been updated and tested to fully support and be compatible with PHP 7.4.
+* Update: The layout of the list of slave websites on the Cerber.Hub's main page has been improved to display the list more accurately on narrow and mobile screens.
+* Update: If a slave website has the professional version of WP Cerber, it has a PRO sign in the "WP Cerber" column. The license expiration date is shown when you hover the mouse over the sign.
+* Fixed: A bug with displaying long file names in the Security Scanner Quarantine that makes unavailable deleting or restoring quarantined files manually.
+* Fixed: A bug that requires installing a valid license key on a Cerber.Hub master website to permit configuring settings on slave websites remotely, which is not intended behavior.
+* [Read more](https://wpcerber.com/wp-cerber-security-8-5-9/)
+
+= 8.5.8 =
+* New: A personal data export and erase features which can be used through the WordPress personal data export and erase tool. This feature helps your organization to be in compliance with data privacy laws such as GDPR in Europe or CCPA in California
+* Update: The performance of the algorithm that handles exporting rows from the Activity log and the Live Traffic log to a CSV file has been improved enabling export larger datasets
+* Update: When you block a user you can add an optional admin note now
+* Fixed: If a user is blocked, it’s not possible to update the user message
+* Fixed: Depending on the logging settings the "Details" links on the Live Traffic log are not displayed in some rows
+* [Read more](https://wpcerber.com/wp-cerber-security-8-5-8/)
+
+= 8.5.6 =
+* New: Ability to separately set the number of days of keeping log records in the database for authenticated (logged in) website users and non-authenticated (not logged in) visitors.
+* New: You can completely turn off the Citadel mode feature in the Main Settings
+* Update: When you upload a ZIP archive on the integrity scanner page it processes nested ZIP archives now and writes errors to the diagnostic log if it's enabled
+* Update: The appearance of the Activity log has got small visual improvements
+* Update: If the number of days to keep log records is not set or set to zero, the plugin uses the default setting instead. Previously you can set it to zero and keep log records infinitely.
+* Fixed: The blacklisting buttons on the Activity tab do not work showing "Incorrect IP address or IP range".
+* Fixed: PHP Notice: Trying to get property "ID" of non-object in cerber-load.php on line 1131
+
 = 8.5.5 =
 * IP Access Lists now support IPv6 networks, ranges, and wildcards. Add as many IPv6 entries to the access lists as you need. We've developed an extraordinarily fast ACL engine to process them.
 * The algorithm of handling consecutive IP address lockouts has been improved: the reason for an existing lockout is updated and its duration is recalculated in real-time now.
@@ -489,20 +522,6 @@ To get access to your dashboard you need to copy the WP Cerber Reset folder to t
 * Update: the redirection from /wp-admin/ to the login page is not blocked for a user that has been logged in once before.
 * Bug fixed: the limit to the number of new user registrations is calculated the way that allows one additional registration within a given period of time.
 * [Read more](https://wpcerber.com/wp-cerber-security-7-0/)
-
-= 6.7.5 =
-* A new button View Activity has been added to the user edit page in the WordPress dashboard.
-* Miscellaneous code optimizations: performance of database routines and SQL queries are improved.
-* A new Swedish translation has been added. Thanks to Fredrik Näslund.
-* Bug fixed: The wildcard *.*.*.* entry (all IPv4 addresses) to the Black IP Access List, doesn't work as intended.
-
-= 6.7 =
-* New: Regular expressions are now available for the Traffic Inspector Request whitelist and Antispam Query whitelist.
-* Update: Antispam engine algorithms have been updated to improve AJAX requests handling and reduce false positives.
-* Update: Improved compatibility with WooCommerce, Formidable Forms, Gravity Forms and AJAX file upload.
-* Update: Any symbols other than letters, numbers, dashes and underscores are not permitted in Custom login URL anymore.
-* Bug fixed: The Safe antispam mode doesn’t work correctly on some website configurations. That may lead to false positives and erroneous spam form submission detection.
-* [Read more](https://wpcerber.com/wp-cerber-security-6-7/)
 
 == Other Notes ==
 

@@ -30,9 +30,10 @@ add_action( 'personal_options', function ( $profileuser ) {
 	if ( defined( 'IS_PROFILE_PAGE' ) && IS_PROFILE_PAGE ) {
 		return;
 	}
-	$b     = crb_is_user_blocked( $profileuser->ID );
-	$b_msg = ( ! empty( $b['blocked_msg'] ) ) ? $b['blocked_msg'] : '';
-	$dsp   = ( ! $b ) ? 'display:none;' : '';
+	$b      = crb_is_user_blocked( $profileuser->ID );
+	$b_msg  = ( ! empty( $b['blocked_msg'] ) ) ? $b['blocked_msg'] : '';
+	$b_note = ( ! empty( $b['blocked_note'] ) ) ? $b['blocked_note'] : '';
+	$dsp    = ( ! $b ) ? 'display:none;' : '';
 	?>
     <tr>
         <th scope="row"><?php _e( 'Block User', 'wp-cerber' ); ?></th>
@@ -63,11 +64,18 @@ add_action( 'personal_options', function ( $profileuser ) {
 
         </td>
     </tr>
-    <tr id="crb_blocked_msg_row" style="<?php echo $dsp; ?>">
+    <tr class="crb_blocked_txt" style="<?php echo $dsp; ?>">
         <th scope="row"><?php _e( 'User Message', 'wp-cerber' ); ?></th>
         <td>
             <textarea placeholder="<?php _e( 'An optional message for this user', 'wp-cerber' ); ?>"
                       id="crb_blocked_msg" name="crb_blocked_msg"><?php echo htmlspecialchars( $b_msg ); ?></textarea>
+        </td>
+    </tr>
+    <tr class="crb_blocked_txt" style="<?php echo $dsp; ?>">
+        <th scope="row"><?php _e( 'Admin Note', 'wp-cerber' ); ?></th>
+        <td>
+            <textarea
+                      id="crb_blocked_note" name="crb_blocked_note"><?php echo htmlspecialchars( $b_note ); ?></textarea>
         </td>
     </tr>
 	<?php
@@ -109,7 +117,7 @@ add_action( 'edit_user_profile_update', function ( $user_id ) {
 		delete_user_meta( $user_id, CERBER_BUKEY );
 	}
 	else {
-		cerber_block_user( $user_id, strip_tags( stripslashes( $_POST['crb_blocked_msg'] ) ) );
+		cerber_block_user( $user_id, strip_tags( stripslashes( $_POST['crb_blocked_msg'] ) ), strip_tags( stripslashes( $_POST['crb_blocked_note'] ) ) );
 	}
 
 } );
@@ -227,7 +235,7 @@ add_filter( "handle_bulk_actions-users", function ( $url ) {
 	return $url;
 } );
 
-function cerber_block_user( $user_id, $msg = '' ) {
+function cerber_block_user( $user_id, $msg = '', $note = '' ) {
 	if ( ! is_super_admin() ) {
 		return;
 	}
@@ -237,7 +245,9 @@ function cerber_block_user( $user_id, $msg = '' ) {
 
 	if ( ( $m = get_user_meta( $user_id, CERBER_BUKEY, true ) )
 	     && ! empty( $m['blocked'] )
-	     && $m[ 'u' . $user_id ] == $user_id ) {
+	     && $m[ 'u' . $user_id ] == $user_id
+	     && $m['blocked_msg'] == $msg
+	     && $m['blocked_note'] == $note ) {
 		return;
 	}
 
@@ -245,12 +255,16 @@ function cerber_block_user( $user_id, $msg = '' ) {
 		$m = array();
 	}
 
-	$m['blocked']        = 1;
-	$m[ 'u' . $user_id ] = $user_id;
-	$m['blocked_by']     = get_current_user_id();
-	$m['blocked_time']   = time();
-	$m['blocked_ip']     = cerber_get_remote_ip();
-	$m['blocked_msg']    = $msg;
+	if ( empty( $m['blocked'] ) ) {
+		$m['blocked_time']   = time();
+		$m['blocked']        = 1;
+		$m[ 'u' . $user_id ] = $user_id;
+		$m['blocked_by']     = get_current_user_id();
+		$m['blocked_ip']     = cerber_get_remote_ip();
+	}
+
+	$m['blocked_msg']  = $msg;
+	$m['blocked_note'] = $note;
 
 	update_user_meta( $user_id, CERBER_BUKEY, $m );
 	crb_admin_destroy( $user_id );
@@ -506,7 +520,7 @@ function crb_admin_save_role_policies( $post ) {
 		}
 		if ( $element && in_array( $key, array( 'rdr_login', 'rdr_logout' ) ) ) {
 			if ( substr( $element, 0, 4 ) != 'http'
-			     && $element{0} != '/' ) {
+			     && $element[0] != '/' ) {
 				$element = '/' . $element;
 			}
 		}
@@ -730,6 +744,208 @@ function crb_admin_show_sessions() {
 	$slaves->display();
 	echo '</form>';
 }
+
+// Personal data exporters ----------------------------------------
+
+function crb_pdata_exporter_act( $email_address, $page = 1 ) {
+
+	$per_page = 1000; // Rows per step (SQL query)
+	$limit    = ( $per_page * ( absint( $page ) - 1 ) ) . ',' . $per_page;
+	$data     = array();
+
+	if ( ( ! $user = get_user_by( 'email', $email_address ) )
+	     || ! $user->ID
+	     || ! $rows = cerber_get_log( null, array( 'id' => $user->ID ), null, $limit ) ) {
+
+		$done = true;
+		if ( $page == 1 ) { // Nothing was logged at all
+			$data[] = array( 'name' => 'Events', 'value' => 'None logged' );
+		}
+	}
+	else {
+
+		$done   = false; // There are rows to be exported
+		$labels = cerber_get_labels( 'activity' );
+
+		foreach ( $rows as $row ) {
+			//$value = 'IP: ' . $row->ip . ' | ' . $labels[ $row->activity ];
+			$value = array( 'IP_ADDRESS' => $row->ip, 'EVENT' => $labels[ $row->activity ] );
+
+			if ( $row->user_login ) {
+				$value['USERNAME'] = $row->user_login;
+			}
+
+			$value = json_encode( $value, JSON_UNESCAPED_UNICODE );
+
+			// Format is defined by WordPress
+			$data[] = array( 'name'  => cerber_date( $row->stamp ), // First column
+			                 'value' => $value // Second column
+			);
+		}
+	}
+
+	return crb_pdata_formater( $data, 'cerber-activity', 'Activity Log', $done );
+
+}
+
+function crb_pdata_exporter_trf( $email_address, $page = 1 ) {
+
+	$per_page = 500; // Rows per step (SQL query)
+	$limit    = ( $per_page * ( absint( $page ) - 1 ) ) . ',' . $per_page;
+	$data     = array();
+
+	if ( ( ! $user = get_user_by( 'email', $email_address ) )
+	     || ! $user->ID
+	     || ! $rows = cerber_db_get_results( 'SELECT ip, uri, stamp, request_fields, request_details FROM  ' . CERBER_TRAF_TABLE . ' WHERE user_id = ' . $user->ID . ' LIMIT ' . $limit, MYSQL_FETCH_OBJECT ) ) {
+
+		$done = true;
+		if ( $page == 1 ) { // Nothing was logged at all
+			$data[] = array( 'name' => 'Events', 'value' => 'None logged' );
+		}
+	}
+	else {
+
+		$done   = false; // There are rows to be exported
+		$what = crb_get_settings( 'pdata_trf' );
+
+		foreach ( $rows as $row ) {
+			$value = array( 'IP_ADDRESS' => $row->ip );
+
+			if ( isset( $what[1] ) ) {
+				$value['URL'] = $row->uri;
+			}
+
+			if ( isset( $what[2] ) ) {
+				if ( $row->request_fields ) {
+					$uns = unserialize( $row->request_fields );
+					if ( ! empty( $uns[1] ) ) {
+						$value['FORM_FIEDLS'] = $uns[1];
+					}
+				}
+			}
+
+			if ( isset( $what[3] ) ) {
+				if ( $row->request_details ) {
+					$uns  = unserialize( $row->request_details );
+					if ( ! empty( $uns[8] ) ) {
+						$value['COOKIES'] = $uns[8];
+					}
+				}
+			}
+
+			$value = json_encode( $value, JSON_UNESCAPED_UNICODE );
+
+			// Format is defined by WordPress
+			$data[] = array( 'name'  => cerber_date( $row->stamp ), // First column
+			                 'value' => $value // Second column
+			);
+		}
+	}
+
+	return crb_pdata_formater( $data, 'cerber-traffic', 'Traffic Log', $done );
+
+}
+
+function crb_pdata_formater( $data = array(), $exp_id = '', $label = '', $done = true ) {
+	$export_items[] = array(
+		'group_id'    => $exp_id,
+		'group_label' => $label,
+		'item_id'     => $exp_id,
+		'data'        => $data,
+	);
+
+	return array(
+		'data' => $export_items,
+		'done' => $done,
+	);
+}
+
+if ( crb_get_settings( 'pdata_export' ) ) {
+	add_filter( 'wp_privacy_personal_data_exporters', 'crb_pdata_register_exporters' );
+}
+
+function crb_pdata_register_exporters( $exporters ) {
+
+	if ( crb_get_settings( 'pdata_act' ) ) {
+		$exporters['cerber-security-act'] = array(
+			'exporter_friendly_name' => 'WP Cerber Activity',
+			'callback'               => 'crb_pdata_exporter_act',
+		);
+	}
+
+	if ( crb_get_settings( 'pdata_trf' ) ) {
+		$exporters['cerber-security-trf'] = array(
+			'exporter_friendly_name' => 'WP Cerber Traffic',
+			'callback'               => 'crb_pdata_exporter_trf',
+		);
+	}
+
+	return $exporters;
+}
+
+// Personal data erasers ----------------------------------------
+
+function crb_pdata_eraser( $email_address, $page = 1 ) {
+
+	$removed  = false;
+	$retained = false;
+	$done     = true;
+	$msg      = array();
+
+	if ( is_super_admin()
+	     && ( $user = get_user_by( 'email', $email_address ) )
+	     && $user->ID ) {
+
+		cerber_db_query( 'DELETE FROM ' . CERBER_LOG_TABLE . ' WHERE user_id = ' . $user->ID );
+		cerber_db_query( 'DELETE FROM ' . CERBER_TRAF_TABLE . ' WHERE user_id = ' . $user->ID );
+
+		if ( ( $reg = get_user_meta( $user->ID, '_crb_reg_', true ) )
+		     && ( empty( $reg['user'] ) || $reg['user'] == $user->ID ) ) {
+			delete_user_meta( $user->ID, '_crb_reg_' );
+		}
+
+		if ( crb_get_settings( 'pdata_sessions' ) ) {
+			update_user_meta( $user->ID , 'session_tokens', array() );
+		}
+
+		$removed = true;
+
+		// Check if removing is OK
+		if ( cerber_get_log( null, array( 'id' => $user->ID ), null, 1 )
+		     || cerber_db_get_var( 'SELECT user_id FROM  ' . CERBER_TRAF_TABLE . ' WHERE user_id = ' . $user->ID . ' LIMIT 1' ) ) {
+
+			$removed  = false;
+			$retained = true;
+			$done     = false;
+
+			if ( $page >= 3 ) { // We failed after three attempts
+				$msg[] = 'WP Cerber is unable to delete rows in its log tables due to a database error. Check the server error log.';
+				$done  = true;
+			}
+		}
+	}
+
+	return array(
+		'items_removed'  => $removed,
+		'items_retained' => $retained,
+		'messages'       => $msg,
+		'done'           => $done,
+	);
+}
+
+if ( crb_get_settings( 'pdata_erase' ) ) {
+	add_filter( 'wp_privacy_personal_data_erasers', 'crb_pdata_register_eraser' );
+}
+
+function crb_pdata_register_eraser( $erasers ) {
+	$erasers['cerber-security-erase'] = array(
+		'eraser_friendly_name' => __( 'WP Cerber Personal Data Eraser' ),
+		'callback'             => 'crb_pdata_eraser',
+	);
+
+	return $erasers;
+}
+
 
 class CRB_Sessions_Table extends WP_List_Table {
 

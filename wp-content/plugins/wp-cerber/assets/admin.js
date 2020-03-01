@@ -1,5 +1,5 @@
 /**
- *	Copyright (C) 2015-19 CERBER TECH INC., https://wpcerber.com
+ *	Copyright (C) 2015-20 CERBER TECH INC., https://wpcerber.com
  */
 jQuery(document).ready(function ($) {
 
@@ -126,13 +126,7 @@ jQuery(document).ready(function ($) {
         }
     }
 
-    //
-
-    /*
-     $('#add-acl-black').submit(function( event ) {
-     $(this).find('[name="add_acl_B"]').val($(this).find("button:focus").val());
-     });
-     */
+    // ----------------------
 
     $(".cerber-dismiss").click(function () {
         $(this).closest('.cerber-msg').fadeOut(500);
@@ -161,7 +155,11 @@ jQuery(document).ready(function ($) {
 
     var crb_traffic = $('#crb-traffic');
 
-    crb_traffic.find('tr.crb-toggle td.crb-request').click(function () {
+    crb_traffic.find('tr.crb-toggle td.crb-request').click(function (event) {
+        //alert(event.target.tagName);
+        if ($(event.target).data('no-js') === 1) {
+            return;
+        }
         var request_details = $(this).parent().next();
         //request_details.slideToggle(100);
         request_details.toggle();

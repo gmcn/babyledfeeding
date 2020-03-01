@@ -1,7 +1,7 @@
 <?php
 /*
-	Copyright (C) 2015-19 CERBER TECH INC., https://cerber.tech
-	Copyright (C) 2015-19 CERBER TECH INC., https://wpcerber.com
+	Copyright (C) 2015-20 CERBER TECH INC., https://cerber.tech
+	Copyright (C) 2015-20 CERBER TECH INC., https://wpcerber.com
 
     Licenced under the GNU GPL.
 
@@ -323,8 +323,7 @@ class CRB_Slave_Table extends WP_List_Table {
 				return 'Down';
 				break;
 			case 'site_url':
-				//.$this->row_actions( array('login'=>'<a href="">Log in</a>') );
-				return '<a href="' . $val . '" target="_blank">' . $val . '</a>';
+				return '<a href="' . $val . '" target="_blank">' . str_replace( array('.', '/'), array('<wbr>.','<wbr>/'), $val ) . '</a>';
 				break;
 			case 'last_scan':
 				if ( ! $item['refreshed'] ) {
@@ -351,12 +350,16 @@ class CRB_Slave_Table extends WP_List_Table {
 				return $val;
 			case 'plugin_v':
 				if ( $val ) {
+					$ret = '<span class="crb-slave-ver">' . $val . '</span>' . ( ( $item['site_key'] ) ? '<span class="crb-vpro" title="Valid until ' . cerber_date( $item['site_key'] ) . '">PRO</span>' : '' );
 					if ( isset( $pup['new_version'] ) && version_compare( $val, $pup['new_version'], '<' ) ) {
-						return $val . ' <i style="color: red; font-size: 1.2em;" class="dashicons dashicons-warning"></i>';
+						$ret .= ' <i style="color: red; font-size: 1.2em;" class="dashicons dashicons-warning"></i>';
 					}
 				}
+				else {
+					$ret = '-';
+				}
 
-				return $val;
+				return $ret;
 			case 'updates':
 				return ( ! empty( $item['refreshed'] ) ) ? '<a href="#">' . $val . '</a>' : '';
 				//return ( $val ) ? '<a href="#">' . $val . '</a>' : $val;
@@ -371,7 +374,7 @@ class CRB_Slave_Table extends WP_List_Table {
 					}
 				}
 
-				$ret = '<a href="' . $this->base_sites . '&filter_server_id=' . $item['server_id'] . '">' . $srv[1] . '</a>';
+				$ret = '<a href="' . $this->base_sites . '&filter_server_id=' . $item['server_id'] . '">' . str_replace( '.', '<wbr>.', $srv[1] ) . '</a>';
 
 				if ( $this->hide_ip ) {
 					return $ret;

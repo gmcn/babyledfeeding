@@ -1,7 +1,7 @@
 <?php
 /*
-	Copyright (C) 2015-19 CERBER TECH INC., https://cerber.tech
-	Copyright (C) 2015-19 CERBER TECH INC., https://wpcerber.com
+	Copyright (C) 2015-20 CERBER TECH INC., https://cerber.tech
+	Copyright (C) 2015-20 CERBER TECH INC., https://wpcerber.com
 
     Licenced under the GNU GPL.
 
@@ -88,8 +88,10 @@ require_once( dirname( __FILE__ ) . '/jetflow.php' );
 require_once( dirname( __FILE__ ) . '/cerber-news.php' );
 require_once( dirname( __FILE__ ) . '/cerber-scanner.php' );
 require_once( dirname( __FILE__ ) . '/cerber-2fa.php' );
-require_once( dirname( __FILE__ ) . '/cerber-ds.php' );
 require_once( dirname( __FILE__ ) . '/nexus/cerber-nexus.php' );
+require_once( dirname( __FILE__ ) . '/cerber-ds.php' );
+
+nexus_init();
 
 if ( defined( 'WP_ADMIN' ) || defined( 'WP_NETWORK_ADMIN' ) ) {
 	cerber_load_admin_code();
@@ -799,7 +801,7 @@ add_action( 'plugins_loaded', function () {
 
 function cerber_load_admin_code() {
 
-	//cerber_cache_enable(); // TODO: Add "clear the cache" button in admin
+	//cerber_cache_enable();
 
 	require_once( ABSPATH . 'wp-admin/includes/class-wp-screen.php' );
 	require_once( ABSPATH . 'wp-admin/includes/screen.php' );
@@ -1033,13 +1035,14 @@ function cerber_authenticate( $user, $username, $password ) {
 
 	// @since 4.18 it is replacement for 'wp_login_failed' action hook
 	// see WP function wp_authenticate()
-	$ignore_codes = array( 'empty_username', 'empty_password', 'cerber_denied' );
+	$ignore_codes = array( 'empty_username', 'empty_password' );
 	if ( is_wp_error( $user ) && ! in_array( $user->get_error_code(), $ignore_codes ) ) {
-		$user_id = null;
+		/*$user_id = null;
 		if ( ( $data = $user->get_error_data() ) && ! empty( $data['user_id'] ) ) {
 			$user_id = $data['user_id'];
 		}
-		cerber_login_failed( $username, $user_id );
+		cerber_login_failed( $username, $user_id );*/
+		cerber_login_failed( $username );
 	}
 
 	return $user;
@@ -1108,7 +1111,10 @@ function crb_login_error( $username, $act = null, $status = null ) {
 add_action( 'wp_login', function ( $login, $user ) {
 	cerber_user_login( $login, $user );
 }, 0, 2 );
-
+/**
+ * @param $login string
+ * @param $user WP_User
+ */
 function cerber_user_login( $login, $user ) {
 	global $wp_cerber_user_id;
 	$wp_cerber_user_id = $user->ID;
@@ -1133,13 +1139,13 @@ function cerber_user_login( $login, $user ) {
 }
 
 /**
- * Catching user switching and authentications without using the login form
+ * Catching user switching and authentications without using a login form
  */
 add_action( 'set_auth_cookie', function () {
 	add_action( 'set_current_user', function () { // deferred to allow the possible 'wp_login' action to be logged first
 		global $current_user;
 		if ( $current_user instanceof WP_User ) {
-			cerber_user_login( $current_user->user_login, $current_user->ID );
+			cerber_user_login( $current_user->user_login, $current_user );
 		}
 	} );
 } );
@@ -1221,9 +1227,11 @@ function cerber_login_failed( $user_login, $user_id = 0 ) {
 	}
 
 	// Must the Citadel mode be activated?
-	if ( ( $per = crb_get_settings( 'ciperiod' ) ) && ! cerber_is_citadel() ) {
+	if ( crb_get_settings( 'citadel_on' )
+	     && ( $per = crb_get_settings( 'ciperiod' ) )
+	     && ! cerber_is_citadel() ) {
 		$range    = time() - $per * 60;
-		$lockouts = cerber_db_get_var( 'SELECT count(ip) FROM ' . CERBER_LOG_TABLE . ' WHERE activity IN (7,51,52) AND stamp > ' . $range );
+		$lockouts = cerber_db_get_var( 'SELECT count(ip) FROM ' . CERBER_LOG_TABLE . ' WHERE activity = 7 AND stamp > ' . $range );
 		if ( $lockouts >= crb_get_settings( 'cilimit' ) ) {
 			cerber_enable_citadel();
 		}
@@ -1545,7 +1553,7 @@ function cerber_is_registration_prohibited( $user_login, $user_email = '' ) {
 		$msg  = '<strong>' . __( 'ERROR:', 'wp-cerber' ) . ' </strong>' .
 		        apply_filters( 'cerber_msg_prohibited_email', __( 'Email address is not permitted.', 'wp-cerber' ) . ' ' . __( 'Please choose another one.', 'wp-cerber' ), 'register' );
 	}
-	elseif ( ! cerber_is_ip_allowed() || lab_is_blocked( $wp_cerber->getRemoteIp() ) ) {
+	elseif ( ! cerber_is_ip_allowed() || lab_is_blocked( cerber_get_remote_ip() ) ) {
 		cerber_log( 54 );
 		$code = 'ip_denied';
 		$msg  = '<strong>' . __( 'ERROR:', 'wp-cerber' ) . ' </strong>' .
@@ -1778,17 +1786,17 @@ add_action( 'pre_comment_on_post', function ( $comment_post_ID ) {
  *
  */
 add_filter( 'rest_allow_anonymous_comments', function ( $allowed, $request ) {
-	global $wp_cerber, $cerber_status;
+	global $cerber_status;
 
 	if ( ! cerber_is_ip_allowed() ) {
 		$allowed = false;
 	}
 	if ( ! cerber_geo_allowed( 'geo_comment' ) ) {
-		ceber_log(19);
+		cerber_log(19);
 		$cerber_status = 16;
 		$allowed = false;
 	}
-	elseif ( lab_is_blocked( $wp_cerber->getRemoteIp() ) ) {
+	elseif ( lab_is_blocked( cerber_get_remote_ip() ) ) {
 		$allowed = false;
 	}
 
@@ -1818,7 +1826,7 @@ function cerber_is_comment_allowed(){
 	elseif ( ! $wp_cerber->reCaptchaValidate( 'comment' , true ) ) {
 		$deny = 16;
 	}
-	elseif ( lab_is_blocked( $wp_cerber->getRemoteIp() ) ) {
+	elseif ( lab_is_blocked( cerber_get_remote_ip() ) ) {
 		$deny = 19;
 	}
 
@@ -2831,14 +2839,13 @@ add_action( 'edit_user_created_user', function ( $user_id, $notify = null ) {
 
 // Log IP address of user registration independently
 function crb_log_user_ip( $user_id, $by_user = null ) {
-	global $wp_cerber;
 	if ( ! $user_id ) {
 		return;
 	}
 	if ( ! $by_user ) {
 		$by_user = get_current_user_id();
 	}
-	add_user_meta( $user_id, '_crb_reg_', array( 'IP' => $wp_cerber->getRemoteIp(), 'user' => $by_user ) );
+	add_user_meta( $user_id, '_crb_reg_', array( 'IP' => cerber_get_remote_ip(), 'user' => $by_user ) );
 }
 
 // Lockouts routines ---------------------------------------------------------------------
@@ -3051,9 +3058,9 @@ function cerber_calc_duration( $ip ) {
  * @return int Allowed attempts for present moment
  */
 function cerber_get_remain_count( $ip = '', $check_acl = true, $activity = array( 7, 51, 52 ), $allowed = null, $period = null ) {
-	global $wp_cerber;
+
 	if ( ! $ip ) {
-		$ip = $wp_cerber->getRemoteIp();
+		$ip = cerber_get_remote_ip();
 	}
 	else {
 		if ( ! $ip = filter_var( $ip, FILTER_VALIDATE_IP ) ) {
@@ -3934,15 +3941,20 @@ function cerber_forbidden_page() {
 // Citadel mode -------------------------------------------------------------------------------------
 
 function cerber_enable_citadel() {
-	global $wp_cerber;
+
+	if ( ! crb_get_settings( 'citadel_on' ) ) {
+		return;
+	}
+
 	if ( get_transient( 'cerber_citadel' ) ) {
 		return;
 	}
+
 	set_transient( 'cerber_citadel', true, crb_get_settings( 'ciduration' ) * 60 );
 	cerber_log( 12 );
 
 	// Notify admin
-	if ( $wp_cerber->getSettings( 'cinotify' ) ) {
+	if ( crb_get_settings( 'cinotify' ) ) {
 		cerber_send_email( 'citadel' );
 	}
 }
@@ -4118,7 +4130,7 @@ function cerber_send_email( $type = '', $msg = '', $ip = '' ) {
 			//$body .= __( 'Change notification settings', 'wp-cerber' ) . ': ' . cerber_admin_link('notifications') . "\n\n";
 			$body .= __( 'Getting Started Guide', 'wp-cerber' ) . "\n\n";
 			$body .= 'https://wpcerber.com/getting-started/' . "\n\n";
-			$body .= 'Be in touch with the developer. Subscribe to Cerber\'s newsletter: http://wpcerber.com/subscribe-newsletter/';
+			$body .= 'Be in touch with the developer. Subscribe to Cerber\'s newsletter: https://wpcerber.com/subscribe-newsletter/';
 			break;
 		case 'newlurl':
 			$subj .= __( 'New Custom login URL', 'wp-cerber' );
@@ -4170,7 +4182,7 @@ function cerber_send_email( $type = '', $msg = '', $ip = '' ) {
 		$footer .= "\n\n" . __( 'Your login page:', 'wp-cerber' ) . ' ' . $lourl;
 	}
 
-	if ( $type == 'report' && $date = lab_lab(true) ) {
+	if ( $type == 'report' && $date = lab_lab( 1 ) ) {
 		$footer .= "\n\n" . __( 'Your license is valid until', 'wp-cerber' ) . ' ' . $date;
 	}
 
@@ -4337,7 +4349,6 @@ function cerber_init_cron(){
 
 add_action( 'cerber_hourly_1', 'cerber_do_hourly' );
 function cerber_do_hourly( $force = false ) {
-	global $wpdb, $wp_cerber;
 
 	$t = 'cerber_hourly_1';
 	$start = time();
@@ -4356,22 +4367,46 @@ function cerber_do_hourly( $force = false ) {
 		set_site_transient( 'cerber_multisite', 'executed', 3600 );
 	}
 
-	$time = time();
-	$days = absint( crb_get_settings( 'keeplog' ) );
-	if ( $days > 0 ) {
+	$time      = time();
+
+	$days      = absint( crb_get_settings( 'keeplog' ) );
+	if ( ! $days ) {
+		$days = cerber_get_defaults( 'keeplog' );  // @since 8.5.6
+	}
+
+	$days_auth = absint( crb_get_settings( 'keeplog_auth' ) );
+	$days_auth = ( ! $days_auth ) ? $days : $days_auth; // It may be not configured by the admin, since it's introduced in 8.5.6
+
+	if ( $days == $days_auth ) {
 		cerber_db_query( 'DELETE FROM ' . CERBER_LOG_TABLE . ' WHERE stamp < ' . ( $time - $days * 24 * 3600 ) );
 	}
+	else {
+		cerber_db_query( 'DELETE FROM ' . CERBER_LOG_TABLE . ' WHERE user_id =0 AND stamp < ' . ( $time - $days * 24 * 3600 ) );
+		cerber_db_query( 'DELETE FROM ' . CERBER_LOG_TABLE . ' WHERE user_id !=0 AND stamp < ' . ( $time - $days_auth * 24 * 3600 ) );
+    }
+
 	$days = absint( crb_get_settings( 'tikeeprec' ) );
-	if ( $days > 0 ) {
+	if ( ! $days ) {
+		$days = cerber_get_defaults( 'tikeeprec' );  // @since 8.5.6
+	}
+
+	$days_auth = absint( crb_get_settings( 'tikeeprec_auth' ) );
+	$days_auth = ( ! $days_auth ) ? $days : $days_auth; // It may be not configured by the admin, since it's introduced in 8.5.6
+
+	if ( $days == $days_auth ) {
 		cerber_db_query( 'DELETE FROM ' . CERBER_TRAF_TABLE . ' WHERE stamp < ' . ( $time - $days * 24 * 3600 ) );
 	}
+	else {
+		cerber_db_query( 'DELETE FROM ' . CERBER_TRAF_TABLE . ' WHERE user_id =0 AND stamp < ' . ( $time - $days * 24 * 3600 ) );
+		cerber_db_query( 'DELETE FROM ' . CERBER_TRAF_TABLE . ' WHERE user_id !=0 AND stamp < ' . ( $time - $days_auth * 24 * 3600 ) );
+    }
 
 	cerber_db_query( 'DELETE FROM ' . CERBER_LAB_IP_TABLE . ' WHERE expires < ' . $time );
 
-	if ( $wp_cerber->getSettings( 'trashafter-enabled') && absint($wp_cerber->getSettings('trashafter'))) {
+	if ( crb_get_settings( 'trashafter-enabled' ) && absint( crb_get_settings( 'trashafter' ) ) ) {
 		$list = get_comments( array( 'status' => 'spam' ) );
 		if ( $list ) {
-			$time = time() - DAY_IN_SECONDS * absint($wp_cerber->getSettings( 'trashafter' ));
+			$time = time() - DAY_IN_SECONDS * absint( crb_get_settings( 'trashafter' ) );
 			foreach ( $list as $item ) {
 				if ( $time > strtotime( $item->comment_date_gmt ) ) {
 					wp_trash_comment( $item->comment_ID );
@@ -4822,8 +4857,7 @@ function cerber_log( $activity, $login = '', $user_id = 0, $ip = null ) {
  *
  * @return array|null
  */
-function cerber_get_log($activity = array(), $user = array(), $order = array(), $limit = ''){
-	global $wpdb;
+function cerber_get_log( $activity = array(), $user = array(), $order = array(), $limit = '' ) {
 
 	$where = array();
 
@@ -4852,18 +4886,18 @@ function cerber_get_log($activity = array(), $user = array(), $order = array(), 
 		if ( ! empty( $order['DESC'] ) ) {
 			$order_sql = ' ORDER BY ' . preg_replace( '/[^\w]/', '', $order['DESC'] ) . ' DESC ';
 		}
-		elseif ( ! empty( $order['ASC'] ) ) {
+        elseif ( ! empty( $order['ASC'] ) ) {
 			$order_sql = ' ORDER BY ' . preg_replace( '/[^\w]/', '', $order['ASC'] ) . ' ASC ';
 		}
 	}
 
 	$limit_sql = '';
 	if ( $limit ) {
-		$limit_sql = ' LIMIT ' . preg_replace( '/[^0-9\.]/', '', $limit );
+		$limit_sql = ' LIMIT ' . preg_replace( '/[^0-9.,]/', '', $limit );
 	}
 
-	// $row = $wpdb->get_row('SELECT * FROM '.CERBER_LOG_TABLE.' WHERE activity = 5 AND user_id = '.absint($user_id) . ' ORDER BY stamp DESC LIMIT 1');
-	return $wpdb->get_results( 'SELECT * FROM ' . CERBER_LOG_TABLE . ' ' . $where_sql . $order_sql . $limit_sql );
+	return cerber_db_get_results( 'SELECT * FROM ' . CERBER_LOG_TABLE . ' ' . $where_sql . $order_sql . $limit_sql, MYSQL_FETCH_OBJECT );
+	//return $wpdb->get_results( 'SELECT * FROM ' . CERBER_LOG_TABLE . ' ' . $where_sql . $order_sql . $limit_sql );
 
 }
 
@@ -5052,10 +5086,10 @@ register_activation_hook( cerber_plugin_file(), function () {
 		'<p style="font-size:120%;">' . __( 'WP Cerber is now active and has started protecting your site', 'wp-cerber' ) . '</p>' .
 		' <p>' . __( 'Your IP address is added to the', 'wp-cerber' ) . ' ' . __( 'White IP Access List', 'wp-cerber' ) .
 
-		' <p style="font-size:130%;"><a href="http://wpcerber.com/getting-started/" target="_blank">' . __( 'Getting Started Guide', 'wp-cerber' ) . '</a></p>' .
+		' <p style="font-size:130%;"><a href="https://wpcerber.com/getting-started/" target="_blank">' . __( 'Getting Started Guide', 'wp-cerber' ) . '</a></p>' .
 
-		//' <p><b>' . __( "It's important to check security settings.", 'wp-cerber' ) . '</b> &nbsp;<a href="http://wpcerber.com/" target="_blank">Read Cerber\'s blog</a> ' .
-		//'&nbsp; <a href="http://wpcerber.com/subscribe-newsletter/" target="_blank">Subscribe to Cerber\'s newsletter</a></p>' .
+		//' <p><b>' . __( "It's important to check security settings.", 'wp-cerber' ) . '</b> &nbsp;<a href="https://wpcerber.com/" target="_blank">Read Cerber\'s blog</a> ' .
+		//'&nbsp; <a href="https://wpcerber.com/subscribe-newsletter/" target="_blank">Subscribe to Cerber\'s newsletter</a></p>' .
 
 		' <p> 
         </p>
@@ -5665,21 +5699,22 @@ function cerber_login_register_stuff() {
 }
 
 /**
- * Inline reCAPTCHA widget
+ * Add Cerber's JS to the footer on the public pages
  *
  */
-add_action( 'wp_footer', 'cerber_foo', 1000 );
-function cerber_foo() {
+add_action( 'wp_footer', 'cerber_wp_footer', PHP_INT_MAX );
+function cerber_wp_footer() {
 	global $wp_cerber;
 
 	if ( is_singular() || is_archive() ) {
 		cerber_antibot_code( array( 'botscomm', 'botsany' ) );
 	}
 
-	if (!$wp_cerber->recaptcha_here) return;
+	if ( ! $wp_cerber->recaptcha_here ) {
+		return;
+	}
 
 	// jQuery version with support visible and invisible reCAPTCHA
-	// TODO: convert it into pure JS
 	?>
 	<script type="text/javascript">
 
@@ -5973,6 +6008,7 @@ function cerber_traffic_log(){
 	if ( crb_get_settings( 'tihdrs' ) ) {
 		$hds = crb_getallheaders();
 		unset( $hds['Cookie'] );
+		unset( $hds['cookie'] );
 		$details[6] = $hds;
 	}
 	if ( crb_get_settings( 'tisenv' ) ) {
@@ -6691,7 +6727,7 @@ function cerber_inspect_uploads() {
 
 	foreach ( $_FILES as $file ) {
 		if ( is_array( $file['tmp_name'] ) ) {
-			$files[] = array_merge( $files, $file['tmp_name'] );
+			$files = array_merge( $files, $file['tmp_name'] );
 		}
 		else {
 			$files[] = $file['tmp_name'];
@@ -6701,7 +6737,9 @@ function cerber_inspect_uploads() {
 	$found = false;
 
 	foreach ( $files as $file_name ) {
-		if ( $f = @fopen( $file_name, 'r' ) ) {
+		if ( $file_name
+		     && is_file( $file_name )
+		     && $f = @fopen( $file_name, 'r' ) ) {
 			$str = @fread( $f, 100000 );
 			@fclose( $f );
 			if ( cerber_inspect_value( $str ) ) {

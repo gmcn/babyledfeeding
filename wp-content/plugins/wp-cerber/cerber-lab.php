@@ -2,8 +2,8 @@
 /*
 	Cerber Laboratory (cerberlab.net) specific routines.
 
-	Copyright (C) 2015-19 CERBER TECH INC., https://cerber.tech
-	Copyright (C) 2015-19 CERBER TECH INC., https://wpcerber.com
+	Copyright (C) 2015-20 CERBER TECH INC., https://cerber.tech
+	Copyright (C) 2015-20 CERBER TECH INC., https://wpcerber.com
 
     Licenced under the GNU GPL.
 
@@ -637,6 +637,21 @@ function lab_gen_site_id() {
 	return $site_id;
 }
 
+/**
+ * @since 8.5.6
+ * @param $site_id string
+ *
+ * @return bool
+ */
+function lab_check_site_id( $site_id ) {
+	if ( ! $site_id
+	     || $site_id != substr( preg_replace( '/[^A-Z0-9]/i', '', $site_id ), 0, 32 ) ) {
+		return false;
+	}
+
+	return true;
+}
+
 function lab_get_key( $refresh = false, $nocache = false) {
 	static $key = null;
 
@@ -644,13 +659,15 @@ function lab_get_key( $refresh = false, $nocache = false) {
 		$key = cerber_get_set( '_cerberkey_' );
 	}
 
-	if ( $refresh || ! $key || ! is_array( $key ) ) {
+	if ( $refresh
+	     || ! $key
+	     || ! is_array( $key ) ) {
 
 		if ( empty( $key ) || ! is_array( $key ) ) {
-			$key = array();
+			$key = array( '' );
 		}
 
-		if ( empty( $key[0] ) ) {
+		if ( ! lab_check_site_id( $key[0] ) ) {
 			$key[0] = lab_gen_site_id();
 		}
 		else {
@@ -731,24 +748,39 @@ function lab_validate_lic( $lic = '', &$msg = '' ) {
 	return true;
 }
 
-function lab_lab( $with_date = false ) {
+function lab_lab( $with_date = 0 ) {
 
-	$key = lab_get_key();
-
-	if ( empty( $key[2] ) || empty( $key[3] ) ) {
-		return false;
+	if ( $slave = nexus_get_context() ) {
+		if ( ! $slave->site_key ) {
+			return false;
+		}
+		$exp = $slave->site_key;
 	}
-	if ( time() > ( $key[3] + LAB_LICENSE_GRACE ) ) {
+	else {
+
+		$key = lab_get_key();
+
+		if ( empty( $key[2] ) || empty( $key[3] ) ) {
+			return false;
+		}
+
+		$exp = $key[3];
+	}
+
+	if ( time() > ( $exp + LAB_LICENSE_GRACE ) ) {
 		return false;
 	}
 	if ( ! $with_date ) {
 		return true;
 	}
+	if ( $with_date == 2 ) {
+		return $exp;
+	}
 
 	$df         = get_option( 'date_format', false );
 	$gmt_offset = get_option( 'gmt_offset', false ) * 3600;
 
-	return date_i18n( $df, $gmt_offset + $key[3] );
+	return date_i18n( $df, $gmt_offset + $exp );
 }
 
 function lab_indicator(){
@@ -838,7 +870,7 @@ function lab_user_opt_in( $button = '' ) {
  * @param $ip array|string  IP address(es)
  * @param bool $cache_only  Use local cache. If false and an IP is not in the cache, sends a request to the Cerber Lab GEO service.
  *
- * @return array|string|bool    A list of country codes if a list of IPs provided, otherwise a string with the country code.
+ * @return array|string|false    A list of country codes if a list of IPs provided, otherwise a string with the country code.
  */
 function lab_get_country( $ip, $cache_only = true ) {
 	global $remote_country;

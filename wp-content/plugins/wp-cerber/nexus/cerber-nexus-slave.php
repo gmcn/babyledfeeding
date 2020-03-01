@@ -1,7 +1,7 @@
 <?php
 /*
-	Copyright (C) 2015-19 CERBER TECH INC., https://cerber.tech
-	Copyright (C) 2015-19 CERBER TECH INC., https://wpcerber.com
+	Copyright (C) 2015-20 CERBER TECH INC., https://cerber.tech
+	Copyright (C) 2015-20 CERBER TECH INC., https://wpcerber.com
 
     Licenced under the GNU GPL.
 
@@ -473,7 +473,7 @@ function nexus_net_send_responce( $payload ) {
 	$response = json_encode( array(
 		'payload'  => $payload,
 		'extra'    => array(
-			'versions' => array( CERBER_VER, cerber_get_wp_version(), PHP_MAJOR_VERSION, PHP_MINOR_VERSION, PHP_RELEASE_VERSION, PHP_OS )
+			'versions' => array( CERBER_VER, cerber_get_wp_version(), PHP_MAJOR_VERSION, PHP_MINOR_VERSION, PHP_RELEASE_VERSION, PHP_OS, lab_lab( 2 ) )
 		),
 		'echo'     => $hash,
 		'p_time'   => $processing,
@@ -596,10 +596,8 @@ function nexus_get_numbers() {
 	$numbers['themes']     = crb_get_themes();
 	$numbers['gmt']        = get_option( 'gmt_offset' );
 	$numbers['tz']         = get_option( 'timezone_string' );
-	$numbers['pro']        = lab_lab( true );
 
 	return $numbers;
-	//return array( 'updates' => $updates, 'scan' => $scan );
 }
 
 // We have to use our own "user id"

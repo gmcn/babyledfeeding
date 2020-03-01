@@ -1,7 +1,7 @@
 <?php
 /*
-	Copyright (C) 2015-19 CERBER TECH INC., https://cerber.tech
-	Copyright (C) 2015-19 CERBER TECH INC., https://wpcerber.com
+	Copyright (C) 2015-20 CERBER TECH INC., https://cerber.tech
+	Copyright (C) 2015-20 CERBER TECH INC., https://wpcerber.com
 
     Licenced under the GNU GPL.
 
@@ -70,7 +70,7 @@ function cerber_settings_config( $args = array() ) {
 	// WP setting is: 'cerber-'.$screen_id
 	$screens = array(
 		'main'          => array( 'boot', 'liloa', 'stspec', 'proactive', 'custom', 'citadel', 'activity', 'prefs' ),
-		'users'         => array( 'us' ),
+		'users'         => array( 'us', 'pdata' ),
 		'hardening'     => array( 'hwp', 'rapi' ),
 		'notifications' => array( 'notify', 'pushit', 'reports' ),
 		'traffic'       => array( 'tmain', 'tierrs', 'tlog' ),
@@ -224,14 +224,22 @@ function cerber_settings_config( $args = array() ) {
 			'name' => __( 'Citadel mode', 'wp-cerber' ),
 			'desc' => __( 'In the Citadel mode nobody is able to log in except IPs from the White IP Access List. Active user sessions will not be affected.', 'wp-cerber' ),
 			'fields' => array(
+				'citadel_on'      => array(
+					'title'   => __( 'Enable authentication log monitoring', 'wp-cerber' ),
+					//'doclink' => 'https://wpcerber.com/only-logged-in-wordpress-users/',
+					'type'    => 'checkbox',
+					'default' => 0,
+				),
 				'citadel'    => array(
 					'title' => __( 'Threshold', 'wp-cerber' ),
 					'type'  => 'citadel',
+					'enabler' => array( 'citadel_on' ),
 				),
 				'ciduration' => array(
 					'title' => __( 'Duration', 'wp-cerber' ),
 					'label' => __( 'minutes', 'wp-cerber' ),
-					'size'  => 3
+					'size'  => 3,
+					'enabler' => array( 'citadel_on' ),
 				),
 				'cinotify'   => array(
 					'title' => __( 'Notifications', 'wp-cerber' ),
@@ -240,7 +248,8 @@ function cerber_settings_config( $args = array() ) {
 					           ' [ <a href="' . cerber_admin_link_add( array(
 							'cerber_admin_do' => 'testnotify',
 							'type'            => 'citadel',
-						) ) . '">' . __( 'Click to send test', 'wp-cerber' ) . '</a> ]'
+						) ) . '">' . __( 'Click to send test', 'wp-cerber' ) . '</a> ]',
+					'enabler' => array( 'citadel_on' ),
 				),
 			),
 		),
@@ -248,19 +257,20 @@ function cerber_settings_config( $args = array() ) {
 			'name'   => __( 'Activity', 'wp-cerber' ),
 			'fields' => array(
 				'keeplog'     => array(
-					'title' => __( 'Keep records for', 'wp-cerber' ),
+					'title' => __( 'Keep log records of not logged in visitors for', 'wp-cerber' ),
 					'label' => __( 'days', 'wp-cerber' ),
 					//'label'  => __( 'days, not logged in visitors', 'wp-cerber' ),
 					'size'  => 3
 				),
-				/*'keeplog_auth' => array(
-					'title' => __( 'Keep records for', 'wp-cerber' ),
-					'label'  => __( 'days, logged in users', 'wp-cerber' ),
+				'keeplog_auth'     => array(
+					'title' => __( 'Keep log records of logged in users for', 'wp-cerber' ),
+					'label' => __( 'days', 'wp-cerber' ),
+					//'label'  => __( 'days, logged in users', 'wp-cerber' ),
 					'size'  => 3
-				),*/
+				),
 				'cerberlab'   => array(
 					'title' => __( 'Cerber Lab connection', 'wp-cerber' ),
-					'label' => __( 'Send malicious IP addresses to the Cerber Lab', 'wp-cerber' ) . ' <a target="_blank" href="http://wpcerber.com/cerber-laboratory/">Know more</a>',
+					'label' => __( 'Send malicious IP addresses to the Cerber Lab', 'wp-cerber' ) . ' <a target="_blank" href="https://wpcerber.com/cerber-laboratory/">Know more</a>',
 					'type'  => 'checkbox',
 				),
 				'cerberproto' => array(
@@ -288,7 +298,7 @@ function cerber_settings_config( $args = array() ) {
 				),
 				'dateformat' => array(
 					'title'     => __( 'Date format', 'wp-cerber' ),
-					'label'     => sprintf( __( 'if empty, the default format %s will be used', 'wp-cerber' ), '<b>' . cerber_date( time() ) . '</b>' ) . ' <a target="_blank" href="http://wpcerber.com/date-format-setting/">Know more</a>',
+					'label'     => sprintf( __( 'if empty, the default format %s will be used', 'wp-cerber' ), '<b>' . cerber_date( time() ) . '</b>' ) . ' <a target="_blank" href="https://wpcerber.com/date-format-setting/">Know more</a>',
 					'label_pos' => 'below',
 					'size'      => 16,
 				),
@@ -545,7 +555,52 @@ function cerber_settings_config( $args = array() ) {
 			)
 		),
 
-		'notify'  => array(
+		'pdata' => array(
+			'name'   => __( 'Personal Data', 'wp-cerber' ),
+			//'desc'   => __( 'These features help your organization to be in compliance with data privacy laws', 'wp-cerber' ),
+			'desc'   => 'These features help your organization to be in compliance with data privacy laws. <a target="_blank" href="https://wpcerber.com/wordpress/gdpr/">Read more</a>',
+			'fields' => array(
+				'pdata_erase'    => array(
+					'title'   => __( 'Enable data erase', 'wp-cerber' ),
+					//'label'   => __( 'Only registered and logged in website users have access to the website', 'wp-cerber' ),
+					//'doclink' => 'https://wpcerber.com/only-logged-in-wordpress-users/',
+					'type'    => 'checkbox',
+					'default' => 0,
+				),
+				'pdata_sessions' => array(
+					'title'   => __( 'Terminate user sessions', 'wp-cerber' ),
+					'label'   => __( 'Delete user sessions data when user data is erased', 'wp-cerber' ),
+					'type'    => 'checkbox',
+					'default' => 0,
+					'enabler' => array( 'pdata_erase' ),
+				),
+				'pdata_export' => array(
+					'title'   => __( 'Enable data export', 'wp-cerber' ),
+					//'label'   => __( 'Only registered and logged in website users have access to the website', 'wp-cerber' ),
+					//'doclink' => 'https://wpcerber.com/only-logged-in-wordpress-users/',
+					'type'    => 'checkbox',
+					'default' => 0,
+				),
+				'pdata_act'    => array(
+					'title'   => __( 'Include activity log events', 'wp-cerber' ),
+					'type'    => 'checkbox',
+					'default' => 0,
+					'enabler' => array( 'pdata_export' ),
+				),
+				'pdata_trf'    => array(
+					'title'   => __( 'Include traffic log entries', 'wp-cerber' ),
+					'type'    => 'checkbox_set',
+					'set'     => array(
+						1 => __( 'Request URL', 'wp-cerber' ),
+						2 => __( 'Form fields data', 'wp-cerber' ),
+						3 => __( 'Cookies', 'wp-cerber' )
+					),
+					'enabler' => array( 'pdata_export' ),
+				),
+			),
+		),
+
+			'notify'  => array(
 			'name'   => __( 'Email notifications', 'wp-cerber' ),
 			'fields' => array(
 				'notify'         => array(
@@ -646,6 +701,7 @@ function cerber_settings_config( $args = array() ) {
 				'tierrnoauth' => array(
 					'title' => __( 'Ignore logged in users', 'wp-cerber' ),
 					'type'  => 'checkbox',
+					//'enabler' => array( 'tierrmon', 1 ),
 				),
 			),
 		),
@@ -699,7 +755,12 @@ function cerber_settings_config( $args = array() ) {
 					'size'  => 4,
 				),
 				'tikeeprec'   => array(
-					'title' => __( 'Keep records for', 'wp-cerber' ),
+					'title' => __( 'Keep log records of not logged in visitors for', 'wp-cerber' ),
+					'label' => __( 'days', 'wp-cerber' ),
+					'size'  => 4,
+				),
+				'tikeeprec_auth'   => array(
+					'title' => __( 'Keep log records of logged in users for', 'wp-cerber' ),
 					'label' => __( 'days', 'wp-cerber' ),
 					'size'  => 4,
 				),
@@ -728,7 +789,7 @@ function cerber_settings_config( $args = array() ) {
 					'type'   => 'textarea',
 					'delimiter'   => "\n",
 					'list'        => true,
-					'label' => __( 'Specify directories to exclude from scanning. Use absolute paths. One item per line.', 'wp-cerber' )
+					'label' => __( 'Specify directories to exclude from scanning. One directory per line.', 'wp-cerber' )
 				),
 				'scan_inew' => array(
 					'title' => __( 'Monitor new files', 'wp-cerber' ),
@@ -921,6 +982,7 @@ function cerber_settings_config( $args = array() ) {
 					'type'      => 'textarea',
 					'delimiter' => "\n",
 					'list'      => true,
+					'doclink' => 'https://wpcerber.com/antispam-exception-for-specific-http-request/',
 				),
 			)
 		),
@@ -1241,7 +1303,7 @@ function cerber_text2array( $text = '', $delimiter = '', $callback = '') {
  *  Each setting field must have a default value!
  *
  */
-function cerber_get_defaults() {
+function cerber_get_defaults( $setting = null ) {
 	$all_defaults = array(
 		CERBER_OPT   => array(
 			'boot-mode'   => 0,
@@ -1265,18 +1327,20 @@ function cerber_get_defaults() {
 			'loginpath' => '',
 			'loginnowp' => 0,
 
+			'citadel_on' => '1',
 			'cilimit'    => 200,
-			'ciperiod'   => 30,
+			'ciperiod'   => 15,
 			'ciduration' => 60,
 			'cinotify'   => 1,
 
-			'keeplog'     => 30,
-			'ip_extra'    => 1,
-			'cerberlab'   => 0,
-			'cerberproto' => 0,
-			'usefile'     => 0,
-			'dateformat'  => '',
-			'admin_lang'  => 0
+			'keeplog'      => 30,
+			'keeplog_auth' => 30,
+			'ip_extra'     => 1,
+			'cerberlab'    => 0,
+			'cerberproto'  => 0,
+			'usefile'      => 0,
+			'dateformat'   => '',
+			'admin_lang'   => 0
 
 		),
 		CERBER_OPT_H => array(
@@ -1295,17 +1359,22 @@ function cerber_get_defaults() {
 			'cleanhead'  => 1,
 		),
 		CERBER_OPT_U => array(
-			'authonly'      => 0,
-			'authonlyacl'   => 0,
-			'authonlymsg'   => __( 'Only registered and logged in users are allowed to view this website', 'wp-cerber' ),
-			'authonlyredir' => '',
-			'reglimit_num'  => 3,
-			'reglimit_min'  => 60,
-			'emrule'        => 0,
-			'emlist'        => array(),
-			'prohibited'    => array(),
-			'auth_expire'   => '',
-			'usersort'      => '',
+			'authonly'       => 0,
+			'authonlyacl'    => 0,
+			'authonlymsg'    => __( 'Only registered and logged in users are allowed to view this website', 'wp-cerber' ),
+			'authonlyredir'  => '',
+			'reglimit_num'   => 3,
+			'reglimit_min'   => 60,
+			'emrule'         => 0,
+			'emlist'         => array(),
+			'prohibited'     => array(),
+			'auth_expire'    => '',
+			'usersort'       => '',
+			'pdata_erase'    => 0,
+			'pdata_sessions' => 0,
+			'pdata_export'   => 0,
+			'pdata_act'      => 0,
+			'pdata_trf'      => array(),
 		),
 		CERBER_OPT_A => array(
 			'botscomm'   => 1,
@@ -1349,21 +1418,22 @@ function cerber_get_defaults() {
 			'enable-report'  => '1',  // workaround, see cerber_upgrade_settings()
 		),
 		CERBER_OPT_T => array(
-			'tienabled'   => '1',
-			'tiipwhite'   => 0,
-			'tiwhite'     => '',
-			'tierrmon'    => '1',
-			'tierrnoauth' => 0,
-			'timode'      => '1',
-			'tinocrabs'   => '1',
-			'tifields'    => 0,
-			'timask'      => '',
-			'tihdrs'      => 0,
-			'tisenv'      => 0,
-			'ticandy'     => 0,
-			'tiphperr'    => 0,
-			'tithreshold' => '',
-			'tikeeprec'   => 7,
+			'tienabled'      => '1',
+			'tiipwhite'      => 0,
+			'tiwhite'        => '',
+			'tierrmon'       => '1',
+			'tierrnoauth'    => 0,
+			'timode'         => '1',
+			'tinocrabs'      => '1',
+			'tifields'       => 0,
+			'timask'         => '',
+			'tihdrs'         => 0,
+			'tisenv'         => 0,
+			'ticandy'        => 0,
+			'tiphperr'       => 0,
+			'tithreshold'    => '',
+			'tikeeprec'      => 30,
+			'tikeeprec_auth' => 30,
 		),
 		CERBER_OPT_US => array(
 			'ds_4acc'      => 0,
@@ -1430,6 +1500,16 @@ function cerber_get_defaults() {
 			'slave_diag'   => 0,
 		),
 	);
+
+	if ( $setting ) {
+		foreach ( $all_defaults as $section ) {
+			if ( isset( $section[ $setting ] ) ) {
+				return $section[ $setting ];
+			}
+		}
+
+		return null;
+	}
 
 	return $all_defaults;
 }

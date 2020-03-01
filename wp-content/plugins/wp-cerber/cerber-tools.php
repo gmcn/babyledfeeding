@@ -1,7 +1,7 @@
 <?php
 /*
-	Copyright (C) 2015-19 CERBER TECH INC., https://cerber.tech
-	Copyright (C) 2015-19 CERBER TECH INC., https://wpcerber.com
+	Copyright (C) 2015-20 CERBER TECH INC., https://cerber.tech
+	Copyright (C) 2015-20 CERBER TECH INC., https://wpcerber.com
 
     Licenced under the GNU GPL
 
@@ -346,11 +346,14 @@ function cerber_show_wp_diag(){
 		array( 'Server platform', PHP_OS ),
 		array( 'Memory limit', @ini_get( 'memory_limit' ) ),
 		array( 'Default PHP timezone', $tz ),
+		array( 'Disabled PHP functions', @ini_get( 'disable_functions' ) ),
 		array( 'WordPress version', cerber_get_wp_version() ),
 		array( 'WordPress locale', get_locale() ),
 		array( 'WordPress options DB table', $wpdb->prefix . 'options' ),
-		array( 'MySQLi', ( function_exists( 'mysqli_connect' ) ) ? 'YES' : '<span style="color: red;">NO</span>' ),
-		array( 'MySQL Native Driver (mysqlnd)', ( function_exists( 'mysqli_fetch_all' ) ) ? 'YES' : 'NO' ),
+		array( 'MySQLi', ( function_exists( 'mysqli_connect' ) ) ? '<span style="color: green;">YES</span>' : '<span style="color: red;">NO</span>' ),
+		array( 'MySQL Native Driver (mysqlnd)', ( function_exists( 'mysqli_fetch_all' ) ) ? '<span style="color: green;">YES</span>' : 'NO' ),
+		array( 'PHP allow_url_fopen', ( ini_get( 'allow_url_fopen' ) ) ? '<span style="color: red;">Enabled</span>' : '<span style="color: green;">Disabled</span>' ),
+		array( 'PHP allow_url_include', ( ini_get( 'allow_url_include' ) ) ? '<span style="color: red;">Enabled</span>' : '<span style="color: green;">Disabled</span>' ),
 		array( 'Persistent object cache', $c ),
 	);
 

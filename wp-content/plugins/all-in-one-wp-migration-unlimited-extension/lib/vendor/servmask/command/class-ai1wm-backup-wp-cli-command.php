@@ -1,6 +1,6 @@
 <?php
 /**
- * Copyright (C) 2014-2019 ServMask Inc.
+ * Copyright (C) 2014-2020 ServMask Inc.
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -44,8 +44,8 @@ if ( defined( 'WP_CLI' ) && ! class_exists( 'Ai1wm_Backup_WP_CLI_Command' ) ) {
 				if ( ! mkdir( AI1WM_STORAGE_PATH ) ) {
 					WP_CLI::error_multi_line(
 						array(
-							sprintf( __( 'All in One WP Migration is not able to create <strong>%s</strong> folder.', AI1WM_PLUGIN_NAME ), AI1WM_STORAGE_PATH ),
-							__( 'You will need to create this folder and grant it read/write/execute permissions (0777) for the All in One WP Migration plugin to function properly.', AI1WM_PLUGIN_NAME ),
+							sprintf( __( 'All-in-One WP Migration is not able to create <strong>%s</strong> folder.', AI1WM_PLUGIN_NAME ), AI1WM_STORAGE_PATH ),
+							__( 'You will need to create this folder and grant it read/write/execute permissions (0777) for the All-in-One WP Migration plugin to function properly.', AI1WM_PLUGIN_NAME ),
 						)
 					);
 					exit;
@@ -56,8 +56,8 @@ if ( defined( 'WP_CLI' ) && ! class_exists( 'Ai1wm_Backup_WP_CLI_Command' ) ) {
 				if ( ! mkdir( AI1WM_BACKUPS_PATH ) ) {
 					WP_CLI::error_multi_line(
 						array(
-							sprintf( __( 'All in One WP Migration is not able to create <strong>%s</strong> folder.', AI1WM_PLUGIN_NAME ), AI1WM_BACKUPS_PATH ),
-							__( 'You will need to create this folder and grant it read/write/execute permissions (0777) for the All in One WP Migration plugin to function properly.', AI1WM_PLUGIN_NAME ),
+							sprintf( __( 'All-in-One WP Migration is not able to create <strong>%s</strong> folder.', AI1WM_PLUGIN_NAME ), AI1WM_BACKUPS_PATH ),
+							__( 'You will need to create this folder and grant it read/write/execute permissions (0777) for the All-in-One WP Migration plugin to function properly.', AI1WM_PLUGIN_NAME ),
 						)
 					);
 					exit;

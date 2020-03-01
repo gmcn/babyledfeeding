@@ -1,6 +1,6 @@
 <?php
 /**
- * Copyright (C) 2014-2019 ServMask Inc.
+ * Copyright (C) 2014-2020 ServMask Inc.
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -36,11 +36,11 @@ class Ai1wmue_Import_Database {
 		// Set progress
 		Ai1wm_Status::info( __( 'Updating settings...', AI1WMUE_PLUGIN_NAME ) );
 
-		// Read settings.json file
-		$handle = ai1wm_open( ai1wm_settings_path( $params ), 'r' );
+		// Read retention.json file
+		$handle = ai1wm_open( ai1wmue_retention_path( $params ), 'r' );
 
 		// Parse settings.json file
-		$settings = ai1wm_read( $handle, filesize( ai1wm_settings_path( $params ) ) );
+		$settings = ai1wm_read( $handle, filesize( ai1wmue_retention_path( $params ) ) );
 		$settings = json_decode( $settings, true );
 
 		// Close handle

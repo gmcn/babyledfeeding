@@ -1,7 +1,7 @@
 <?php
 /*
-	Copyright (C) 2015-19 CERBER TECH INC., https://cerber.tech
-	Copyright (C) 2015-19 CERBER TECH INC., https://wpcerber.com
+	Copyright (C) 2015-20 CERBER TECH INC., https://cerber.tech
+	Copyright (C) 2015-20 CERBER TECH INC., https://wpcerber.com
 
     Licenced under the GNU GPL.
 
@@ -357,7 +357,6 @@ function nexus_update_slave( $id, $data ) {
 	// Details
 	$old_details = ( is_array( $old->details ) ) ? $old->details : array();
 	$details_fields = nexus_slave_form_fields();
-	//$details_fields = array( 'first_name', 'last_name', 'owner_email', 'owner_phone', 'owner_biz', 'owner_address' );
 	if ( $new_details = array_intersect_key( $data, array_flip( $details_fields ) ) ) {
 		$data['details'] = serialize( array_replace( $old_details, $new_details ) );
 	}
@@ -368,13 +367,13 @@ function nexus_update_slave( $id, $data ) {
 	}
 
 	// 1. Numbers
-	$int_columns = array( 'group_id', 'site_status', 'updates', 'refreshed', 'last_scan', 'last_http');
+	$int_columns = array( 'group_id', 'site_status', 'updates', 'refreshed', 'last_scan', 'last_http', 'site_key' );
 	$update      = array_map( function ( $e ) {
 		return absint( $e );
 	}, array_intersect_key( $data, array_flip( $int_columns ) ) );
 
 	// 2. Escaping strings
-	$str_columns = array( 'site_name', 'details', 'site_notes', 'plugin_v', 'wp_v' );
+	$str_columns = array( 'site_name', 'details', 'site_notes', 'plugin_v', 'wp_v', 'server_id', 'server_country' );
 	$update      = array_merge( $update,
 		array_map( function ( $e ) {
 			return cerber_real_escape( $e );
@@ -683,6 +682,13 @@ function nexus_send( $request, $slave_id = null ) {
 		$parse  = parse_url( $slave->site_url );
 		$domain = $parse['host'];
 		$ip     = gethostbyname( $domain );
+		if ( ! cerber_is_ip( $ip ) ) {
+			$ip = 'Unknown. Unable to resolve the IP address. Possibly the domain ' . $domain . ' is not delegated.';
+			$hostname = 'Unknown';
+		}
+		else {
+			$hostname = gethostbyaddr( $ip );
+		}
 
 		?>
         <div style="padding: 4em;">
@@ -731,7 +737,7 @@ function nexus_send( $request, $slave_id = null ) {
                 HTTP code: <?php echo $nexus_last_http; ?><br/>
                 Response size: <?php echo $nexus_last_curl['size_download']; ?><br/>
                 IP address: <?php echo $ip; ?><br/>
-                Hostname: <?php echo gethostbyaddr( $ip ); ?><br/>
+                Hostname: <?php echo $hostname; ?><br/>
 		        <?php
 
 		        foreach ( $nexus_last_curl as $key => $val ) {
@@ -758,11 +764,16 @@ function nexus_process_extra( $data, $slave ) {
 	$update = array();
 
 	$v = $data['extra']['versions'];
+
 	if ( $slave->plugin_v != $v[0] ) {
 		$update['plugin_v'] = $v[0];
 	}
 	if ( $slave->wp_v != $v[1] ) {
 		$update['wp_v'] = $v[1];
+	}
+
+	if ( isset( $v[6] ) && $slave->site_key != $v[6] ) {
+		$update['site_key'] = $v[6];
 	}
 
 	if ( $nums = crb_array_get( $data['payload'], 'numbers' ) ) {
@@ -787,10 +798,6 @@ function nexus_process_extra( $data, $slave ) {
 
         if ( $plugins = crb_array_get( $nums, 'plugins' ) ) {
 			$installed = array();
-
-			if ( ! empty( $nums['pro'] ) ) {
-				//$plugins[ CERBER_PLUGIN_ID ]['Version'] = $plugins[ CERBER_PLUGIN_ID ]['Version'] . ' PRO';
-			}
 
 			$active = array_flip( crb_array_get( $nums, 'active', array() ) );
 
@@ -1454,10 +1461,15 @@ function nexus_refresh_slave_srv( $slave_id ) {
 
 	$server_host = parse_url( $slave->site_url, PHP_URL_HOST );
 	$srv_ip      = @gethostbyname( $server_host );
+
+	if ( ! cerber_is_ip( $srv_ip ) ) {
+		return;
+	}
+
 	$srv_country = lab_get_country( $srv_ip, false );
 
 	if ( $srv_ip != $slave->server_id || $srv_country != $slave->server_country ) {
-		cerber_db_query( 'UPDATE ' . cerber_get_db_prefix() . CERBER_MS_TABLE . ' SET server_id = "' . cerber_real_escape( $srv_ip ) . '", server_country = "' . cerber_real_escape( $srv_country ) . '" WHERE id = ' . $slave_id );
+		nexus_update_slave( $slave_id, array( 'server_id' => $srv_ip, 'server_country' => $srv_country ) );
 	}
 
 	// Updating servers
@@ -1482,7 +1494,7 @@ function nexus_refresh_slave_srv( $slave_id ) {
 		$list = array();
 	}
 
-	if ( ! isset( $list[ $srv_country ] ) ) {
+	if ( $srv_country && ! isset( $list[ $srv_country ] ) ) {
 		$list[ $srv_country ] = cerber_country_name( $srv_country );
 		cerber_update_set( 'nexus_countries', $list );
 	}
@@ -1720,6 +1732,12 @@ function nexus_upgrade_db( $force = false ) {
 		 ADD INDEX server (server_id),
          ADD server_country CHAR(3) CHARACTER SET ascii COLLATE ascii_general_ci NOT NULL DEFAULT "" AFTER server_id, 
          ADD INDEX country (server_country);
+		 ';
+	}
+
+	if ( $force || ! cerber_is_column( cerber_get_db_prefix() . CERBER_MS_TABLE, 'site_key' ) ) {
+		$sql[] = 'ALTER TABLE ' . cerber_get_db_prefix() . CERBER_MS_TABLE . '
+		 ADD site_key INT(11) UNSIGNED NOT NULL DEFAULT "0" AFTER plugin_v;
 		 ';
 	}
 

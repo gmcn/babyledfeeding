@@ -1,6 +1,6 @@
 <?php
 /**
- * Copyright (C) 2014-2019 ServMask Inc.
+ * Copyright (C) 2014-2020 ServMask Inc.
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -40,8 +40,8 @@ class Ai1wmue_Import_Settings {
 			'ai1wmue_days'    => get_option( 'ai1wmue_days', false ),
 		);
 
-		// Save settings.json file
-		$handle = ai1wm_open( ai1wm_settings_path( $params ), 'w' );
+		// Save retention.json file
+		$handle = ai1wm_open( ai1wmue_retention_path( $params ), 'w' );
 		ai1wm_write( $handle, json_encode( $settings ) );
 		ai1wm_close( $handle );
 

@@ -1,6 +1,6 @@
 <?php
 /**
- * Copyright (C) 2014-2019 ServMask Inc.
+ * Copyright (C) 2014-2020 ServMask Inc.
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -30,7 +30,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 // ==================
 // = Plugin Version =
 // ==================
-define( 'AI1WMUE_VERSION', '2.33' );
+define( 'AI1WMUE_VERSION', '2.36' );
 
 // ===============
 // = Plugin Name =
@@ -71,6 +71,11 @@ define( 'AI1WMUE_TEMPLATES_PATH', AI1WMUE_LIB_PATH . DIRECTORY_SEPARATOR . 'view
 // = Vendor Path =
 // ===============
 define( 'AI1WMUE_VENDOR_PATH', AI1WMUE_LIB_PATH . DIRECTORY_SEPARATOR . 'vendor' );
+
+// ==================
+// = Retention Path =
+// ==================
+define( 'AI1WMUE_RETENTION_NAME', 'retention.json' );
 
 // ===========================
 // = ServMask Activation URL =

@@ -1,7 +1,7 @@
 <?php
 /*
-	Copyright (C) 2015-19 CERBER TECH INC., https://cerber.tech
-	Copyright (C) 2015-19 CERBER TECH INC., https://wpcerber.com
+	Copyright (C) 2015-20 CERBER TECH INC., https://cerber.tech
+	Copyright (C) 2015-20 CERBER TECH INC., https://wpcerber.com
 
     Licenced under the GNU GPL.
 
@@ -240,7 +240,7 @@ function cerber_field_show( $args ) {
 	$label = crb_array_get( $args, 'label', '' );
 
 	if ( ! empty( $args['doclink'] ) ) {
-		$label .= ' &nbsp; <a target="_blank" href="' . $args['doclink'] . '">Read more</a>';
+		$label .= ' &nbsp; <a target="_blank" href="' . $args['doclink'] . '">Know more</a>';
 	}
 
 	$placeholder = esc_attr( crb_array_get( $args, 'placeholder', '' ) );
@@ -342,7 +342,7 @@ function cerber_field_show( $args ) {
 		case 'citadel':
 			$html = sprintf( __( 'Enable after %s failed login attempts in last %s minutes', 'wp-cerber' ),
 				'<input type="text" id="cilimit" name="cerber-' . $args['group'] . '[cilimit]" value="' . $settings['cilimit'] . '" size="3" maxlength="3" />',
-				'<input type="text" id="ciperiod" name="cerber-' . $args['group'] . '[ciperiod]" value="' . $settings['ciperiod'] . '" size="3" maxlength="3" />' );
+				'<input type="text" id="ciperiod" name="cerber-' . $args['group'] . '[ciperiod]" value="' . $settings['ciperiod'] . '" size="3" maxlength="3" /><i ' . $data . '></i>' );
 			break;
 		case 'checkbox':
 			$html = '<div style="display: table-cell;"><label class="crb-switch"><input class="screen-reader-text" type="checkbox" id="' . $id . '" name="' . $name . '" value="1" ' . checked( 1, $value, false ) . $atts . ' /><span class="crb-slider round"></span></label></div>';
@@ -624,8 +624,10 @@ add_filter( 'pre_update_option_'.CERBER_OPT, function ($new, $old, $option) {
 		$new['cilimit'] = '';
 	}
 
-	if ( absint( $new['keeplog'] ) == 0 ) {
-		$new['keeplog'] = '';
+	$new['keeplog'] = absint( $new['keeplog'] );
+
+	if ( $new['keeplog'] == 0 ) {
+		$new['keeplog'] = 1;
 	}
 
 	if ( $new['cookiepref'] != $old['cookiepref'] ) {
@@ -782,9 +784,10 @@ add_filter( 'pre_update_option_'.CERBER_OPT_T, function ($new, $old, $option) {
 	if ( $new['tithreshold'] ) {
 		$new['tithreshold'] = absint( $new['tithreshold'] );
 	}
-	$new['tikeeprec'] = absint($new['tikeeprec']);
-	if ( $new['tikeeprec'] < 1 ) {
-		$new['tikeeprec'] = $old['tikeeprec'];
+
+	$new['tikeeprec'] = absint( $new['tikeeprec'] );
+	if ( $new['tikeeprec'] == 0 ) {
+		$new['tikeeprec'] = 1;
 		cerber_admin_notice( 'You may not set <b>Keep records for</b> to 0 days. To completely disable logging set <b>Logging mode</b> to Logging disabled.' );
 	}
 
