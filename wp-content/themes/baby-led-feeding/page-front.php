@@ -14,35 +14,43 @@
 
 get_header(); ?>
 
-gary mcnally
-
-<div class="callout-card">
-	<div class="v-align">
-		Gary
-	</div>
-
-</div>
 
 
+<?php
 
-	<div id="primary" class="content-area">
-		<main id="main" class="site-main" role="main">
+	include(locate_template("inc/page-front/hero.php"));
 
-			<?php
-			while ( have_posts() ) : the_post();
+ ?>
 
-				get_template_part( 'template-parts/content', 'page' );
+ <?php if( have_rows('flexible_front_page') ): ?>
+ 	<?php while( have_rows('flexible_front_page') ): the_row(); ?>
+ 			<?php if( get_row_layout() == 'advert' ): ?>
 
-				// If comments are open or we have at least one comment, load up the comment template.
-				if ( comments_open() || get_comments_number() ) :
-					comments_template();
-				endif;
+ 					<?php include(locate_template("inc/page-front/advert.php")); ?>
 
-			endwhile; // End of the loop.
-			?>
+ 			<?php elseif( get_row_layout() == 'posts' ): ?>
 
-		</main><!-- #main -->
-	</div><!-- #primary -->
+				<?php include(locate_template("inc/page-front/posts.php")); ?>
+
+			<?php elseif( get_row_layout() == 'videos' ): ?>
+
+				<?php include(locate_template("inc/page-front/videos.php")); ?>
+
+			<?php elseif( get_row_layout() == 'general_content' ): ?>
+
+				<?php include(locate_template("inc/page-front/general.php")); ?>
+
+			<?php elseif( get_row_layout() == 'books_products' ): ?>
+
+				<?php include(locate_template("inc/page-front/products.php")); ?>
+
+			<?php elseif( get_row_layout() == 'newsletter' ): ?>
+
+				<?php include(locate_template("inc/page-elements/newsletter.php")); ?>
+
+ 			<?php endif; ?>
+ 	<?php endwhile; ?>
+ <?php endif; ?>
 
 <?php
 get_sidebar();

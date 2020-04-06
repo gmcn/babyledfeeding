@@ -15,3 +15,55 @@ ul.nav li.menu-item-has-children:hover > ul.dropdown-menu {
     display: block !important;
   }
 }
+
+header {
+  background: #fff;
+  .header {
+    &_mobile {
+
+      &__nav {
+        background: #fff;
+        padding: 10px;
+        text-align: center;
+        &__search {
+          padding: 20px;
+        }
+      }
+    }
+    &_social {
+      margin-bottom: 20px;
+      &__wrapper {
+        margin-top: 5px;
+        margin-right: 10px;
+      }
+      &__divide {
+        padding-left: 15px;
+        padding-right: 15px;
+      }
+      &__icon {
+        float: right;
+        padding: 0 5px !important;
+        img, svg {
+          height: 24px;
+        }
+      }
+      &__free {
+        background: #FFB71B;
+        padding: 0 15px;
+        transition: .5s;
+        a {
+          padding-top: 5px !important;
+          padding-bottom: 5px !important;
+          color: #fff !important;
+        }
+        &:hover {
+          background: $blfpink;
+        }
+      }
+    }
+  }
+}
+
+.navbar-header {
+  padding: 10px;
+}

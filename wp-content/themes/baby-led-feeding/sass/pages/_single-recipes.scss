@@ -1,0 +1,159 @@
+.single-recipe {
+  padding: 50px !important;
+  iframe {
+    width: 100%;
+  }
+  h1 {
+    font-family: $font__headings;
+    font-size: 38px;
+    margin-bottom: 50px;
+  }
+  h3 {
+    font-family: $font__headings;
+    font-size: 32px;
+    line-height: 40px;
+    margin-bottom: 50px;
+    color: $blfpink;
+    margin-bottom: 25px;
+  }
+  img.size-full {
+    width: 100%;
+  }
+  &__metadata {
+    border-top: 1px solid #ECEDED;
+    border-bottom: 1px solid #ECEDED;
+    text-align: center;
+    margin-bottom: 50px;
+    &__wrap {
+      @include md {
+        border-right: 1px solid #ECEDED;
+      }
+
+    }
+    p {
+      font-weight: $soleilBd;
+      margin-bottom: 0;
+    }
+    &__popovers {
+      padding-top: 20px;
+      padding-bottom: 15px;
+    }
+    &__prep {
+      padding-top: 15px;
+      padding-bottom: 15px;
+      padding-right: 0 !important;
+      padding-left: 0 !important;
+      transition: .5s;
+      cursor: pointer;
+      &:hover {
+        background: #ECEDED
+      }
+    }
+    &__cook {
+      padding-top: 15px;
+      padding-bottom: 15px;
+      padding-right: 0 !important;
+      padding-left: 0 !important;
+      transition: .5s;
+      cursor: pointer;
+      &:hover {
+        background: #ECEDED
+      }
+    }
+    &__serving {
+      padding-top: 15px;
+      padding-bottom: 15px;
+      padding-right: 0 !important;
+      padding-left: 0 !important;
+      transition: .5s;
+      cursor: pointer;
+      &:hover {
+        background: #ECEDED
+      }
+    }
+  }
+  ul {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    line-height: 1.5em;
+  }
+  ol {
+    margin: 0 0 0 15px;
+    padding: 0;
+    li {
+      margin-bottom: 15px;
+    }
+  }
+  &__actions {
+    a {
+      background: $blforange;
+      color: #fff;
+      padding: 5px 15px;
+      font-weight: $soleilBd;
+      display: inline-block;
+      margin-top: 15px;
+      margin-bottom: 15px;
+      text-decoration: none;
+      &:hover {
+        color: #fff;
+        background: $blfpink;
+      }
+    }
+  }
+  &__ingredients {
+    font-weight: $soleilSb;
+    margin-bottom: 25px;
+    h4 {
+      color: $blfpink;
+      font-weight: $soleilSb
+    }
+  }
+  &__tips {
+    font-weight: $soleilSb;
+    background: #F6F5F3;
+    padding: 20px;
+    font-style: italic;
+    margin-bottom: 15px;
+    h4 {
+      font-family: $font__headings;
+      color: $blforange;
+      margin-top: 0;
+      font-size: 28px;
+    }
+  }
+}
+
+.related-recipes {
+  padding-top: 25px;
+  padding-bottom: 25px;
+  h3 {
+    font-family: $font__headings;
+    text-align: center;
+    color: #000;
+    font-weight: $soleilBd;
+    font-size: 32px;
+    margin-bottom: 25px;
+  }
+  &__cat {
+    text-transform: uppercase;
+    margin-bottom: 0;
+  }
+  &__recipe {
+    margin-bottom: 15px;
+    img {
+      text-align: center;
+      display: block;
+      // width: 100%;
+      margin-bottom: 15px;
+      // height: 400px;
+    }
+    a {
+      display: block;
+      color: #000;
+      text-decoration: none;
+      font-size: 18px;
+      font-weight: $soleilSb
+    }
+  }
+}

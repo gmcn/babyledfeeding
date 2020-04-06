@@ -10,9 +10,10 @@
 
 .navbar {
   position: relative;
-  min-height: $navbar-height; // Ensure a navbar always shows (e.g., without a .navbar-brand in collapsed mode)
-  margin-bottom: $navbar-margin-bottom;
-  border: 1px solid transparent;
+  @include md {
+    min-height: $navbar-height; // Ensure a navbar always shows (e.g., without a .navbar-brand in collapsed mode)
+    margin-bottom: 5px;
+  }
 
   // Prevent floats from breaking the navbar
   @include clearfix;
@@ -207,15 +208,22 @@
     outline: 0;
   }
 
+  &:hover {
+    .icon-bar {
+      background-color: $blfpink;
+    }
+  }
+
   // Bars
   .icon-bar {
     display: block;
-    width: 22px;
-    height: 2px;
-    border-radius: 1px;
+    width: 35px;
+    height: 7px;
+    background-color: #4A4F55;
+    transition: .5s;
   }
   .icon-bar + .icon-bar {
-    margin-top: 4px;
+    margin-top: 7px;
   }
 
   @media (min-width: $grid-float-breakpoint) {
@@ -395,8 +403,6 @@
 
 // Default navbar
 .navbar-default {
-  background-color: $navbar-default-bg;
-  border-color: $navbar-default-border;
 
   .navbar-brand {
     color: $navbar-default-brand-color;
@@ -413,7 +419,8 @@
 
   .navbar-nav {
     > li > a {
-      color: $navbar-default-link-color;
+      color: #000;
+      font-weight: $soleilBd;
 
       &:hover,
       &:focus {
