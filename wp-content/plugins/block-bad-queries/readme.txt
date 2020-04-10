@@ -10,9 +10,9 @@ Author URI: https://plugin-planet.com/
 Contributors: specialk, aldolat, WpBlogHost, jameswilkes, juliobox, lernerconsult
 Donate link: https://monzillamedia.com/donate.html
 Requires at least: 4.1
-Tested up to: 5.3
-Stable tag: 20191109
-Version: 20191109
+Tested up to: 5.4
+Stable tag: 20200319
+Version: 20200319
 Requires PHP: 5.6.20
 Text Domain: block-bad-queries
 Domain Path: /languages
@@ -167,6 +167,11 @@ __Answer:__ It's fine to run both BBQ and 6G/7G Firewall at the same time. Both 
 Yes, check out [Blackhole for Bad Bots](https://wordpress.org/plugins/blackhole-bad-bots/) to protect your site against bad bots. I also have a [video course on WordPress security](https://m0n.co/securewp), for more plugin recommendations and lots of tips and tricks.
 
 
+**My PHP checker found something?**
+
+If you are using some PHP checker that's reporting an error or bad string in BBQ, it's a false positive and safe to ignore. Why? Because the PHP checker is finding the static strings/patterns that BBQ uses to identify and block bad requests. In other words, your PHP checker is finding a static string thinking it is live code. It's not. If possible, please take a moment to report this to the developers of your PHP checker. They should be happy to improve the accuracy and quality of their plugin.
+
+
 **Got a question?**
 
 Send any questions or feedback via my [contact form](https://perishablepress.com/contact/).
@@ -198,6 +203,10 @@ Links, tweets and likes also appreciated. Thank you! :)
 
 If you like BBQ, please take a moment to [give a 5-star rating](https://wordpress.org/support/plugin/block-bad-queries/reviews/?rate=5#new-post). It helps to keep development and support going strong. Thank you!
 
+
+**2020/03/19**
+
+* Tests on WordPress 5.4
 
 **2019/11/09**
 
