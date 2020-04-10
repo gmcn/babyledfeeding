@@ -92,17 +92,17 @@
    <?php if($query->have_posts()) : ?>
 
      <?php if ($section_bg): ?>
-       <div class="fp_row-bg" style="background: url(<?php echo $section_bg ?>) no-repeat">
+       <div class="fp_row-bg" style="background: url(<?php echo $section_bg ?>) no-repeat; background-size: cover">
      <?php endif; ?>
 
 
-   <article class="container recipes">
+   <div class="container recipes">
      <h3><?php echo $sectionTitle ?></h3>
      <div class="row">
 
        <?php while($query->have_posts()) : $query->the_post();
 
-       $thumb = get_the_post_thumbnail( $post_id, 'related-size' , array( 'loading' => 'lazy' ) );
+       $thumb = get_the_post_thumbnail( $post_id, 'related-size' , array( 'loading' => 'lazy', 'itemprop' => 'image' ) );
 
        if ($posts_per_page == 3 ) {
          $cols = "col-md-4";
@@ -111,16 +111,17 @@
        }
 
        ?>
-           <article <?php post_class(array('col-xs-6', $cols, 'recipes__recipe', 'matchheight')); ?>>
+           <article itemscope itemtype="http://schema.org/Recipe" <?php post_class(array('col-xs-6', $cols, 'recipes__recipe', 'matchheight')); ?>>
              <div class="row">
                <div class="col-sm-6 col-md-12">
-                 <?php echo $thumb; ?>
+                 <a href="<?php the_permalink(); ?>">
+                   <?php echo $thumb; ?>
+                 </a>
                </div>
                <div class="col-sm-6 col-md-12">
                  FOOD
-                 <?php //echo get_the_term_list( $post->ID, 'recipe-categories' ); ?>
                  <p class="recipes__cat"><?php echo $product_cat; ?></p>
-                 <a href="<?php the_permalink(); ?>"><?php echo the_title(); ?></a>
+                 <a itemprop="url" href="<?php the_permalink(); ?>"><span itemprop="name"><?php echo the_title(); ?></span></a>
                </div>
              </div>
            </article>
@@ -128,7 +129,7 @@
        <?php endwhile; ?>
 
      </div>
-   </article>
+   </div>
    <?php if ($section_bg): ?>
    </div>
    <?php endif; ?>

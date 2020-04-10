@@ -6,15 +6,26 @@
 // Dropdown arrow/caret
 .caret {
   display: inline-block;
-  width: 0;
-  height: 0;
-  margin-left: 2px;
+  // width: 0;
+  // height: 0;
+  margin-left: 8px;
   vertical-align: middle;
-  border-top:   $caret-width-base dashed;
-  border-top:   $caret-width-base solid \9; // IE8
-  border-right: $caret-width-base solid transparent;
-  border-left:  $caret-width-base solid transparent;
+  // border-top:   $caret-width-base dashed;
+  // border-top:   $caret-width-base solid \9; // IE8
+  // border-right: $caret-width-base solid transparent;
+  // border-left:  $caret-width-base solid transparent;
+  transition: .5s;
+  img {
+    width: 15px;
+  }
 }
+
+// .caret:before {
+//   transition: transform 1s;
+//   transform-origin: center center;
+//   margin-top: 3px;
+//   content: "\e114";
+// }
 
 // The dropdown wrapper (div)
 .dropup,
@@ -41,7 +52,7 @@
   list-style: none;
   font-size: $font-size-base;
   text-align: left; // Ensures proper alignment if parent has it changed (e.g., modal footer)
-  background-color: rgba(255,255,255,.9);
+  background-color: rgba(255,255,255,.98);
   background-clip: padding-box;
 
   // Aligns the dropdown menu to right

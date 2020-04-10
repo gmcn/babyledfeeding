@@ -15,8 +15,8 @@
 <meta charset="<?php bloginfo( 'charset' ); ?>">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <link rel="profile" href="http://gmpg.org/xfn/11">
-<link rel="icon" href="<?php echo get_template_directory_uri(); ?>/images/favicon.png">
-<link rel="shortcut icon" href="<?php echo get_template_directory_uri(); ?>/images/favicon.png">
+<link rel="icon" href="<?php echo get_template_directory_uri(); ?>/images/favicon.svg">
+<link rel="shortcut icon" href="<?php echo get_template_directory_uri(); ?>/images/favicon.svg">
 <link type="text/plain" rel="robots" href="<?php echo get_template_directory_uri(); ?>/humans.txt" />
 <link type="text/plain" rel="author" href="<?php echo get_template_directory_uri(); ?>/robots.txt" />
 <?php wp_head(); ?>
@@ -54,7 +54,7 @@
 
 	<header id="masthead" class="site-header navbar-fixed-top" role="banner">
 
-		<div class="row header_mobile__nav hidden-sm hidden-md hidden-lg">
+		<div class="row header_mobile__nav hidden-md hidden-lg">
 			<div class="col-xs-3">
 				<button class="navbar-toggle" type="button" data-toggle="collapse" data-target="#navbar-collapse-grid">
 					<span class="icon-bar"></span>
@@ -78,7 +78,7 @@
 
 
 		<div class="container navbar navbar-default yamm">
-          <div class="navbar-header hidden-xs">
+          <div class="navbar-header hidden-xs hidden-sm">
 
 
 						<a href="/" class="site-branding">
@@ -129,20 +129,20 @@
 
 
 								</li>
-								<li class="header_social__free"><a  href="#">FREE Recipes</a></li>
+								<li class="header_social__free"><a  href="#freerecipes">FREE Recipes</a></li>
 
             </ul>
 						<div style="clear: right;"></div>
           <div class="navbar-collapse collapse" id="navbar-collapse-grid">
             <ul class="nav navbar-nav navbar-right">
               <!-- Grid 12 Menu -->
-              <li class="dropdown yamm-fw"><a class="dropdown-toggle" href="#" data-toggle="dropdown">Recipes<b class="caret"></b></a>
+              <li class="dropdown yamm-fw"><a class="dropdown-toggle" href="#" data-toggle="dropdown">Recipes<b class="caret"><img src="<?php echo get_template_directory_uri(); ?>/images/caret.svg" alt="Dropdown Arrow"></b></a>
                 <ul class="dropdown-menu">
                   <li class="container-fluid">
                     <div class="row">
                       <div class="col-sm-3">
 
-                        <h3 class="hidden-xs hidden-sm">Recipes</h3>
+                        <h3 class="hidden-xs hidden-sm"><a href="/recipes">Recipes</a></h3>
 
                         <?php wp_nav_menu( array(
                           'theme_location' => 'recipe',
@@ -172,7 +172,6 @@
                          <?php while($query->have_posts()) : $query->the_post(); ?>
 
                            <div class="col-md-4 recipe_wrapper_thumb">
-                             <!-- <img src="<?php echo get_the_post_thumbnail_url( $post_id, 'custom-size' ); ?>" alt=""> -->
                              <?php echo get_the_post_thumbnail( $post_id, 'custom-size' ); ?>
                              <a href="<?php echo the_permalink(); ?>">
                                <div class="vert-align">
@@ -201,13 +200,13 @@
               <li><a class="dropdown-toggle" href="/videos">Videos</a></li>
 
 
-              <li class="dropdown yamm-fw"><a class="dropdown-toggle" href="#" data-toggle="dropdown" aria-expanded="false">Baby Led Weaning<b class="caret"></b></a>
+              <li class="dropdown yamm-fw"><a class="dropdown-toggle" href="#" data-toggle="dropdown" aria-expanded="false">Baby Led Weaning<b class="caret"><img src="<?php echo get_template_directory_uri(); ?>/images/caret.svg" alt="Dropdown Arrow"></b></a>
                 <ul class="dropdown-menu">
                   <li class="container-fluid">
                     <div class="row">
 											<div class="col-sm-3">
 
-                        <h3 class="hidden-xs hidden-sm">Baby Led Feeding</h3>
+                        <h3 class="hidden-xs hidden-sm"><a href="/weaning">Baby Led Feeding</a></h3>
 
                         <?php wp_nav_menu( array(
                           'theme_location' => 'baby-led-feeding',
@@ -220,7 +219,7 @@
                         <?php
 
                           $args = array(
-                            'post_type' => 'recipes',
+                            'post_type' => 'weaning',
                             'post_status' => 'publish',
                             'posts_per_page' => 3,
                             'orderby' => 'date',
@@ -237,7 +236,6 @@
                          <?php while($query->have_posts()) : $query->the_post(); ?>
 
                            <div class="col-md-4 recipe_wrapper_thumb">
-                             <!-- <img src="<?php echo get_the_post_thumbnail_url( $post_id, 'custom-size' ); ?>" alt=""> -->
                              <?php echo get_the_post_thumbnail( $post_id, 'custom-size' ); ?>
                              <a href="<?php echo the_permalink(); ?>">
                                <div class="vert-align">

@@ -2,7 +2,7 @@
 
   <div class="container single-recipe__comments">
     <a id="review"></a>
-    <div class="row">
+    <div itemprop="comment" class="row">
       <?php echo comments_template(); ?>
     </div>
   </div>

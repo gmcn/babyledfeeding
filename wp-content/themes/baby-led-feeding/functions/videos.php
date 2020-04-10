@@ -56,3 +56,28 @@ function videos_post_type() {
 	register_post_type( 'videos', $args );
 }
 add_action( 'init', 'videos_post_type', 0 );
+
+add_action( 'init', 'videos_taxonomies', 0 );
+
+//create two taxonomies, genres and tags for the post type "tag"
+function videos_taxonomies()
+{
+	// partners taxonomy
+    $videos_cat_labels = array(
+			'name'                => _x( 'Recipe Category', 'taxonomy general name' ),
+			'singular_name'       => _x( 'Recipe Category', 'taxonomy singular name' ),
+			'menu_name'           => __( 'Recipe Category' ),
+    );
+    $videos_cat_args = array(
+        'labels'                     => $recipes_cat_labels,
+        'hierarchical'               => true,
+        'public'                     => true,
+        'show_ui'                    => true,
+        'show_admin_column'          => true,
+        'show_in_nav_menus'          => true,
+				'show_in_rest'               => true,
+        'show_tagcloud'              => true,
+        'rewrite'                    => array('slug' => 'video-categories')
+    );
+    register_taxonomy( 'video-categories', array( 'videos' ), $videos_cat_args );
+}

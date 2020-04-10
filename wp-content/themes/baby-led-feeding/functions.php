@@ -110,10 +110,11 @@ function starting_theme_scripts() {
 	wp_enqueue_script( 'jquery', 'https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js', array(), '1.12.4', true );
 	wp_enqueue_script( 'starting-theme-navigation', get_template_directory_uri() . '/js/navigation.js', array(), '20151215', true );
 	wp_enqueue_script( 'bxslider-js', get_template_directory_uri() . '/js/jquery.bxslider.min.js', array(), '4.2.12', true );
-	wp_enqueue_script( 'fancybox-js', get_template_directory_uri() . '/js/jquery.fancybox.js', array(), '2.1.7', true );
+	// wp_enqueue_script( 'fancybox-js', get_template_directory_uri() . '/js/jquery.fancybox.js', array(), '2.1.7', true );
 	wp_enqueue_script( 'cookieconsent', get_template_directory_uri() . '/js/cookieconsent.min.js', array(), '3.1.1', true );
 	wp_enqueue_script( 'fancybox-pack-js', get_template_directory_uri() . '/js/jquery.fancybox.pack.js', array(), '2.1.7', true );
-	wp_enqueue_script( 'functions-js', get_template_directory_uri() . '/js/functions.js', array(), '0.1', true );
+	wp_enqueue_script( 'functions-js', get_template_directory_uri() . '/js/functions.js', array(), '1.0', true );
+	// wp_enqueue_script( 'compiled-js', get_template_directory_uri() . '/js/compiled.js', array(), '0.1', true );
 	wp_enqueue_script( 'wow-js', get_template_directory_uri() . '/js/wow.min.js', array(), '0.1', true );
 	wp_enqueue_script( 'matchHeight-js', get_template_directory_uri() . '/js/jquery.matchHeight.js', array(), '0.7.2', true );
 	wp_enqueue_script( 'bootstrap-js', get_template_directory_uri() . '/js/bootstrap.min.js', array(), '3.3.7', true );
@@ -200,6 +201,19 @@ function cf_search_where( $where ) {
 add_filter( 'posts_where', 'cf_search_where' );
 
 /**
+ * Prevent duplicates
+ * http://codex.wordpress.org/Plugin_API/Filter_Reference/posts_distinct
+ */
+function cf_search_distinct( $where ) {
+    global $wpdb;
+    if ( is_search() ) {
+        return "DISTINCT";
+    }
+    return $where;
+}
+add_filter( 'posts_distinct', 'cf_search_distinct' );
+
+/**
  * Code to add the custom login css file to the theme
  * - file is "/login/custom-login-styles.css"
  */
@@ -229,9 +243,78 @@ function cc_mime_types($mimes) {
 add_filter('upload_mimes', 'cc_mime_types');
 
 
+
+
+
+
+
+
+/* GET AND SET THE NUMBER OF TIMES A POST IS VIEWED */
+/* the function is set in the single portfolio page and it it gotten in each meta area on the main portfolio page */
+function getPostViews($postID){
+    $count_key = 'post_views_count';
+    $count = get_post_meta($postID, $count_key, true);
+    if($count==''){
+        delete_post_meta($postID, $count_key);
+        add_post_meta($postID, $count_key, '0');
+        return "0 View";
+    }
+    return $count;
+}
+function setPostViews($postID) {
+    $count_key = 'post_views_count';
+    $count = get_post_meta($postID, $count_key, true);
+    if($count==''){
+        $count = 0;
+        delete_post_meta($postID, $count_key);
+        add_post_meta($postID, $count_key, '0');
+    }else{
+        $count++;
+        update_post_meta($postID, $count_key, $count);
+    }
+}
+
+//Function that Adds a 'Views' Column to your Posts tab in WordPress Dashboard.
+function post_column_views($newcolumn){
+    //Retrieves the translated string, if translation exists, and assign it to the 'default' array.
+    $newcolumn['post_views'] = __('Views');
+    return $newcolumn;
+}
+
+//Function that Populates the 'Views' Column with the number of views count.
+function post_custom_column_views($column_name, $id){
+
+    if($column_name === 'post_views'){
+        // Display the Post View Count of the current post.
+        // get_the_ID() - Returns the numeric ID of the current post.
+        echo getPostViews(get_the_ID());
+    }
+}
+//Hooks a function to a specific filter action.
+//applied to the list of columns to print on the manage posts screen.
+add_filter('manage_posts_columns', 'post_column_views');
+
+//Hooks a function to a specific action.
+//allows you to add custom columns to the list post/custom post type pages.
+//'10' default: specify the function's priority.
+//and '2' is the number of the functions' arguments.
+add_action('manage_posts_custom_column', 'post_custom_column_views',10,2);
+
+
+// Remove issues with prefetching adding extra views
+remove_action( 'wp_head', 'adjacent_posts_rel_link_wp_head', 10, 0);
+/* GET AND SET THE NUMBER OF TIMES A POST IS VIEWED END */
+
+
+
+
+
+
+
+
+
 add_image_size( 'custom-size', 400, 400, array( 'center', 'center' ) ); // Hard crop left top
 add_image_size( 'related-size', 350, 350, array( 'center', 'center' ) ); // Hard crop left top
-
 
 
 //* Enqueue script to activate WOW.js

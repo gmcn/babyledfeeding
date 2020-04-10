@@ -26,16 +26,16 @@
 
      <?php while($query->have_posts()) : $query->the_post();
 
-     $thumb = get_the_post_thumbnail( $post_id, 'related-size' , array( 'loading' => 'lazy' ) );
+     $thumb = get_the_post_thumbnail( $post_id, 'related-size' , array( 'loading' => 'lazy', 'itemprop' => 'image' ) );
 
      ?>
 
        <?php if ($thumb): ?>
-         <article <?php post_class(array('col-sm-6', 'col-md-4', 'related-recipes__recipe', 'matchheight')); ?>>
+         <article itemscope itemtype="http://schema.org/Recipe" <?php post_class(array('col-sm-6', 'col-md-4', 'related-recipes__recipe', 'matchheight')); ?>>
            <?php echo $thumb; ?>
            <?php //echo get_the_term_list( $post->ID, 'recipe-categories' ); ?>
            <p class="related-recipes__cat"><?php echo $product_cat; ?></p>
-           <a href="<?php the_permalink(); ?>"><?php echo the_title(); ?></a>
+           <a itemprop="url" href="<?php the_permalink(); ?>"><span itemprop="name"><?php echo the_title(); ?></span></a>
          </article>
        <?php endif; ?>
      <?php endwhile; ?>

@@ -151,7 +151,7 @@
 					<p>This site and all of its contents are the copyright of Baby Led Feeding</p>
 				</div>
 				<div class="col-md-4 sig_credit__byline">
-					<p><img class="animated pulse infinite" src="<?php echo get_template_directory_uri() ?>/images/sweet-heart.svg" alt="">designed with love by <a href="https://www.sweet.ie" target="_blank">sweet.ie</a></p>
+					<p><img class="animated pulse infinite" src="<?php echo get_template_directory_uri() ?>/images/sweet-heart.svg" alt="designed with love by sweet.ie">designed with love by <a href="https://www.sweet.ie" target="_blank">sweet.ie</a></p>
 				</div>
 			</div>
 		</div>

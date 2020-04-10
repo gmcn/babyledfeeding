@@ -42,7 +42,7 @@ function recipes_post_type() {
 		'show_in_menu'          => true,
 		'menu_position'         => 5,
 		'menu_icon'             => 'dashicons-book',
-    'taxonomies'            => array('recipe-categories', 'category', 'post_tag'),
+    'taxonomies'            => array('recipe-categories', 'recipe-diet', 'recipe-type', 'post_tag'),
 		'show_in_admin_bar'     => true,
 		'show_in_nav_menus'     => true,
 		'can_export'            => true,
@@ -58,14 +58,14 @@ add_action( 'init', 'recipes_post_type', 0 );
 
 add_action( 'init', 'recipes_taxonomies', 0 );
 
-//create two taxonomies, genres and tags for the post type "tag"
+//add taxonomies, genres and tags for the post type "tag"
 function recipes_taxonomies()
 {
-	// partners taxonomy
+	// Recipe Category taxonomy
     $recipes_cat_labels = array(
-        'name'                => _x( 'Recipe Category', 'taxonomy general name' ),
-        'singular_name'       => _x( 'Recipe Category', 'taxonomy singular name' ),
-        'menu_name'           => __( 'Recipe Category' ),
+        'name'                => _x( 'Recipe Meal', 'taxonomy general name' ),
+        'singular_name'       => _x( 'Recipe Meal', 'taxonomy singular name' ),
+        'menu_name'           => __( 'Recipe Meal' ),
     );
     $recipes_cat_args = array(
         'labels'                     => $recipes_cat_labels,
@@ -79,4 +79,42 @@ function recipes_taxonomies()
         'rewrite'                    => array('slug' => 'recipe-categories')
     );
     register_taxonomy( 'recipe-categories', array( 'recipes' ), $recipes_cat_args );
+
+		// Recipe Category taxonomy
+	    $recipes_diets_labels = array(
+	        'name'                => _x( 'Recipe Diet', 'taxonomy general name' ),
+	        'singular_name'       => _x( 'Recipe Diet', 'taxonomy singular name' ),
+	        'menu_name'           => __( 'Recipe Diet' ),
+	    );
+	    $recipes_diets_args = array(
+	        'labels'                     => $recipes_diets_labels,
+	        'hierarchical'               => true,
+	        'public'                     => true,
+	        'show_ui'                    => true,
+	        'show_admin_column'          => true,
+	        'show_in_nav_menus'          => true,
+					'show_in_rest'               => true,
+	        'show_tagcloud'              => true,
+	        'rewrite'                    => array('slug' => 'recipe-diet')
+	    );
+	    register_taxonomy( 'recipe-diets', array( 'recipes' ), $recipes_diets_args );
+
+			// Recipe Category taxonomy
+		    $recipes_type_labels = array(
+		        'name'                => _x( 'Recipe Type', 'taxonomy general name' ),
+		        'singular_name'       => _x( 'Recipe Type', 'taxonomy singular name' ),
+		        'menu_name'           => __( 'Recipe Type' ),
+		    );
+		    $recipes_type_args = array(
+		        'labels'                     => $recipes_type_labels,
+		        'hierarchical'               => true,
+		        'public'                     => true,
+		        'show_ui'                    => true,
+		        'show_admin_column'          => true,
+		        'show_in_nav_menus'          => true,
+						'show_in_rest'               => true,
+		        'show_tagcloud'              => true,
+		        'rewrite'                    => array('slug' => 'recipe-type')
+		    );
+		    register_taxonomy( 'recipe-type', array( 'recipes' ), $recipes_type_args );
 }

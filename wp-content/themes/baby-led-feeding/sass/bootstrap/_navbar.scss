@@ -61,7 +61,7 @@
     overflow-y: auto;
   }
 
-  @media (min-width: $grid-float-breakpoint) {
+  @media (min-width: $screen-md-min) {
     width: auto;
     border-top: 0;
     box-shadow: none;
@@ -226,7 +226,7 @@
     margin-top: 7px;
   }
 
-  @media (min-width: $grid-float-breakpoint) {
+  @include md {
     display: none;
   }
 }
@@ -469,8 +469,9 @@
       &,
       &:hover,
       &:focus {
-        background-color: $navbar-default-link-active-bg;
+        // background-color: $navbar-default-link-active-bg;
         color: $navbar-default-link-active-color;
+        border-bottom: 3px solid #E36386;
       }
     }
 
@@ -482,8 +483,9 @@
           &:hover,
           &:focus {
             color: $navbar-default-link-hover-color;
-            background-color: $navbar-default-link-hover-bg;
+            border-bottom: 3px solid #E36386;
           }
+
         }
         > .active > a {
           &,

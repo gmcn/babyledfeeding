@@ -19,6 +19,14 @@ body {
 	}
 }
 
+.post-type-archive-recipes, .post-type-archive-weaning {
+	.site-content {
+		.container-fluid:nth-child(odd) {
+			background: #f6f5f3;
+		}
+	}
+}
+
 hr {
 	background-color: $color__background-hr;
 	border: 0;
@@ -29,14 +37,38 @@ hr {
 @import "lists";
 
 .h2_wrapper {
-	padding: 60px 15px;
-	background: #8AC168 url(images/lunch-recipes_bg.svg) center right no-repeat;
-	background-attachment:fixed;
+
+	background: #E36386;
+
+	.container {
+		background-image: url('images/birds-and-bees.svg');
+		background-repeat: no-repeat;
+		background-position: center right;
+	}
+
+	h1 {
+		font-family: $font__headings;
+		color: #fff;
+		margin: 0;
+		padding: 30px 15px;
+		@include md {
+			padding: 60px 15px;
+		}
+	}
 	h2 {
 		font-family: $font__headings;
 		color: #fff;
 		margin: 0;
+		padding: 30px 15px;
+		@include md {
+			padding: 60px 15px;
+		}
 	}
+}
+
+.rotate-180 {
+  transform: rotate(-180deg);
+	transform-origin: center center;
 }
 
 .share {
@@ -55,6 +87,9 @@ hr {
 	&__popovers {
 		height: 30px;
 		width: 30px;
+	}
+	a {
+		text-decoration: none !important;
 	}
 }
 
@@ -88,10 +123,20 @@ hr {
 .filter {
 
 	background: #F6F5F3;
-	padding: 50px 15px;
+	padding: 25px 15px;
+	@include md {
+		padding: 40px 15px;
+	}
 
 	&_options {
-
+		.dropdown-menu {
+			a {
+				text-decoration: none;
+				&:hover {
+					text-decoration: underline;
+				}
+			}
+		}
 	}
 
 	&_search {
@@ -101,6 +146,7 @@ hr {
 			input[type="search"] {
 				padding: 5px;
 				border: .5px solid #707070;
+				font-weight: $soleilBd;
 			}
 			.search-submit {
 				background-color: #8AC168;
@@ -110,12 +156,41 @@ hr {
 		}
 	}
 
+	.dropdown.open {
+		img {
+			transform: rotate(180deg);
+		}
+		.dropdown-menu {
+			width: 100%;
+		}
+	}
+
+	a.dropdown-toggle {
+		text-align: left;
+		width: 100%;
+		background: #fff;
+		padding: 5px 15px 10px;
+		border-radius: 0;
+		border: .5px solid #4A4F54;
+		color: #000;
+		text-decoration: none;
+		font-weight: $soleilBd;
+		img {
+			padding-top: 8px;
+			transition: .5s;
+			float: right;
+		}
+	}
+
 }
 
 .recipes {
   padding-top: 25px;
   padding-bottom: 25px;
-  h3 {
+	.archive-description {
+		display: none;
+	}
+  h1, h2, h3 {
     font-family: $font__headings;
     text-align: center;
     color: #000;
@@ -135,6 +210,10 @@ hr {
       // width: 100%;
       margin-bottom: 15px;
       // height: 400px;
+			transition: .5s;
+			&:hover {
+				transform: scale(1.05);
+			}
     }
     a {
       display: block;
@@ -143,6 +222,15 @@ hr {
       font-size: 18px;
       font-weight: $soleilSb
     }
+		h2, h3 {
+			font-family: $font__headings;
+	    text-align: left;
+	    color: #000;
+	    font-weight: $soleilBd;
+	    font-size: 26px;
+	    margin-bottom: 15px;
+			margin-top: 0;
+		}
   }
 	a.watch {
 		text-align: center;
@@ -163,44 +251,7 @@ hr {
   }
 }
 
-.videos {
-  padding-top: 25px;
-  padding-bottom: 25px;
-	&_wrapper {
-		margin-bottom: 50px;
-	}
-	&_feat {
-		margin-bottom: 15px;
-	}
-  h3 {
-    font-family: $font__headings;
-    text-align: center;
-    color: #000;
-    font-weight: $soleilBd;
-    font-size: 32px;
-    margin-bottom: 25px;
-  }
-	p {
-		margin: 0 0 10px;
-	}
-  a.watch {
-		text-align: center;
-		background: #000;
-    color: #fff;
-    padding: 5px 15px;
-    font-weight: 700;
-    display: inline-block;
-    margin-top: 15px;
-    margin-bottom: 15px;
-    text-decoration: none;
-		@include sm {
-			background: #FFB71E;
-		}
-		&:hover {
-			background: #E36386;
-		}
-  }
-}
+
 
 .vert-align {
 	@include md {

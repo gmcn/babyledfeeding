@@ -288,6 +288,9 @@ body {
     .site-content {
       padding-top: 133px; } }
 
+.post-type-archive-recipes .site-content .container-fluid:nth-child(odd), .post-type-archive-weaning .site-content .container-fluid:nth-child(odd) {
+  background: #f6f5f3; }
+
 hr {
   background-color: #ccc;
   border: 0;
@@ -315,13 +318,31 @@ dd {
   margin: 0 1.5em 1.5em; }
 
 .h2_wrapper {
-  padding: 60px 15px;
-  background: #8AC168 url(images/lunch-recipes_bg.svg) center right no-repeat;
-  background-attachment: fixed; }
+  background: #E36386; }
+  .h2_wrapper .container {
+    background-image: url("images/birds-and-bees.svg");
+    background-repeat: no-repeat;
+    background-position: center right; }
+  .h2_wrapper h1 {
+    font-family: "fatfrank", sans-serif;
+    color: #fff;
+    margin: 0;
+    padding: 30px 15px; }
+    @media screen and (min-width: 992px) {
+      .h2_wrapper h1 {
+        padding: 60px 15px; } }
   .h2_wrapper h2 {
     font-family: "fatfrank", sans-serif;
     color: #fff;
-    margin: 0; }
+    margin: 0;
+    padding: 30px 15px; }
+    @media screen and (min-width: 992px) {
+      .h2_wrapper h2 {
+        padding: 60px 15px; } }
+
+.rotate-180 {
+  transform: rotate(-180deg);
+  transform-origin: center center; }
 
 .share {
   text-align: center;
@@ -335,6 +356,8 @@ dd {
   .share__popovers {
     height: 30px;
     width: 30px; }
+  .share a {
+    text-decoration: none !important; }
 
 .site-content a {
   text-decoration: underline; }
@@ -359,23 +382,51 @@ dd {
 
 .filter {
   background: #F6F5F3;
-  padding: 50px 15px; }
+  padding: 25px 15px; }
+  @media screen and (min-width: 992px) {
+    .filter {
+      padding: 40px 15px; } }
+  .filter_options .dropdown-menu a {
+    text-decoration: none; }
+    .filter_options .dropdown-menu a:hover {
+      text-decoration: underline; }
   .filter_search {
     text-align: right; }
     .filter_search form {
       width: 100%; }
       .filter_search form input[type="search"] {
         padding: 5px;
-        border: .5px solid #707070; }
+        border: .5px solid #707070;
+        font-weight: 700; }
       .filter_search form .search-submit {
         background-color: #8AC168;
         color: #fff;
         padding: 5px 15px; }
+  .filter .dropdown.open img {
+    transform: rotate(180deg); }
+  .filter .dropdown.open .dropdown-menu {
+    width: 100%; }
+  .filter a.dropdown-toggle {
+    text-align: left;
+    width: 100%;
+    background: #fff;
+    padding: 5px 15px 10px;
+    border-radius: 0;
+    border: .5px solid #4A4F54;
+    color: #000;
+    text-decoration: none;
+    font-weight: 700; }
+    .filter a.dropdown-toggle img {
+      padding-top: 8px;
+      transition: .5s;
+      float: right; }
 
 .recipes {
   padding-top: 25px;
   padding-bottom: 25px; }
-  .recipes h3 {
+  .recipes .archive-description {
+    display: none; }
+  .recipes h1, .recipes h2, .recipes h3 {
     font-family: "fatfrank", sans-serif;
     text-align: center;
     color: #000;
@@ -390,13 +441,24 @@ dd {
     .recipes__recipe img {
       text-align: center;
       display: block;
-      margin-bottom: 15px; }
+      margin-bottom: 15px;
+      transition: .5s; }
+      .recipes__recipe img:hover {
+        transform: scale(1.05); }
     .recipes__recipe a {
       display: block;
       color: #000;
       text-decoration: none;
       font-size: 18px;
       font-weight: 600; }
+    .recipes__recipe h2, .recipes__recipe h3 {
+      font-family: "fatfrank", sans-serif;
+      text-align: left;
+      color: #000;
+      font-weight: 700;
+      font-size: 26px;
+      margin-bottom: 15px;
+      margin-top: 0; }
   .recipes a.watch {
     text-align: center;
     background: #000;
@@ -411,38 +473,6 @@ dd {
       .recipes a.watch {
         background: #FFB71E; } }
     .recipes a.watch:hover {
-      background: #E36386; }
-
-.videos {
-  padding-top: 25px;
-  padding-bottom: 25px; }
-  .videos_wrapper {
-    margin-bottom: 50px; }
-  .videos_feat {
-    margin-bottom: 15px; }
-  .videos h3 {
-    font-family: "fatfrank", sans-serif;
-    text-align: center;
-    color: #000;
-    font-weight: 700;
-    font-size: 32px;
-    margin-bottom: 25px; }
-  .videos p {
-    margin: 0 0 10px; }
-  .videos a.watch {
-    text-align: center;
-    background: #000;
-    color: #fff;
-    padding: 5px 15px;
-    font-weight: 700;
-    display: inline-block;
-    margin-top: 15px;
-    margin-bottom: 15px;
-    text-decoration: none; }
-    @media screen and (min-width: 768px) {
-      .videos a.watch {
-        background: #FFB71E; } }
-    .videos a.watch:hover {
       background: #E36386; }
 
 @media screen and (min-width: 992px) {
@@ -491,6 +521,10 @@ table {
     font-family: "fatfrank", sans-serif;
     margin-bottom: 25px;
     padding: 10px 15px; }
+    .yamm .dropdown-menu h3 a, .yamm .dropdown-menu h3 a:visited {
+      color: #fff; }
+    .yamm .dropdown-menu h3 a:hover {
+      color: #E36386; }
   .yamm .dropdown-menu .recipe_wrapper_thumb img {
     width: 100%; }
   .yamm .dropdown-menu .recipe_wrapper_thumb a {
@@ -1178,6 +1212,157 @@ footer .sig_credit {
     @media screen and (min-width: 992px) {
       .fp_row-four img {
         margin-bottom: 0; } }
+
+.fpvideos {
+  padding-top: 25px;
+  padding-bottom: 25px; }
+  .fpvideos_wrapper {
+    margin-bottom: 50px; }
+  .fpvideos_feat {
+    margin-bottom: 15px; }
+  .fpvideos h3 {
+    font-family: "fatfrank", sans-serif;
+    text-align: center;
+    color: #000;
+    font-weight: 700;
+    font-size: 32px;
+    margin-bottom: 25px; }
+  .fpvideos p {
+    margin: 0 0 10px; }
+  .fpvideos a.watch {
+    text-align: center;
+    background: #000;
+    color: #fff;
+    padding: 5px 15px;
+    font-weight: 700;
+    display: inline-block;
+    margin-top: 15px;
+    margin-bottom: 15px;
+    text-decoration: none; }
+    @media screen and (min-width: 768px) {
+      .fpvideos a.watch {
+        background: #FFB71E; } }
+    .fpvideos a.watch:hover {
+      background: #E36386; }
+
+.videohero, #videohero {
+  height: calc(60vh - 150px);
+  margin-bottom: 25px; }
+  @media screen and (min-width: 992px) {
+    .videohero, #videohero {
+      height: calc(100vh - 150px);
+      margin-bottom: 50px; } }
+  .videohero ul, #videohero ul {
+    margin: 0;
+    padding: 0; }
+  .videohero li, #videohero li {
+    height: 100%;
+    position: relative; }
+    .videohero li .container, #videohero li .container {
+      height: 100%; }
+    .videohero li .vert-align, #videohero li .vert-align {
+      position: absolute;
+      top: 50%;
+      width: calc(100% - 30px);
+      -webkit-transform: translateY(-50%);
+      -moz-transform: translateY(-50%);
+      -ms-transform: translateY(-50%);
+      -o-transform: translateY(-50%);
+      transform: translateY(-50%);
+      z-index: 1; }
+      .videohero li .vert-align a, #videohero li .vert-align a {
+        color: #fff;
+        background: #FFB71E;
+        border: 0;
+        padding: 5px 25px;
+        transition: .5s;
+        text-decoration: none; }
+        .videohero li .vert-align a:hover, #videohero li .vert-align a:hover {
+          background: #E36386; }
+    .videohero li h1, #videohero li h1 {
+      font-family: "fatfrank", sans-serif;
+      color: #fff;
+      font-weight: 700;
+      font-size: 32px;
+      margin-bottom: 25px;
+      text-align: left; }
+      .videohero li h1 strong, #videohero li h1 strong {
+        color: #FFB71E; }
+    .videohero li .overlay, #videohero li .overlay {
+      opacity: .4;
+      background: #000;
+      width: 100%;
+      height: 100%;
+      position: absolute;
+      top: 0;
+      left: 0;
+      transition: .5s ease;
+      z-index: 1;
+      display: block; }
+  .videohero .bx-default-pager, #videohero .bx-default-pager {
+    text-align: center; }
+
+.videos {
+  margin-bottom: 50px; }
+  .videos h3 {
+    font-family: "fatfrank", sans-serif;
+    color: #000;
+    font-weight: 700;
+    font-size: 32px;
+    margin-bottom: 25px;
+    text-align: left; }
+    .videos h3 span {
+      font-size: .6em;
+      font-family: "soleil", sans-serif;
+      font-weight: 700; }
+  .videos_wrapper {
+    padding-right: 0 !important; }
+    @media screen and (min-width: 992px) {
+      .videos_wrapper {
+        padding-left: 100px !important; } }
+    .videos_wrapper a {
+      overflow: hidden; }
+    .videos_wrapper img.play {
+      position: absolute;
+      bottom: 100%;
+      transition: .5s ease;
+      left: 0;
+      right: 0;
+      margin-left: auto;
+      margin-right: auto;
+      z-index: 2; }
+    .videos_wrapper .fancybox .overlay {
+      opacity: 0;
+      background: #000;
+      width: 100%;
+      height: 100%;
+      position: absolute;
+      top: 0;
+      left: 0;
+      transition: .5s ease;
+      z-index: 1;
+      display: block; }
+    .videos_wrapper .fancybox p {
+      color: #000;
+      position: absolute;
+      top: 83%;
+      left: 0;
+      right: 0;
+      padding: 10px;
+      background-color: #fff;
+      overflow: hidden;
+      width: 100%;
+      height: 50%;
+      transition: .5s ease;
+      z-index: 1; }
+    .videos_wrapper .fancybox:hover p {
+      top: 50%;
+      height: 50%; }
+    .videos_wrapper .fancybox:hover img.play {
+      position: absolute;
+      bottom: 65%; }
+    .videos_wrapper .fancybox:hover .overlay {
+      opacity: .5; }
 
 .single-recipe {
   padding: 50px !important; }
@@ -2391,6 +2576,7 @@ object {
 .bx-wrapper {
   position: relative;
   padding: 0;
+  width: 100% !important;
   *zoom: 1;
   -ms-touch-action: pan-y;
   touch-action: pan-y; }
@@ -3032,8 +3218,8 @@ th {
     border: 1px solid #ddd !important; } }
 @font-face {
   font-family: 'Glyphicons Halflings';
-  src: url("../fonts/bootstrap/glyphicons-halflings-regular.eot");
-  src: url("../fonts/bootstrap/glyphicons-halflings-regular.eot?#iefix") format("embedded-opentype"), url("../fonts/bootstrap/glyphicons-halflings-regular.woff2") format("woff2"), url("../fonts/bootstrap/glyphicons-halflings-regular.woff") format("woff"), url("../fonts/bootstrap/glyphicons-halflings-regular.ttf") format("truetype"), url("../fonts/bootstrap/glyphicons-halflings-regular.svg#glyphicons_halflingsregular") format("svg"); }
+  src: url("fonts/glyphicons-halflings-regular.eot");
+  src: url("fonts/glyphicons-halflings-regular.eot?#iefix") format("embedded-opentype"), url("fonts/glyphicons-halflings-regular.woff2") format("woff2"), url("fonts/glyphicons-halflings-regular.woff") format("woff"), url("fonts/glyphicons-halflings-regular.ttf") format("truetype"), url("fonts/glyphicons-halflings-regular.svg#glyphicons_halflingsregular") format("svg"); }
 .glyphicon {
   position: relative;
   top: 1px;
@@ -3867,7 +4053,7 @@ a {
   text-decoration: none;
   transition: .5s; }
   a:hover, a:focus {
-    color: #639c40; }
+    color: #E36386; }
   a:focus {
     outline: 5px auto -webkit-focus-ring-color;
     outline-offset: -2px; }
@@ -5940,14 +6126,11 @@ tbody.collapse.in {
 
 .caret {
   display: inline-block;
-  width: 0;
-  height: 0;
-  margin-left: 2px;
+  margin-left: 8px;
   vertical-align: middle;
-  border-top: 4px dashed;
-  border-top: 4px solid \9;
-  border-right: 4px solid transparent;
-  border-left: 4px solid transparent; }
+  transition: .5s; }
+  .caret img {
+    width: 15px; }
 
 .dropup,
 .dropdown {
@@ -5969,7 +6152,7 @@ tbody.collapse.in {
   list-style: none;
   font-size: 16px;
   text-align: left;
-  background-color: rgba(255, 255, 255, 0.9);
+  background-color: rgba(255, 255, 255, 0.98);
   background-clip: padding-box; }
   .dropdown-menu.pull-right {
     right: 0;
@@ -6342,7 +6525,10 @@ tbody.collapse.in {
     .nav > li > a {
       position: relative;
       display: block;
-      padding: 10px 15px; }
+      padding: 10px 10px; }
+      @media screen and (min-width: 1200px) {
+        .nav > li > a {
+          padding: 10px 15px; } }
       .nav > li > a:hover, .nav > li > a:focus {
         text-decoration: none;
         background-color: #eeeeee; }
@@ -6486,7 +6672,7 @@ tbody.collapse.in {
     clear: both; }
   .navbar-collapse.in {
     overflow-y: auto; }
-  @media (min-width: 768px) {
+  @media (min-width: 992px) {
     .navbar-collapse {
       width: auto;
       border-top: 0;
@@ -6588,7 +6774,7 @@ tbody.collapse.in {
     transition: .5s; }
   .navbar-toggle .icon-bar + .icon-bar {
     margin-top: 7px; }
-  @media (min-width: 768px) {
+  @media screen and (min-width: 992px) {
     .navbar-toggle {
       display: none; } }
 
@@ -6757,14 +6943,14 @@ tbody.collapse.in {
 .navbar-default .navbar-form {
   border-color: #e7e7e7; }
 .navbar-default .navbar-nav > .open > a, .navbar-default .navbar-nav > .open > a:hover, .navbar-default .navbar-nav > .open > a:focus {
-  background-color: #e7e7e7;
-  color: #555; }
+  color: #555;
+  border-bottom: 3px solid #E36386; }
 @media (max-width: 767px) {
   .navbar-default .navbar-nav .open .dropdown-menu > li > a {
     color: #777; }
     .navbar-default .navbar-nav .open .dropdown-menu > li > a:hover, .navbar-default .navbar-nav .open .dropdown-menu > li > a:focus {
       color: #333;
-      background-color: transparent; }
+      border-bottom: 3px solid #E36386; }
   .navbar-default .navbar-nav .open .dropdown-menu > .active > a, .navbar-default .navbar-nav .open .dropdown-menu > .active > a:hover, .navbar-default .navbar-nav .open .dropdown-menu > .active > a:focus {
     color: #555;
     background-color: #e7e7e7; }

@@ -33,6 +33,12 @@
       font-family: $font__headings;
       margin-bottom: 25px;
       padding: 10px 15px;
+      a, a:visited {
+        color: #fff;
+      }
+      a:hover {
+        color: $blfpink;
+      }
     }
     .recipe_wrapper {
       &_thumb {

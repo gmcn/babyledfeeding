@@ -18,23 +18,22 @@
 
 
 
-  <div class="container videos">
+  <div class="container fpvideos">
     <h3><?php echo $section_title ?></h3>
-    <div class="row videos_wrapper hidden-xs">
+    <div class="row fpvideos_wrapper hidden-xs">
 
       <?php while($featVideo->have_posts()) : $featVideo->the_post();
 
       $video_url = get_field('video_url');
-      $thumb = get_the_post_thumbnail( $post_id, 'related-size' , array( 'loading' => 'lazy' ) );
-      $thumbsml = get_the_post_thumbnail( $post_id, 'medium' , array( 'loading' => 'lazy' ) );
+      $thumb = get_the_post_thumbnail( $post_id, 'related-size' , array( 'loading' => 'lazy', 'itemprop' => 'image' ) );
+      $thumbsml = get_the_post_thumbnail( $post_id, 'medium' , array( 'loading' => 'lazy', 'itemprop' => 'image' ) );
 
       ?>
 
-        <article class="col-sm-8 videos_main">
+        <article itemscope itemtype="http://schema.org/MusicVideoObject" class="col-sm-8 fpvideos_main">
           <div class="row">
             <div class="col-md-6 featureheight">
-              <a class="fancybox" data-fancybox-type="iframe" href="https://www.youtube.com/embed/<?php echo $video_url ?>">
-
+              <a itemprop="url" class="fancybox" data-fancybox-type="iframe" href="https://www.youtube.com/embed/<?php echo $video_url ?>">
                 <?php echo $thumb; ?>
               </a>
               <?php echo $i ?>
@@ -43,7 +42,7 @@
               <div class="vert-align">
                 <?php //echo the_title(); ?>
                 <?php echo the_content(); ?>
-                <a class="fancybox watch hidden-xs" data-fancybox-type="iframe" href="https://www.youtube.com/embed/<?php echo $video_url ?>">
+                <a itemprop="url" class="fancybox watch hidden-xs" data-fancybox-type="iframe" href="https://www.youtube.com/embed/<?php echo $video_url ?>">
                   Watch Video
                 </a>
               </div>
@@ -57,22 +56,24 @@
           <?php while($featVideoRemain->have_posts()) : $featVideoRemain->the_post();
 
           $video_url = get_field('video_url');
-          $thumb = get_the_post_thumbnail( $post_id, 'related-size' , array( 'loading' => 'lazy' ) );
-          $thumbsml = get_the_post_thumbnail( $post_id, 'medium' , array( 'loading' => 'lazy' ) );
+          $thumb = get_the_post_thumbnail( $post_id, 'related-size' , array( 'loading' => 'lazy', 'itemprop' => 'image' ) );
+          $thumbsml = get_the_post_thumbnail( $post_id, 'medium' , array( 'loading' => 'lazy', 'itemprop' => 'image' ) );
 
           ?>
 
 
-            <article class="row videos_feat">
+            <article itemscope itemtype="http://schema.org/MusicVideoObject" class="row fpvideos_feat">
               <div class="col-sm-6 col-md-4 matchheight">
-                <a class="fancybox" data-fancybox-type="iframe" href="https://www.youtube.com/embed/<?php echo $video_url ?>">
+                <a itemprop="url" class="fancybox" data-fancybox-type="iframe" href="https://www.youtube.com/embed/<?php echo $video_url ?>">
                   <?php echo $thumb; ?>
                 </a>
                 <?php echo $i ?>
               </div>
               <div class="col-sm-6 col-md-8 matchheight">
                 <div class="vert-align">
-                  <?php echo the_title(); ?>
+                  <span itemprop="name">
+                    <?php echo the_title(); ?>
+                  </span>
                 </div>
               </div>
             </article>
@@ -83,7 +84,7 @@
 
     </div>
 
-    <div class="row videos_wrapper hidden-sm hidden-md hidden-lg">
+    <div class="row fpvideos_wrapper hidden-sm hidden-md hidden-lg">
 
       <?php while($featVideoMob->have_posts()) : $featVideoMob->the_post();
 
@@ -93,7 +94,7 @@
 
       ?>
 
-        <article class="col-xs-6 videos_main matchheight">
+        <article class="col-xs-6 fpvideos_main matchheight">
           <a class="fancybox" data-fancybox-type="iframe" href="https://www.youtube.com/embed/<?php echo $video_url ?>">
 
             <?php echo $thumb; ?>

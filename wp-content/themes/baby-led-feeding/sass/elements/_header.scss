@@ -19,6 +19,7 @@ ul.nav li.menu-item-has-children:hover > ul.dropdown-menu {
 header {
   background: #fff;
   .header {
+
     &_mobile {
 
       &__nav {
@@ -29,6 +30,7 @@ header {
           padding: 20px;
         }
       }
+
     }
     &_social {
       margin-bottom: 20px;

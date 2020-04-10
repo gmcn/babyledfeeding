@@ -28,7 +28,18 @@
       		<article class="col-xs-6">
 
               <div class="col-md-6 matchheight">
-                <img src="<?php echo esc_url($bookproduct_image['url']); ?>" alt="<?php echo esc_attr($bookproduct_image['alt']); ?>" />
+                <?php if( $bookproduct_link ): ?>
+                  <a href="<?php echo esc_url( $bookproduct_link_url ); ?>" target="<?php echo esc_attr( $bookproduct_link_target ); ?>">
+                <?php endif; ?>
+
+                  <img src="<?php echo esc_url($bookproduct_image['url']); ?>" alt="<?php echo esc_attr($bookproduct_image['alt']); ?>" />
+                  
+                <?php if( $bookproduct_link ): ?>
+                  </a>
+                <?php endif; ?>
+
+
+
               </div>
               <div class="col-md-6 matchheight">
                 <div class="vert-align">

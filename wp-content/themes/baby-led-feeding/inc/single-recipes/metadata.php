@@ -18,19 +18,19 @@
        <h3><?php the_title(); ?></h3>
        <div class="row single-recipe__metadata">
          <div class="col-sm-4 col-md-2 single-recipe__metadata__prep">
-           <div class="single-recipe__metadata__wrap">
+           <div itemprop="prepTime" class="single-recipe__metadata__wrap">
              <p>Prep Time</p>
              <?php echo $prep_time ?>
            </div>
          </div>
          <div class="col-sm-4 col-md-2 single-recipe__metadata__cook">
-           <div class="single-recipe__metadata__wrap">
+           <div itemprop="cookTime" class="single-recipe__metadata__wrap">
              <p>Cook Time</p>
              <?php echo $cook_time ?>
            </div>
          </div>
          <div class="col-sm-4 col-md-3 single-recipe__metadata__serving">
-           <div class="single-recipe__metadata__wrap">
+           <div itemprop="recipeYield" class="single-recipe__metadata__wrap">
              <p>Servings</p>
              <?php echo $serves ?>
            </div>
@@ -71,14 +71,14 @@
      </div>
    </div>
 
-   <div class="row single-recipe__ingredients">
+   <div itemprop="recipeIngredient" class="row single-recipe__ingredients">
      <div class="col-md-12">
        <h4>Ingredients</h4>
        <?php echo $ingredients_list ?>
      </div>
    </div>
 
-   <div class="row single-recipe__ingredients">
+   <div itemprop="cookingMethod" class="row single-recipe__ingredients">
      <div class="col-md-12">
        <h4>Method</h4>
        <?php echo $how_to_make ?>
