@@ -41,7 +41,7 @@ function mealplanner_post_type() {
 		'show_ui'               => true,
 		'show_in_menu'          => true,
 		'menu_position'         => 5,
-		'menu_icon'             => 'dashicons-book',
+		'menu_icon'             => 'dashicons-calendar-alt',
     'taxonomies'            => array('mealplanner-categories', 'post_tag'),
 		'show_in_admin_bar'     => true,
 		'show_in_nav_menus'     => true,
