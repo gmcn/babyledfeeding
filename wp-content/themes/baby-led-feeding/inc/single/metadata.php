@@ -12,12 +12,12 @@
 
  ?>
 
- <div class="container">
+ <div class="container single-recipe">
    <div class="row">
      <div class="col-md-8">
        <h3><?php the_title(); ?></h3>
        <div class="row single-recipe__metadata">
-
+         
          <?php if ($prep_time): ?>
            <div class="col-sm-4 col-md-2 single-recipe__metadata__prep">
              <div itemprop="prepTime" class="single-recipe__metadata__wrap">
@@ -44,7 +44,6 @@
              </div>
            </div>
          <?php endif; ?>
-
 
          <div class="col-md-5 single-recipe__metadata__popovers">
 
@@ -82,39 +81,26 @@
      </div>
    </div>
 
-   <?php if ($ingredients_list): ?>
-     <div itemprop="recipeIngredient" class="row single-recipe__ingredients">
-       <div class="col-md-12">
-         <h4>Ingredients</h4>
-         <?php echo $ingredients_list ?>
-       </div>
+   <div itemprop="recipeIngredient" class="row single-recipe__ingredients">
+     <div class="col-md-12">
+       <h4>Ingredients</h4>
+       <?php echo $ingredients_list ?>
      </div>
-   <?php endif; ?>
+   </div>
 
-   <?php if ($how_to_make): ?>
-     <div itemprop="recipeInstructions" class="row single-recipe__ingredients">
-      <div class="col-md-12">
-        <h4>Method</h4>
-        <?php echo $how_to_make ?>
-      </div>
+   <div itemprop="recipeInstructions" class="row single-recipe__ingredients">
+     <div class="col-md-12">
+       <h4>Method</h4>
+       <?php echo $how_to_make ?>
      </div>
-   <?php endif; ?>
-
+    </div>
  </div>
 
  <?php if($add_helpful_tip) : ?>
 
  <div class="container single-recipe__tips">
    <div class="col-md-12">
-     <h4>
-
-       <?php if ($helpful_tip_header): ?>
-         <?php echo $helpful_tip_header ?>
-         <?php else: ?>
-           Tip
-       <?php endif; ?>
-
-       </h4>
+     <h4><?php echo $helpful_tip_header ?></h4>
      <?php echo $helpful_tip ?>
    </div>
  </div>

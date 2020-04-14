@@ -5,6 +5,8 @@
   $front_page_row_one_post_type = get_sub_field('section_post_type');
   $front_page_row_one_category = get_sub_field('choose_post_category');
   $front_page_row_one_recipe_cat = get_sub_field('choose_recipe_category');
+  $front_page_row_one_recipe_diet = get_sub_field('choose_recipe_diet');
+  $front_page_row_one_recipe_type = get_sub_field('choose_recipe_type');
   $front_page_row_one_weaning_cat = get_sub_field('choose_weaning_category');
   $posts_per_page = get_sub_field('posts_per_page');
   $section_bg = get_sub_field('section_bg');
@@ -52,7 +54,31 @@
             )
         ));
 
-       } else {
+      } elseif ($front_page_row_one_recipe_diet) {
+
+         $args = array( 'post_type' => 'recipes', 'posts_per_page' => $posts_per_page, 'orderby' => 'date', 'tax_query' => array (
+               array(
+                  'taxonomy' => 'recipe-diets',
+                   'field' => 'slug',
+                   'terms' => array(
+                       $front_page_row_one_recipe_diet->slug
+                   )
+               )
+           ));
+
+         } elseif ($front_page_row_one_recipe_type) {
+
+             $args = array( 'post_type' => 'recipes', 'posts_per_page' => $posts_per_page, 'orderby' => 'date', 'tax_query' => array (
+                   array(
+                      'taxonomy' => 'recipe-type',
+                       'field' => 'slug',
+                       'terms' => array(
+                           $front_page_row_one_recipe_type->slug
+                       )
+                   )
+               ));
+
+              } else {
 
           $args = array( 'post_type' => 'recipes', 'posts_per_page' => $posts_per_page, 'orderby' => 'date');
 
@@ -61,8 +87,6 @@
     }
 
     elseif ($front_page_row_one_post_type == 'weaning') {
-
-
 
       if ($front_page_row_one_weaning_cat) {
 
@@ -119,7 +143,19 @@
                  </a>
                </div>
                <div class="col-sm-6 col-md-12">
-                 FOOD
+                 <div class="recipes__recipe__cat">
+                   <?php if ($front_page_row_one_recipe_cat): ?>
+                     <?php echo $front_page_row_one_recipe_cat->name ?>
+                   <?php elseif ($front_page_row_one_weaning_cat): ?>
+                     <?php echo $front_page_row_one_weaning_cat->name ?>
+                   <?php elseif ($front_page_row_one_recipe_diet): ?>
+                     <?php echo $front_page_row_one_recipe_diet->name ?>
+                   <?php elseif ($front_page_row_one_recipe_type): ?>
+                     <?php echo $front_page_row_one_recipe_type->name ?>
+                   <?php else : ?>
+                     Food
+                   <?php endif; ?>
+                 </div>
                  <p class="recipes__cat"><?php echo $product_cat; ?></p>
                  <a itemprop="url" href="<?php the_permalink(); ?>"><span itemprop="name"><?php echo the_title(); ?></span></a>
                </div>

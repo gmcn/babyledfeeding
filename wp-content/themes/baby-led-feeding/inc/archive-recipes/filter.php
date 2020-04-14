@@ -9,7 +9,7 @@ $recipe_types = get_terms( 'recipe-type', 'orderby=count&hide_empty=1' );
 <div class="container-fluid filter">
   <div class="container">
     <div class="row">
-      <div class="col-md-8 filter_options">
+      <div class="col-md-7 filter_options">
 
         <div class="col-md-4">
           <div class="dropdown show">
@@ -72,8 +72,19 @@ $recipe_types = get_terms( 'recipe-type', 'orderby=count&hide_empty=1' );
         </div>
 
       </div>
-      <div class="col-md-4 filter_search">
-        <?php echo get_search_form(); ?>
+      <div class="col-md-5 filter_search">
+
+        <div class="col-md-12">
+          <form role="search" method="get" class="search-form" action="/">
+    				<label>
+    					<span class="screen-reader-text">Search for:</span>
+    					<input type="search" class="search-field" placeholder="Search…" value="" name="s">
+    				</label>
+    				<input <?php if($catColour) : ?>style="background-color: <?php echo $catColour ?>" <?php endif; ?> type="submit" class="search-submit" value="Search">
+    			</form>
+        </div>
+
+
       </div>
     </div>
   </div>

@@ -32,14 +32,10 @@
 
        <?php if ($thumb): ?>
          <article itemscope itemtype="http://schema.org/Recipe" <?php post_class(array('col-sm-6', 'col-md-4', 'related-recipes__recipe', 'matchheight')); ?>>
-           <a itemprop="url" href="<?php the_permalink(); ?>">
-
-            <?php echo $thumb; ?>
-
-             <?php //echo get_the_term_list( $post->ID, 'recipe-categories' ); ?>
-             <p class="related-recipes__cat"><?php echo $product_cat; ?></p>
-             <span itemprop="name"><?php echo the_title(); ?></span>
-           </a>
+           <?php echo $thumb; ?>
+           <?php //echo get_the_term_list( $post->ID, 'recipe-categories' ); ?>
+           <p class="related-recipes__cat"><?php echo $product_cat; ?></p>
+           <a itemprop="url" href="<?php the_permalink(); ?>"><span itemprop="name"><?php echo the_title(); ?></span></a>
          </article>
        <?php endif; ?>
      <?php endwhile; ?>

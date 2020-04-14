@@ -22,6 +22,30 @@
    </div>
  <?php endif; ?>
 
+ <?php if (is_post_type_archive('mealplanner') ): ?>
+   <div class="container-fluid h2_wrapper">
+     <div class="container">
+       <h2 itemprop="recipeCategory">
+
+        Family Weekly Meal Plan Archive
+
+       </h2>
+     </div>
+   </div>
+ <?php endif; ?>
+
+ <?php if (is_page('my-weekly-meal-plan') || is_singular('mealplanner') ): ?>
+   <div class="container-fluid h2_wrapper">
+     <div class="container">
+       <h2>
+
+        Family Weekly Meal Plan
+
+       </h2>
+     </div>
+   </div>
+ <?php endif; ?>
+
  <?php if (is_post_type_archive('weaning')): ?>
    <div class="container-fluid h2_wrapper">
      <div class="container">
@@ -79,21 +103,30 @@
    </div>
  <?php endif; ?>
 
- <?php if (is_single()) : ?>
-   <!-- <div class="container-fluid h2_wrapper">
-     <div class="container">
+ <?php if (is_singular('post')) : ?>
+
+   <?php $categories = get_the_category();
+
+   $catTermColour = get_field('category_colour', $categories[0]);
+   $catTermIcon = get_field('category_icon', $categories[0]);
+
+    ?>
+
+   <div class="container-fluid h2_wrapper" <?php if($catTermColour) : ?>style="background-color: <?php echo $catTermColour ?>" <?php endif; ?>>
+     <div class="container" <?php if($catTermColour) : ?>style="background-image: url('<?php echo $catTermIcon ?>'); background-repeat: no-repeat; background-position: center right;" <?php endif; ?>>
        <h2>
 
-         <?php $category_detail=get_the_category($post->ID);//$post->ID
- ?>
+         <?php
 
-         Blog <?php foreach($category_detail as $cd){
-         //echo " // " . $cd->cat_name;
-       } ?>
+         if ( ! empty( $categories ) ) {
+             echo esc_html( $categories[0]->name );
+          }
+
+          ?>
 
        </h2>
      </div>
-   </div> -->
+   </div>
  <?php endif; ?>
 
  <?php if (is_search()): ?>

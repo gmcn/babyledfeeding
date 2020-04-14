@@ -45,10 +45,9 @@ $args = array(
           </a>
         </div>
         <div class="col-sm-6 col-md-12">
-          FOOD
           <?php //echo get_the_term_list( $post->ID, 'recipe-categories' ); ?>
           <p class="recipes__cat"><?php echo $product_cat; ?></p>
-          <a itemprop="url" href="<?php the_permalink(); ?>">><span itemprop="name"><?php echo the_title(); ?></span></a>
+          <a itemprop="url" href="<?php the_permalink(); ?>"><span itemprop="name"><?php echo the_title(); ?></span></a>
         </div>
       </div>
     </article>

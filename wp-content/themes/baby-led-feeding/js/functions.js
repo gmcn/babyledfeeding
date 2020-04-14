@@ -40,6 +40,7 @@
   function startMatchHeight() {
     $('.matchheight').matchHeight();
     $('.featureheight').matchHeight();
+    $('.plannerheight').matchHeight();
     $('.pheight').matchHeight();
   }
   window.onload = startMatchHeight;

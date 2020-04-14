@@ -1,10 +1,3 @@
-<?php
-/**
- * Note: The design shows a section in the banner 'tile' that seems to indicate that there should
- * be reference made to a particular project however none of the slides in the banner relate to
- * projects so this is not being coded.
- */
-?>
 
 <!-- BX Slider with Caption & Read More Link -->
 <div id="bxslider">

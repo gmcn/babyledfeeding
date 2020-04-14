@@ -14,7 +14,9 @@ if ( have_posts() ) : ?>
   <article itemscope itemtype="http://schema.org/Recipe" <?php post_class(array('col-xs-6', 'col-md-3', 'recipes__recipe', 'matchheight')); ?>>
     <div class="row">
       <div class="col-sm-6 col-md-12">
-        <?php echo $thumb; ?>
+        <a itemprop="url" href="<?php the_permalink(); ?>">
+          <?php echo $thumb; ?>
+        </a>
       </div>
       <div class="col-sm-6 col-md-12">
         <?php //echo get_the_term_list( $post->ID, 'recipe-categories' ); ?>

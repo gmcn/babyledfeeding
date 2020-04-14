@@ -147,6 +147,10 @@
       // width: 100%;
       margin-bottom: 15px;
       // height: 400px;
+      transition: .5s;
+      &:hover {
+        transform: scale(1.05);
+      }
     }
     a {
       display: block;
