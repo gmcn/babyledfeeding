@@ -1,0 +1,76 @@
+.post-type-archive-mealplanner, .page-template-page-planner, .single-mealplanner {
+  .h2_wrapper {
+    background: $blfblue !important;
+  }
+  form .search-submit {
+    background: $blforange !important;
+  }
+}
+
+.planner {
+  h2 {
+    color: $blfblue;
+    font-size: 18px;
+  }
+  &_content {
+    text-align: center;
+    p {
+      line-height: 1.5em;
+    }
+  }
+  &-grid {
+    margin-bottom: 50px;
+    border-bottom: 1px solid #E9E9EA;
+    &_head {
+
+      &__wrapper {
+        font-size: 22px;
+        @include md {
+          font-size: 16px;
+        }
+        margin-top: 10px;
+        background: $blfblue;
+        font-family: $font__headings;
+        color: #fff;
+        text-align: center;
+        padding: 10px;
+        margin-bottom: 10px;
+        &.notes {
+          text-align: left !important;
+        }
+      }
+    }
+    img {
+      display: block;
+    }
+    a {
+      color: #000;
+      text-decoration: none;
+      font-size: 15px;
+    }
+    a.title {
+      padding-top: 5px;
+      padding-bottom: 5px;
+      display: block;
+    }
+    &_day {
+      @include md {
+        padding-top: 10px;
+        background: $blfblue;
+      }
+      text-align: center;
+      font-family: $font__headings;
+      color: #fff;
+      font-size: 14px;
+    }
+    &_snack {
+      border-right: 1px solid #E9E9EA;
+      padding-left: 7.5px;
+      padding-right: 7.5px;
+    }
+    &_note {
+      color: $blfblue;
+      padding: 20px 15px;
+    }
+  }
+}

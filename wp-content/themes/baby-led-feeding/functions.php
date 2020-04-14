@@ -225,6 +225,7 @@ add_action('login_head', 'my_custom_login');
 include(get_template_directory() . '/functions/recipies.php' );
 include(get_template_directory() . '/functions/weaning.php' );
 include(get_template_directory() . '/functions/videos.php' );
+include(get_template_directory() . '/functions/mealplanner.php' );
 
 if( function_exists('acf_add_options_page') ) {
 	acf_add_options_page();

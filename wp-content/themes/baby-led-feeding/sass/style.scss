@@ -61,7 +61,7 @@ Tags:
 /*--------------------------------------------------------------
 # Navigation
 --------------------------------------------------------------*/
-@import "navigation/navigation";
+// @import "navigation/navigation";
 
 /*--------------------------------------------------------------
 # Accessibility
@@ -98,6 +98,8 @@ Tags:
 --------------------------------------------------------------*/
 @import "pages/home";
 @import "pages/videos";
+@import "pages/planner";
+@import "pages/page";
 @import "pages/single-recipes";
 
 /*--------------------------------------------------------------

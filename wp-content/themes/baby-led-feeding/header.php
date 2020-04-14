@@ -206,7 +206,7 @@
                     <div class="row">
 											<div class="col-sm-3">
 
-                        <h3 class="hidden-xs hidden-sm"><a href="/weaning">Baby Led Feeding</a></h3>
+                        <h3 class="hidden-xs hidden-sm"><a href="/baby-led-weaning">Baby Led Feeding</a></h3>
 
                         <?php wp_nav_menu( array(
                           'theme_location' => 'baby-led-feeding',
@@ -260,7 +260,7 @@
                 </ul>
               </li>
 
-							<li><a class="dropdown-toggle" href="/meal-planner">Meal Planner</a></li>
+							<li><a class="dropdown-toggle" href="/my-weekly-meal-plan">FREE Meal Planner</a></li>
 							<li><a class="dropdown-toggle" href="/about">About</a></li>
 							<li><a class="dropdown-toggle" href="/work-with-me">Work with Me</a></li>
 
