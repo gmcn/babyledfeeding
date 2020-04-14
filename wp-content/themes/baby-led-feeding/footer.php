@@ -24,9 +24,10 @@
 
 
 
-		<div class="container-fluid footer_insta">
+		<div class="footer_insta">
 			<h3>On the Gram</h3>
 			<p>What cool mums call Instagram</p>
+			Temp removed to avoid maxing out API calls while testing // all working
 			<?php //echo do_shortcode('[instagram-feed]'); ?>
 		</div><!-- /.insta_feed -->
 
