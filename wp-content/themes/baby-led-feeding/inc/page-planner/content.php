@@ -35,45 +35,49 @@
 
     <?php if( have_rows('weekly_plan') ): ?>
 
-      <div class="row hidden-xs">
-        <div class="col-sm-2 col-md-1">
-        </div>
-        <div class="col-sm-2 col-md-2 planner-grid_head">
-
-          <div class="planner-grid_head__wrapper">
-            Breakfast
+      <!-- <div class="container"> -->
+        <div class="row planner-grid planner-grid__header hidden-xs">
+          <div class="col-sm-2 col-md-1 planner-grid_day__wrapper">
           </div>
+          <div class="col-sm-2 col-md-2 planner-grid_head">
 
-        </div>
-        <div class="col-sm-2 col-md-2 planner-grid_head">
+            <div class="planner-grid_head__wrapper">
+              Breakfast
+            </div>
 
-          <div class="planner-grid_head__wrapper">
-            Lunch
           </div>
+          <div class="col-sm-2 col-md-2 planner-grid_head">
 
-        </div>
-        <div class="col-sm-2 col-md-2 planner-grid_head">
+            <div class="planner-grid_head__wrapper">
+              Lunch
+            </div>
 
-          <div class="planner-grid_head__wrapper">
-            Dinner
           </div>
+          <div class="col-sm-2 col-md-2 planner-grid_head">
 
-        </div>
-        <div class="col-sm-2 col-md-2 planner-grid_head">
+            <div class="planner-grid_head__wrapper">
+              Dinner
+            </div>
 
-          <div class="planner-grid_head__wrapper">
-            Snack
           </div>
+          <div class="col-sm-2 col-md-2 planner-grid_head snack">
 
-        </div>
-        <div class="col-sm-2 col-md-3 planner-grid_head">
+            <div class="planner-grid_head__wrapper">
+              Snack
+            </div>
 
-          <div class="planner-grid_head__wrapper notes">
-            Notes from Aileen
           </div>
+          <div class="col-sm-2 col-md-3 planner-grid_head notes">
 
+            <div class="planner-grid_head__wrapper" style="text-align: left;">
+              Notes from Aileen
+            </div>
+
+          </div>
         </div>
-      </div>
+      <!-- </div> -->
+
+
 
     	<?php while( have_rows('weekly_plan') ): the_row();
 
@@ -221,13 +225,17 @@
 
     <br />
 
-  <div class="row">
-   <div class="col-md-10 col-md-offset-1 single-recipe__tips">
-     <h4>Meal Plan Notes</h4>
+    <?php if ($meal_plan_notes) : ?>
 
-     <p><?php echo $meal_plan_notes ?></p>
+      <div class="row">
+        <div class="col-md-10 col-md-offset-1 single-recipe__tips">
+          <h4>Meal Plan Notes</h4>
 
+          <p><?php echo $meal_plan_notes ?></p>
+
+        </div>
      </div>
- </div>
+
+   <?php endif; ?>
 
 </div>

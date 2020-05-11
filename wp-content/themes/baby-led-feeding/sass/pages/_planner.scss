@@ -9,6 +9,7 @@
 
 .planner {
   padding-bottom: 25px;
+  border-top: 1px solid #E9E9EA;
   h1 {
     font-family: $font__headings;
     text-align: center;
@@ -70,26 +71,80 @@
     }
   }
   &-grid {
-    margin-bottom: 50px;
+
+    &.planner-grid__header {
+      border-bottom: none;
+    }
+
+    padding-left: 15px;
+    padding-right: 15px;
+    // margin-bottom: 50px;
     border-bottom: 1px solid #E9E9EA;
+    border-left: 1px solid #E9E9EA;
+    border-right: 1px solid #E9E9EA;
+
+    &__header {
+      border-top: 1px solid #E9E9EA;
+    }
+
 
     &_day {
-      padding-left: 0px !important;
+      padding-left: 7.5px !important;
+      padding-right: 7.5px !important;
       text-align: center;
-      padding-right: 10px !important;
+      margin-top: 15px;
+      @include md {
+        height: 185px;
+        padding-left: 0px !important;
+        padding-right: 10px !important;
+      }
+      @include lg {
+        width: 12.33333% !important;
+        font-size: 18px;
+      }
+
       .vert-align {
         width: 100%;
       }
     }
 
-    &_breakfast, &_lunch, &_dinner, &_snack {
+    &_breakfast {
+      padding-top: 15px;
+      padding-left: 10px !important;
+      padding-right: 5px !important;
+      padding-bottom: 10px !important;
+    }
+
+    &_lunch, &_dinner, &_snack {
+      padding-top: 15px;
       padding-left: 5px !important;
       padding-right: 5px !important;
+      padding-bottom: 10px !important;
     }
     &_head {
 
       padding-left: 5px !important;
       padding-right: 5px !important;
+
+      &.snack {
+
+        @include md {
+          border-right: 1px solid #E9E9EA;
+        }
+
+      }
+
+      &.notes {
+        text-align: left;
+        @include lg {
+          width: 21%;
+        }
+
+        &__wrapper {
+          text-align: left;
+        }
+
+      }
 
       &__wrapper {
         font-size: 22px;
@@ -104,9 +159,7 @@
         text-align: center;
         padding: 10px;
         margin-bottom: 10px;
-        &.notes {
-          text-align: left !important;
-        }
+
       }
     }
     img {
@@ -118,6 +171,9 @@
       text-decoration: none;
       font-size: 15px;
       font-weight: 600;
+      &:hover {
+        color: $blfblue;
+      }
     }
     a.title {
       padding-top: 5px;
@@ -133,6 +189,15 @@
       font-family: $font__headings;
       color: #fff;
       font-size: 14px;
+      &__wrapper {
+        @include lg {
+          width: 12.33333% !important;
+        }
+      }
+      @include lg {
+        width: 12.33333% !important;
+        font-size: 18px;
+      }
     }
     &_snack {
       border-right: 1px solid #E9E9EA;
@@ -140,9 +205,12 @@
       padding-right: 7.5px;
     }
     &_note {
+      @include lg {
+        width: 21% !important;
+      }
       color: $blfblue;
       padding: 15px 15px;
-      font-size: 16px;
+      font-size: 15px;
     }
   }
   .single-recipe__tips {

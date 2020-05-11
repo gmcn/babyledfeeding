@@ -324,7 +324,7 @@
       <ul class="nav navbar-nav navbar-right header_social hidden-sm hidden-xs">
 
 
-          <li class="header_social__wrapper gary">
+          <li class="header_social__wrapper__vert">
 
             <a class="header_social__icon" href="https://www.youtube.com/channel/UCyp_TJ38ejW-_pMWGOheF0Q/" target="_blank">
 

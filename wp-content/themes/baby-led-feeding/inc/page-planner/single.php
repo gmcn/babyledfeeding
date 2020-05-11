@@ -56,8 +56,8 @@ $the_query = new WP_Query( $args );
 
       <?php if( have_rows('weekly_plan', $query_id ) ): ?>
 
-        <div class="row hidden-xs">
-          <div class="col-sm-2 col-md-1">
+        <div class="row planner-grid planner-grid__header hidden-xs">
+          <div class="col-sm-2 col-md-1 planner-grid_day__wrapper">
           </div>
           <div class="col-sm-2 col-md-2 planner-grid_head">
 
@@ -80,16 +80,16 @@ $the_query = new WP_Query( $args );
             </div>
 
           </div>
-          <div class="col-sm-2 col-md-2 planner-grid_head">
+          <div class="col-sm-2 col-md-2 planner-grid_head snack">
 
             <div class="planner-grid_head__wrapper">
               Snack
             </div>
 
           </div>
-          <div class="col-sm-2 col-md-3 planner-grid_head">
+          <div class="col-sm-2 col-md-3 planner-grid_head notes">
 
-            <div class="planner-grid_head__wrapper notes">
+            <div class="planner-grid_head__wrapper" style="text-align: left;">
               Notes from Aileen
             </div>
 
@@ -223,14 +223,18 @@ $the_query = new WP_Query( $args );
         </div>
 
 
-        <div class="row">
-         <div class="col-md-10 col-md-offset-1 single-recipe__tips">
-           <h4>Meal Plan Notes</h4>
+        <?php if ($meal_plan_notes) : ?>
 
-           <p><?php echo $meal_plan_notes ?></p>
+          <div class="row">
+            <div class="col-md-10 col-md-offset-1 single-recipe__tips">
+              <h4>Meal Plan Notes</h4>
 
-           </div>
-       </div>
+              <p><?php echo $meal_plan_notes ?></p>
+
+            </div>
+         </div>
+
+       <?php endif; ?>
 
        <?php
 
