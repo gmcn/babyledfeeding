@@ -6,13 +6,13 @@
 
  ?>
 
-<div class="container-fluid fp_row-four">
+<div class="container-fluid general">
   <div class="container">
     <?php if ($sectionTitle): ?>
       <h3><?php echo $sectionTitle ?></h3>
     <?php endif; ?>
     <div class="row">
-      <div class="col-sm-6 matchheight">
+      <div class="col-sm-5 matchheight">
         <img src="<?php echo esc_url($genealImage['url']); ?>" alt="<?php echo esc_attr($genealImage['alt']); ?>" />
       </div>
       <div class="col-sm-6 matchheight">

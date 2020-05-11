@@ -1,0 +1,115 @@
+.post-type-archive-recipes, .post-type-archive-weaning {
+	.site-content {
+		.container-fluid:nth-child(odd) {
+			background: #f6f5f3;
+		}
+    .container-fluid:last-of-type {
+      @include md {
+        padding-bottom: 110px;
+      }
+		}
+	}
+}
+
+.recipes_main {
+  padding-top: 25px;
+  padding-bottom: 35px;
+	.archive-description {
+		display: none;
+	}
+  h1 {
+    font-family: $font__headings;
+    text-align: center;
+    color: #000;
+    font-weight: $soleilBd;
+		font-size: 28px;
+		margin-top: 30px;
+		margin-bottom: 30px;
+		@include md {
+			font-size: 40px;
+		}
+  }
+   h2, h3 {
+    font-family: $font__headings;
+    text-align: center;
+    color: #000;
+    font-weight: $soleilBd;
+		font-size: 28px;
+		margin-top: 12px;
+		margin-bottom: 30px;
+		@include md {
+			font-size: 40px;
+		}
+  }
+  p {
+    font-weight: 600;
+    @include md {
+      margin-bottom: 35px;
+    }
+  }
+  &__cat {
+    text-transform: uppercase;
+    margin-bottom: 0;
+  }
+  &__recipe {
+		margin-bottom: 15px;
+		@include md {
+			margin-bottom: 0;
+		}
+		padding-right: 10px !important;
+		padding-left: 10px !important;
+    img {
+      text-align: center;
+      display: block;
+      width: 100%;
+      margin-bottom: 15px;
+      // height: 400px;
+			transition: .5s;
+			&:hover {
+				transform: scale(1.05);
+			}
+    }
+		&__cat {
+			text-transform: uppercase;
+			color: #4A4F54;
+			font-size: .75em;
+			margin-bottom: 7px;
+		}
+    a {
+      display: block;
+      color: #000;
+      text-decoration: none;
+      font-size: 18px;
+      font-weight: $soleilSb
+    }
+		h2, h3 {
+			font-family: $font__headings;
+	    text-align: left;
+	    color: #000;
+	    font-weight: $soleilBd;
+	    font-size: 26px;
+	    margin-bottom: 15px;
+			@include md {
+				margin-bottom: 7.5px;
+			}
+			margin-top: 0;
+		}
+  }
+	a.watch {
+		text-align: center;
+		background: #000;
+    color: #fff;
+    padding: 5px 15px;
+    font-weight: 700;
+    display: inline-block;
+    margin-top: 15px;
+    margin-bottom: 15px;
+    text-decoration: none;
+		@include sm {
+			background: #FFB71E;
+		}
+		&:hover {
+			background: #E36386;
+		}
+  }
+}

@@ -29,7 +29,7 @@ $the_query = new WP_Query( $args );
 
    ?>
 
-    <div class="container recipes planner">
+    <div class="container planner">
       <div class="row">
         <h1><?php the_title(); ?></h1>
         <h2><?php echo $week_beginning; ?></h2>
@@ -223,14 +223,21 @@ $the_query = new WP_Query( $args );
         </div>
 
 
-      <div class="row single-recipe__tips">
-       <div class="col-md-12">
-         <h4>Meal Plan Notes</h4>
+        <div class="row">
+         <div class="col-md-10 col-md-offset-1 single-recipe__tips">
+           <h4>Meal Plan Notes</h4>
 
-         <p><?php echo $meal_plan_notes ?></p>
+           <p><?php echo $meal_plan_notes ?></p>
 
-         </div>
-     </div>
+           </div>
+       </div>
+
+       <?php
+
+         include(locate_template("inc/page-elements/share.php"));
+
+        ?>
+
 
     </div>
 

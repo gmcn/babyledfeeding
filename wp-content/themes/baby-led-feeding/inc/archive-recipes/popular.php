@@ -24,7 +24,7 @@ $args = array(
 <?php if($query->have_posts()) : ?>
 
 <div class="container-fluid">
- <div class="container recipes">
+ <div class="container recipes_main">
    <div class="row">
 
      <h3>Everyone is making...</h3>
@@ -37,7 +37,7 @@ $args = array(
 
      ?>
 
-    <article itemscope itemtype="http://schema.org/Recipe" <?php post_class(array('col-xs-6', 'col-md-4', 'recipes__recipe', 'matchheight')); ?>>
+    <article itemscope itemtype="http://schema.org/Recipe" class="col-xs-6 col-md-4 recipes__recipe matchheight" <?php //post_class(array('col-xs-6', 'col-md-4', 'recipes__recipe', 'matchheight')); ?>>
       <div class="row">
         <div class="col-sm-6 col-md-12">
           <a itemprop="url" href="<?php the_permalink(); ?>">
@@ -45,8 +45,10 @@ $args = array(
           </a>
         </div>
         <div class="col-sm-6 col-md-12">
-          <?php //echo get_the_term_list( $post->ID, 'recipe-categories' ); ?>
-          <p class="recipes__cat"><?php echo $product_cat; ?></p>
+          <div class="recipes__recipe__cat">
+            <?php echo get_the_term_list( $post->ID, 'recipe-categories' ); ?>
+          </div>
+
           <a itemprop="url" href="<?php the_permalink(); ?>"><span itemprop="name"><?php echo the_title(); ?></span></a>
         </div>
       </div>

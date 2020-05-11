@@ -16,8 +16,24 @@
       text-align: center;
       font-family: $font__headings;
       color: #4A4F54;
-      font-size: 50px;
+      font-size: 28px;
+      margin-bottom: 5px;
+  		@include md {
+  			font-size: 40px;
+  		}
     }
+
+    label {
+      font-weight: 300;
+    }
+
+    .comment-author {
+      color: #4A4F54 !important;
+      a {
+        color: #4A4F54 !important;
+      }
+    }
+
     ol.comment-list {
       list-style: none;
       margin: 0;
@@ -70,6 +86,7 @@
     #comment { }
     #submit {
 
+      margin-top: 20px;
       background: $blforange;
       border: 0;
       padding: 5px 25px;
@@ -82,9 +99,19 @@
 
      }
 
-    .comment-notes { }
+     input, textarea {
+       border: 0;
+     }
+
+
+
+    .comment-notes {
+      color: $blfpink;
+    }
     .required { }
     .comment-form-author {
+
+      margin-bottom: 15px;
 
       label {
         display: none;
@@ -93,7 +120,6 @@
       input {
         padding: 15px;
         width: 45%;
-
         ::placeholder {
           color: #000;
         }

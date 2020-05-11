@@ -126,7 +126,7 @@
 
        <?php while($query->have_posts()) : $query->the_post();
 
-       $thumb = get_the_post_thumbnail( $post_id, 'related-size' , array( 'loading' => 'lazy', 'itemprop' => 'image' ) );
+       $thumb = get_the_post_thumbnail( $post_id, 'custom-size' , array( 'loading' => 'lazy', 'itemprop' => 'image' ) );
 
        if ($posts_per_page == 3 ) {
          $cols = "col-md-4";
@@ -135,7 +135,8 @@
        }
 
        ?>
-           <article itemscope itemtype="http://schema.org/Recipe" <?php post_class(array('col-xs-6', $cols, 'recipes__recipe', 'matchheight')); ?>>
+
+           <article class="col-xs-6 <?php echo $cols ?> recipes__recipe matchheight" itemscope itemtype="http://schema.org/Recipe" <?php //post_class(array('col-xs-6', $cols, 'recipes__recipe', 'matchheight')); ?>>
              <div class="row">
                <div class="col-sm-6 col-md-12">
                  <a href="<?php the_permalink(); ?>">

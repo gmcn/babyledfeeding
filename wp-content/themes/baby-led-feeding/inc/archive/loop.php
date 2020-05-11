@@ -11,7 +11,7 @@ if ( have_posts() ) : ?>
 
   ?>
 
-  <article itemscope itemtype="http://schema.org/Recipe" <?php post_class(array('col-xs-6', 'col-md-3', 'recipes__recipe', 'matchheight')); ?>>
+  <article itemscope itemtype="http://schema.org/Recipe" class="col-xs-6 col-md-4 recipes__recipe matchheight" <?php //post_class(array('col-xs-6', 'col-md-3', 'recipes__recipe', 'matchheight')); ?>>
     <div class="row">
       <div class="col-sm-6 col-md-12">
         <a itemprop="url" href="<?php the_permalink(); ?>">

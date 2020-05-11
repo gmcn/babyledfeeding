@@ -26,9 +26,9 @@
 
 		<div class="footer_insta">
 			<h3>On the Gram</h3>
-			<p>What cool mums call Instagram</p>
-			Temp removed to avoid maxing out API calls while testing // all working
-			<?php //echo do_shortcode('[instagram-feed]'); ?>
+			<p>What cool Moms call Instagram</p>
+			<!-- Temp removed to avoid maxing out API calls while testing // all working -->
+			<?php echo do_shortcode('[instagram-feed]'); ?>
 		</div><!-- /.insta_feed -->
 
 
@@ -38,7 +38,7 @@
 				<p>Exclusive recipes, meal plans and more to your inbox.</p>
 				<!-- Begin Mailchimp Signup Form -->
 					<div id="mc_embed_signup">
-					<form action="https://digital-only.us19.list-manage.com/subscribe/post?u=15d8e8c82aaff87551e711d19&amp;id=d91a32e363" method="post" id="mc-embedded-subscribe-form" name="mc-embedded-subscribe-form" class="validate" target="_blank" novalidate>
+					<form action="https://babyledfeeding.us13.list-manage.com/subscribe/post?u=dc3694f602d3460be23500dcc&amp;id=76e0dfcc87" method="post" id="mc-embedded-subscribe-form" name="mc-embedded-subscribe-form" class="validate" target="_blank" novalidate>
 				    <div id="mc_embed_signup_scroll">
 							<div class="form-group">
 								<input type="text" value="" name="FNAME" class="form-control" id="mce-FNAME" placeholder="First Name">
@@ -67,7 +67,7 @@
 
 		<div class="container sig">
 			<div class="row">
-				<div class="col-sm-6 col-md-4 sig_brand hidden-xs">
+				<div class="col-sm-6 col-md-3 sig_brand hidden-xs">
 					<a href="/">
 						<img src="<?php echo get_template_directory_uri() ?>/images/babyledfeeding-branding_footer.svg" alt="Baby Led Feeding">
 					</a>
@@ -76,7 +76,7 @@
 				<div class="col-sm-6 col-md-4 sig_social">
 					<p>Let's be Best Friends</p>
 					<div class="row">
-						<div class="col-xs-3">
+						<div class="sig_social__icon">
 							<a href="https://www.facebook.com/babyledfeeding" target="_blank">
 
 								<?php $facebookConents = file_get_contents(get_template_directory_uri() . '/images/facebook-icon_footer.svg'); ?>
@@ -85,7 +85,7 @@
 
 							</a>
 						</div>
-						<div class="col-xs-3">
+						<div class="sig_social__icon">
 							<a href="https://www.instagram.com/babyledfeeding/" target="_blank">
 
 								<?php $instagramConents = file_get_contents(get_template_directory_uri() . '/images/instagram-icon_footer.svg'); ?>
@@ -94,7 +94,7 @@
 
 							</a>
 						</div>
-						<div class="col-xs-3">
+						<div class="sig_social__icon">
 							<a href="https://www.pinterest.co.uk/babyledfeeding/" target="_blank">
 
 								<?php $pinterestConents = file_get_contents(get_template_directory_uri() . '/images/pinterest-icon_footer.svg'); ?>
@@ -103,7 +103,7 @@
 
 							</a>
 						</div>
-						<div class="col-xs-3">
+						<div class="sig_social__icon">
 							<a href="https://www.youtube.com/channel/UCyp_TJ38ejW-_pMWGOheF0Q/" target="_blank">
 
 								<?php $ytConents = file_get_contents(get_template_directory_uri() . '/images/youtube-icon_footer.svg'); ?>
@@ -114,11 +114,11 @@
 					</div>
 
 				</div>
-				<div class="col-md-4 col-lg-3 col-lg-offset-1 footer_newsletter hidden-xs hidden-sm">
+				<div class="col-md-4 col-lg-4 col-lg-offset-1 footer_newsletter hidden-xs hidden-sm">
 					<p>Newsletter Signup</p>
 					<!-- Begin Mailchimp Signup Form -->
 						<div id="mc_embed_signup">
-						<form action="https://digital-only.us19.list-manage.com/subscribe/post?u=15d8e8c82aaff87551e711d19&amp;id=d91a32e363" method="post" id="mc-embedded-subscribe-form" name="mc-embedded-subscribe-form" class="validate" target="_blank" novalidate>
+						<form action="https://babyledfeeding.us13.list-manage.com/subscribe/post?u=dc3694f602d3460be23500dcc&amp;id=76e0dfcc87" method="post" id="mc-embedded-subscribe-form" name="mc-embedded-subscribe-form" class="validate" target="_blank" novalidate>
 					    <div id="mc_embed_signup_scroll">
 								<div class="form-group">
 									<input type="text" value="" name="FNAME" class="form-control" id="mce-FNAME" placeholder="First Name">

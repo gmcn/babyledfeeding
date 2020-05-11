@@ -9,8 +9,8 @@
 
 
 
-<div class="container-fluid" style="text-align: center; background: url(<?php echo $advertBg ?>); background-size: cover;">
-  <div class="container recipes">
+<div class="container-fluid" style="margin-top: -10px; z-index: 0; position: relative; text-align: center; background: url(<?php echo $advertBg ?>); background-size: cover;">
+  <div class="container advert">
     <h3><?php echo $sectionTitle ?></h3>
     <?php  if( !empty( $advertImg ) ): ?>
       <img src="<?php echo esc_url($advertImg['url']); ?>" alt="<?php echo esc_attr($advertImg['alt']); ?>" />

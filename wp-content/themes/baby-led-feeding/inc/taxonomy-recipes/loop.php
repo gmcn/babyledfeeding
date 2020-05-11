@@ -1,7 +1,7 @@
 <?php if ( have_posts() ) : ?>
 
 <div class="container-fluid">
- <div class="container recipes">
+ <div class="container recipes_main">
    <div class="row">
 
      <h3>Recent <?php single_cat_title(); ?> Recipies</h3>
@@ -16,7 +16,7 @@
 
      ?>
 
-    <article <?php post_class(array('col-xs-6', 'col-md-3', 'recipes__recipe', 'matchheight')); ?>>
+    <article class="col-xs-6 col-md-3 recipes__recipe matchheight" <?php //post_class(array('col-xs-6', 'col-md-3', 'recipes__recipe', 'matchheight')); ?>>
       <div class="row">
         <div class="col-sm-6 col-md-12">
           <a href="<?php the_permalink(); ?>"><?php echo $thumb; ?></a>
@@ -25,7 +25,6 @@
           <div class="recipes__recipe__cat">
             <?php single_cat_title(); ?>
           </div>
-          <p class="recipes__cat"><?php echo $product_cat; ?></p>
           <a href="<?php the_permalink(); ?>"><?php echo the_title(); ?></a>
         </div>
       </div>

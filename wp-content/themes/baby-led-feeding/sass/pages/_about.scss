@@ -1,0 +1,93 @@
+.page-about {
+  padding-top: 50px;
+  background: #F6F5F3;
+  color: #4A4F54;
+  h2, h3, h4 {
+    font-family: $font__headings;
+    margin-bottom: 35px;
+    font-size: 28px;
+    line-height: 1.3em;
+		@include md {
+			font-size: 40px;
+		}
+  }
+  strong {
+    color: $blfpink;
+  }
+  a {
+    color: #4A4F54;
+    display: inline-block;
+    text-decoration: none;
+    &:hover {
+      color: $blfpink;
+    }
+    &::after {
+      display: block;
+      height: 7px;
+      width: 100%;
+      margin-top: -1px;
+      content: "";
+      background: $blforange;
+    }
+  }
+  &_about {
+    margin-bottom: 50px;
+
+    &__img {
+      background: url(images/hearts_pink.svg) no-repeat top center;
+      position: relative;
+      img {
+        width: 100%;
+      }
+      .vert-align {
+        right: -150px !important;
+        z-index: 1;
+      }
+    }
+    &__copy {
+      background: url(images/hearts_white.svg) $blfpink no-repeat 60% 5%;
+      color: #fff;
+      padding-top: 50px;
+      padding-bottom: 25px;
+      p {
+        line-height: 1.5em;
+      }
+      @include md {
+        padding-right: 10% !important;
+        padding-left: 200px !important;
+        padding-bottom: 50px;
+      }
+      @include lg {
+        padding-right: 25% !important;
+      }
+
+
+    }
+  }
+  &_intro {
+    font-size: 28px;
+    font-weight: $soleilBd;
+    color: #4A4F54;
+    padding-top: 25px;
+  }
+  &_colour {
+    margin-top: 50px;
+    margin-bottom: 50px;
+    text-align: center;
+    color: #fff;
+    padding-top: 50px;
+    padding-bottom: 30px;
+    h2, h3, h4 {
+      font-family: $font__headings;
+      margin-bottom: 35px;
+      font-size: 28px;
+      line-height: 1.3em;
+  		@include md {
+  			font-size: 38px;
+  		}
+    }
+    p {
+      font-size: 24px;
+    }
+  }
+}

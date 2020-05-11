@@ -23,7 +23,7 @@
 			?>
 
 			<div class="container-fluid">
-				<div class="container recipes">
+				<div class="container recipes_main">
 					<h3><?php echo $category->name; ?></h3>
 					<div class="row">
 						<?php while ($recipes->have_posts()) : $recipes->the_post();

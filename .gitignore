@@ -22,6 +22,10 @@ wp-content/plugins/
 *.log
 *.sql
 *.sqlite
+.DS_Store
+.DS_Store?
+**/.DS_Store
+*.DS_Store
 
 # ignore these plugins
 wp-content/plugins/hello.php

@@ -117,7 +117,7 @@ function starting_theme_scripts() {
 	// wp_enqueue_script( 'compiled-js', get_template_directory_uri() . '/js/compiled.js', array(), '0.1', true );
 	wp_enqueue_script( 'wow-js', get_template_directory_uri() . '/js/wow.min.js', array(), '0.1', true );
 	wp_enqueue_script( 'matchHeight-js', get_template_directory_uri() . '/js/jquery.matchHeight.js', array(), '0.7.2', true );
-	wp_enqueue_script( 'bootstrap-js', get_template_directory_uri() . '/js/bootstrap.min.js', array(), '3.3.7', true );
+	wp_enqueue_script( 'bootstrap-js', get_template_directory_uri() . '/js/bootstrap.js', array(), '3.3.7', true );
 	wp_enqueue_script( 'starting-theme-skip-link-focus-fix', get_template_directory_uri() . '/js/skip-link-focus-fix.js', array(), '20151215', true );
 
 	if ( is_singular() && comments_open() && get_option( 'thread_comments' ) ) {
@@ -227,6 +227,8 @@ include(get_template_directory() . '/functions/weaning.php' );
 include(get_template_directory() . '/functions/videos.php' );
 include(get_template_directory() . '/functions/mealplanner.php' );
 
+include(get_template_directory() . '/functions/blocks.php' );
+
 if( function_exists('acf_add_options_page') ) {
 	acf_add_options_page();
 }
@@ -309,13 +311,16 @@ remove_action( 'wp_head', 'adjacent_posts_rel_link_wp_head', 10, 0);
 
 
 
+function add_custom_sizes() {
+		add_image_size( 'custom-size', 400, 400, array( 'center', 'center' ) ); // Hard crop left top
+		add_image_size( 'related-size', 350, 350, array( 'center', 'center' ) ); // Hard crop left top
+}
+add_action('after_setup_theme','add_custom_sizes');
 
 
 
 
 
-add_image_size( 'custom-size', 400, 400, array( 'center', 'center' ) ); // Hard crop left top
-add_image_size( 'related-size', 350, 350, array( 'center', 'center' ) ); // Hard crop left top
 
 
 //* Enqueue script to activate WOW.js

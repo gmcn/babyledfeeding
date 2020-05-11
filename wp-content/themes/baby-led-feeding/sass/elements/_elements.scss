@@ -19,14 +19,6 @@ body {
 	}
 }
 
-.post-type-archive-recipes, .post-type-archive-weaning {
-	.site-content {
-		.container-fluid:nth-child(odd) {
-			background: #f6f5f3;
-		}
-	}
-}
-
 hr {
 	background-color: $color__background-hr;
 	border: 0;
@@ -74,12 +66,16 @@ hr {
 .share {
 	text-align: center;
 	display: block;
+	font-size: 16px;
 	margin-bottom: 50px;
 	&:first-of-type {
 		span {
 			display: inline-block;
 			padding-right: 15px;
 		}
+	}
+	&:last-of-type {
+		// margin-bottom: 0; // TODO:
 	}
 	span {
 		display: none;
@@ -90,6 +86,9 @@ hr {
 	}
 	a {
 		text-decoration: none !important;
+		&:after {
+			display: none !important;
+		}
 	}
 }
 
@@ -131,10 +130,13 @@ hr {
 	background: #F6F5F3;
 	padding: 25px 15px;
 	@include md {
-		padding: 40px 15px;
+		padding: 45px 15px;
 	}
 
 	&_options {
+		.col-md-4 {
+			padding-right: 0 !important;
+		}
 		.dropdown-menu {
 			a {
 				text-decoration: none;
@@ -150,7 +152,10 @@ hr {
 		form {
 			width: 100%;
 			label {
-				width: 80%;
+				width: 65%;
+				@include md {
+					width: 72%;
+				}
 				margin-bottom: 5px;
 				@include md {
 					margin-bottom: 0;
@@ -158,17 +163,20 @@ hr {
 			}
 			input[type="search"] {
 				padding: 7.5px 10px 7.5px;
-				border: .5px solid #707070;
+				border: .5px solid #c5c7c6;
 				font-weight: $soleilBd;
 				width: 100%;
 			}
 			.search-submit {
 				background-color: #8AC168;
 				color: #fff;
-				padding: 7.5px 15px;
+				padding: 8px 15px;
 				float: right;
-				margin-left: 1%;
-				width: 19%;
+				// margin-left: 1%;
+				width: 30%;
+				@include md {
+					width: 23.5%;
+				}
 				border: none;
 				transition: .5s;
 				&:hover {
@@ -196,7 +204,7 @@ hr {
 		background: #fff;
 		padding: 5px 15px 10px;
 		border-radius: 0;
-		border: .5px solid #4A4F54;
+		border: .5px solid #c5c7c6;
 		color: #000;
 		text-decoration: none;
 		font-weight: $soleilBd;
@@ -220,19 +228,30 @@ hr {
     text-align: center;
     color: #000;
     font-weight: $soleilBd;
-    font-size: 32px;
-    margin-bottom: 25px;
+		font-size: 28px;
+		margin-top: 30px;
+		margin-bottom: 30px;
+		@include md {
+			font-size: 40px;
+			margin-top: 45px;
+		}
+
   }
   &__cat {
     text-transform: uppercase;
     margin-bottom: 0;
   }
   &__recipe {
-    margin-bottom: 15px;
+		margin-bottom: 15px;
+		@include md {
+			// margin-bottom: 0;
+		}
+		padding-right: 10px !important;
+		padding-left: 10px !important;
     img {
       text-align: center;
       display: block;
-      // width: 100%;
+      width: 100%;
       margin-bottom: 15px;
       // height: 400px;
 			transition: .5s;
@@ -242,8 +261,8 @@ hr {
     }
 		&__cat {
 			text-transform: uppercase;
-			// color: #000;
-			font-size: .85em;
+			color: #4A4F54;
+			font-size: .75em;
 			margin-bottom: 7px;
 		}
     a {
@@ -260,9 +279,140 @@ hr {
 	    font-weight: $soleilBd;
 	    font-size: 26px;
 	    margin-bottom: 15px;
+			@include md {
+				margin-bottom: 7.5px;
+			}
 			margin-top: 0;
 		}
   }
+	a.watch {
+		text-align: center;
+		background: #000;
+    color: #fff;
+    padding: 5px 15px;
+    font-weight: 700;
+    display: inline-block;
+    margin-top: 15px;
+    margin-bottom: 15px;
+    text-decoration: none;
+		@include sm {
+			background: #FFB71E;
+		}
+		&:hover {
+			background: #E36386;
+		}
+  }
+}
+
+.products {
+	background: url(images/product_bg.svg) no-repeat 50% 40px;
+  padding-top: 25px;
+	padding-bottom: 75px;
+	@include md {
+		padding-bottom: 126px;
+	}
+
+  h1, h2, h3 {
+    font-family: $font__headings;
+    text-align: center;
+    color: #000;
+    font-weight: $soleilBd;
+		font-size: 28px;
+		margin-top: 45px;
+		margin-bottom: 35px;
+		@include md {
+			font-size: 40px;
+		}
+  }
+  &__cat {
+    text-transform: uppercase;
+    margin-bottom: 0;
+  }
+  &__product {
+    margin-bottom: 15px;
+		padding-right: 10px !important;
+		padding-left: 10px !important;
+    img {
+      text-align: center;
+      display: block;
+      // width: 100%;
+      margin-bottom: 15px;
+      // height: 400px;
+			transition: .5s;
+			&:hover {
+				transform: scale(1.05);
+			}
+    }
+		&__cat {
+			text-transform: uppercase;
+			// color: #000;
+			font-size: .75em;
+			margin-bottom: 7px;
+		}
+		p {
+			font-weight: 600;
+		}
+    a {
+      display: block;
+      color: #000;
+      text-decoration: none;
+      font-size: 18px;
+      font-weight: $soleilSb
+    }
+		h2, h3 {
+			font-family: $font__headings;
+	    text-align: left;
+	    color: #000;
+	    font-weight: $soleilBd;
+	    font-size: 26px;
+	    margin-bottom: 15px;
+			@include md {
+				margin-bottom: 7.5px;
+			}
+			margin-top: 0;
+		}
+  }
+	a.watch {
+		text-align: center;
+		background: #000;
+    color: #fff;
+    padding: 5px 15px;
+    font-weight: 700;
+    display: inline-block;
+    margin-top: 15px;
+    margin-bottom: 15px;
+    text-decoration: none;
+		@include sm {
+			background: #FFB71E;
+		}
+		&:hover {
+			background: #E36386;
+		}
+  }
+}
+
+.advert {
+	margin-top: -10px;
+  padding-top: 25px;
+  padding-bottom: 40px;
+	padding-left: 0;
+	padding-right: 0;
+  h1, h2, h3 {
+    font-family: $font__headings;
+    text-align: center;
+    color: #000;
+    font-weight: $soleilBd;
+		font-size: 28px;
+		margin-top: 90px;
+		margin-bottom: 25px;
+		@include md {
+			font-size: 40px;
+		}
+  }
+	img {
+		width: 100%;
+
+	}
 	a.watch {
 		text-align: center;
 		background: #000;

@@ -2,10 +2,10 @@
 <div class="container-fluid footer_newsletter__main hidden-xs hidden-sm">
   <div class="container">
     <h3>FREE Recipes</h3>
-    <p>The Baby Led Newsletter contains exclusive recipes, <br />meal plans and more to your inbox.</p>
+    <p>The Baby Led Feeding Newsletter contains exclusive <br />recipes, meal plans and more to your inbox.</p>
     <!-- Begin Mailchimp Signup Form -->
       <div id="mc_embed_signup">
-      <form action="https://digital-only.us19.list-manage.com/subscribe/post?u=15d8e8c82aaff87551e711d19&amp;id=d91a32e363" method="post" id="mc-embedded-subscribe-form" name="mc-embedded-subscribe-form" class="validate" target="_blank" novalidate>
+      <form action="https://babyledfeeding.us13.list-manage.com/subscribe/post?u=dc3694f602d3460be23500dcc&amp;id=76e0dfcc87" method="post" id="mc-embedded-subscribe-form" name="mc-embedded-subscribe-form" class="validate" target="_blank" novalidate>
         <div id="mc_embed_signup_scroll">
           <div class="form-group">
             <input type="text" value="" name="FNAME" class="form-control" id="mce-FNAME" placeholder="First Name">

@@ -10,7 +10,7 @@
 
  <?php if (is_tax()): ?>
    <div class="container-fluid h2_wrapper" <?php if($catColour) : ?>style="background-color: <?php echo $catColour ?>" <?php endif; ?>>
-     <div class="container" <?php if($catColour) : ?>style="background-image: url('<?php echo $catIcon ?>'); background-repeat: no-repeat; background-position: center right;" <?php endif; ?>>
+     <div class="container" <?php if($catIcon) : ?>style="background-image: url('<?php echo $catIcon ?>'); background-repeat: no-repeat; background-position: center right;" <?php endif; ?>>
        <h2 itemprop="recipeCategory">
 
         <?php
@@ -48,7 +48,7 @@
 
  <?php if (is_post_type_archive('weaning')): ?>
    <div class="container-fluid h2_wrapper">
-     <div class="container">
+    <div class="container" <?php if($catIcon) : ?>style="background-image: url('<?php echo $catIcon ?>'); background-repeat: no-repeat; background-position: center right;" <?php endif; ?>>
        <h2 itemprop="recipeCategory">
 
         All the recipes
@@ -128,6 +128,20 @@
      </div>
    </div>
  <?php endif; ?>
+
+<?php if (is_home() || is_category()) : ?>
+
+  <div class="container-fluid h2_wrapper">
+    <div class="container">
+      <h2>
+
+        Blog
+
+      </h2>
+    </div>
+  </div>
+
+<?php endif; ?>
 
  <?php if (is_search()): ?>
    <div class="container-fluid h2_wrapper">

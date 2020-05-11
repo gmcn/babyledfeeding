@@ -1,13 +1,531 @@
+.recipe-categories-breakfast {
+
+  .single-recipe__wrapper {
+
+    @include lg {
+      width: 800px;
+    }
+
+    h2 {
+      text-align: left;
+      color: $blfBreakfast;
+      font-size: 30px;
+      line-height: 1.2em;
+    }
+    h3 {
+      text-align: left;
+      color: #000;
+      font-size: 25px;
+      line-height: 1.2em;
+    }
+    h4 {
+      background: rgba($blfLunch, .2);
+    }
+    blockquote {
+      p {
+        background: rgba($blfBreakfast, .2);
+      }
+    }
+    ul {
+      li {
+        &::before {
+          color: $blfBreakfast;
+        }
+      }
+    }
+    ol {
+      li {
+        &::before {
+          color: $blfBreakfast;
+        }
+      }
+    }
+    strong {
+      color: $blfBreakfast;
+    }
+    a {
+      font-weight: 600;
+      color: #000;
+      text-decoration: none;
+      display: inline-block;
+      &:after {
+        display: block;
+         height: 7px;
+         width: 100%;
+         margin-top: -3px;
+         content: "";
+         background: rgba($blfBreakfast, .2);
+         transition: .5s;
+      }
+      &:hover {
+        &:after {
+          display: block;
+           height: 7px;
+           width: 100%;
+           margin-top: -3px;
+           content: "";
+           background: rgba($blfBreakfast, 1);
+        }
+      }
+    }
+
+
+  }
+
+
+}
+
+
+.recipe-categories-lunch {
+
+  .single-recipe__wrapper {
+
+    h2 {
+      text-align: left;
+      color: $blfLunch;
+      font-size: 30px;
+      line-height: 1.2em;
+    }
+    h3 {
+      text-align: left;
+      color: #000;
+      font-size: 25px;
+      line-height: 1.2em;
+    }
+    h4 {
+      background: rgba($blfLunch, .2);
+    }
+    ul {
+      li {
+        &::before {
+          color: $blfLunch;
+        }
+      }
+    }
+    ol {
+      li {
+        &::before {
+          color: $blfLunch;
+        }
+      }
+    }
+    blockquote {
+      p {
+        background: rgba($blfLunch, .2);
+      }
+    }
+    strong {
+      color: $blfLunch;
+    }
+    a {
+      font-weight: 600;
+      color: #000;
+      text-decoration: none;
+      display: inline-block;
+      &:after {
+        display: block;
+         height: 7px;
+         width: 100%;
+         margin-top: -3px;
+         content: "";
+         background: rgba($blfLunch, .2);
+         transition: .5s;
+      }
+      &:hover {
+        &:after {
+          display: block;
+           height: 7px;
+           width: 100%;
+           margin-top: -3px;
+           content: "";
+           background: rgba($blfLunch, 1);
+        }
+      }
+    }
+
+
+  }
+
+
+}
+
+.recipe-categories-dinner {
+
+  .single-recipe__wrapper {
+
+    h2 {
+      text-align: left;
+      color: $blfDinner;
+      font-size: 30px;
+      line-height: 1.2em;
+    }
+    h3 {
+      text-align: left;
+      color: #000;
+      font-size: 25px;
+      line-height: 1.2em;
+    }
+    h4 {
+      background: rgba($blfDinner, .2);
+    }
+    blockquote {
+      p {
+        background: rgba($blfDinner, .2);
+      }
+    }
+    ul {
+      li {
+        &::before {
+          color: $blfDinner;
+        }
+      }
+    }
+    ol {
+      li {
+        &::before {
+          color: $blfDinner;
+        }
+      }
+    }
+    strong {
+      color: $blfDinner;
+    }
+     a {
+       font-weight: 600;
+       color: #000;
+       text-decoration: none;
+       display: inline-block;
+       &:after {
+         display: block;
+          height: 7px;
+          width: 100%;
+          margin-top: -3px;
+          content: "";
+          background: rgba($blfDinner, .2);
+          transition: .5s;
+       }
+       &:hover {
+         &:after {
+           display: block;
+            height: 7px;
+            width: 100%;
+            margin-top: -3px;
+            content: "";
+            background: rgba($blfDinner, 1);
+         }
+       }
+     }
+
+
+  }
+
+
+}
+
+.recipe-categories-natural-treats {
+
+  .single-recipe__wrapper {
+
+    h2 {
+      text-align: left;
+      color: $blfTreats;
+      font-size: 30px;
+      line-height: 1.2em;
+    }
+    h3 {
+      text-align: left;
+      color: #000;
+      font-size: 25px;
+      line-height: 1.2em;
+    }
+    h4 {
+      background: rgba($blfTreats, .2);
+    }
+    blockquote {
+      p {
+        background: rgba($blfTreats, .2);
+      }
+    }
+    ul {
+      li {
+        &::before {
+          color: $blfTreats;
+        }
+      }
+    }
+    ol {
+      li {
+        &::before {
+          color: $blfTreats;
+        }
+      }
+    }
+    strong {
+      color: $blfTreats;
+    }
+     a {
+       font-weight: 600;
+       color: #000;
+       text-decoration: none;
+       display: inline-block;
+       &:after {
+         display: block;
+          height: 7px;
+          width: 100%;
+          margin-top: -3px;
+          content: "";
+          background: rgba($blfTreats, .2);
+          transition: .5s;
+       }
+       &:hover {
+         &:after {
+           display: block;
+            height: 7px;
+            width: 100%;
+            margin-top: -3px;
+            content: "";
+            background: rgba($blfTreats, 1);
+         }
+       }
+     }
+
+
+  }
+
+
+}
+
+
+
+.recipe-categories-on-the-side {
+
+  .single-recipe__wrapper {
+
+    h2 {
+      text-align: left;
+      color: $blfSide;
+      font-size: 30px;
+      line-height: 1.2em;
+    }
+    h3 {
+      text-align: left;
+      color: #000;
+      font-size: 25px;
+      line-height: 1.2em;
+    }
+    h4 {
+      background: rgba($blfSide, .2);
+    }
+    blockquote {
+      p {
+        background: rgba($blfSide, .2);
+      }
+    }
+    ul {
+      li {
+        &::before {
+          color: $blfSide;
+        }
+      }
+    }
+    ol {
+      li {
+        &::before {
+          color: $blfSide;
+        }
+      }
+    }
+    strong {
+      color: $blfSide;
+    }
+     a {
+       font-weight: 600;
+       color: #000;
+       text-decoration: none;
+       display: inline-block;
+       &:after {
+         display: block;
+          height: 7px;
+          width: 100%;
+          margin-top: -3px;
+          content: "";
+          background: rgba($blfSide, .2);
+          transition: .5s;
+       }
+       &:hover {
+         &:after {
+           display: block;
+            height: 7px;
+            width: 100%;
+            margin-top: -3px;
+            content: "";
+            background: rgba($blfSide, 1);
+         }
+       }
+     }
+
+
+  }
+
+
+}
+
+
+.recipe-categories-dips-sauces {
+
+  .single-recipe__wrapper {
+
+    h2 {
+      text-align: left;
+      color: $blfDips;
+      font-size: 30px;
+      line-height: 1.2em;
+    }
+    h3 {
+      text-align: left;
+      color: #000;
+      font-size: 25px;
+      line-height: 1.2em;
+    }
+    h4 {
+      background: rgba($blfDips, .2);
+    }
+    blockquote {
+      p {
+        background: rgba($blfDips, .2);
+      }
+    }
+    ul {
+      li {
+        &::before {
+          color: $blfDips;
+        }
+      }
+    }
+    ol {
+      li {
+        &::before {
+          color: $blfDips;
+        }
+      }
+    }
+    strong {
+
+    }
+     a {
+       font-weight: 600;
+       color: #000;
+       text-decoration: none;
+       display: inline-block;
+       &:after {
+         display: block;
+          height: 7px;
+          width: 100%;
+          margin-top: -3px;
+          content: "";
+          background: rgba($blfDips, .2);
+          transition: .5s;
+       }
+       &:hover {
+         &:after {
+           display: block;
+            height: 7px;
+            width: 100%;
+            margin-top: -3px;
+            content: "";
+            background: rgba($blfDips, 1);
+         }
+       }
+     }
+
+
+  }
+
+
+}
+
+
 .single-recipe {
-  padding: 50px !important;
+  padding: 50px 15px 0 15px !important;
+
+
+  &__wrapper {
+    h1 {
+      font-family: $font__headings;
+      font-size: 28px;
+      @include md {
+        font-size: 40px;
+      }
+      margin-bottom: 50px;
+      text-align: left;
+    }
+    h2 {
+      text-align: left;
+      font-size: 30px;
+      line-height: 1.2em;
+    }
+    h3 {
+      text-align: left;
+      color: #000;
+      font-size: 25px;
+      line-height: 1.2em;
+    }
+    h4 {
+      text-align: left;
+      display: inline-block;
+      padding: 5px;
+      margin-bottom: 24px;
+      color: #000;
+      font-weight: 700;
+      font-size: 20px;
+      line-height: 1.2em;
+    }
+    ul {
+      list-style: none; /* Remove default bullets */
+      li {
+        &::before {
+          content: "\2022";  /* Add content: \2022 is the CSS Code/unicode for a bullet */
+          font-weight: bold; /* If you want it to be bold */
+          display: inline-block; /* Needed to add space between the bullet and the text */
+          width: 1.5em; /* Also needed for space (tweak if needed) */
+          margin-left: -1em; /* Also needed for space (tweak if needed) */
+        }
+      }
+    }
+    ol {
+      list-style: none; counter-reset: li;
+      li {
+        counter-increment: li;
+        &::before {
+          content: counter(li);
+          display: inline-block;
+          width: 1em;
+          margin-left: -1em
+        }
+      }
+    }
+    strong {
+
+    }
+     a {
+       font-weight: 600;
+       color: #000;
+       text-decoration: none;
+       display: inline-block;
+       &:after {
+         display: block;
+          height: 7px;
+          width: 100%;
+          margin-top: -3px;
+          content: "";
+       }
+     }
+  }
+
   iframe {
     width: 100%;
   }
-  h1 {
-    font-family: $font__headings;
-    font-size: 38px;
-    margin-bottom: 50px;
-  }
+
   h3 {
     font-family: $font__headings;
     font-size: 32px;
@@ -15,11 +533,19 @@
     margin-bottom: 50px;
     color: $blfpink;
     margin-bottom: 25px;
+    text-align: left;
+    margin-top: 0;
+  }
+  p, ul, ol {
+    font-size: 20px;
+    line-height: 1.6em;
   }
   img.size-full {
     width: 100%;
   }
   &__metadata {
+    font-size: 16px;
+    line-height: 1.2em;
     border-top: 1px solid #ECEDED;
     border-bottom: 1px solid #ECEDED;
     text-align: center;
@@ -37,8 +563,13 @@
     &__popovers {
       padding-top: 20px;
       padding-bottom: 15px;
+      padding-right: 7.5px !important;
+      padding-left: 7.5px !important;
     }
     &__prep {
+      p {
+        font-size: 16px;
+      }
       padding-top: 15px;
       padding-bottom: 15px;
       padding-right: 0 !important;
@@ -50,6 +581,9 @@
       }
     }
     &__cook {
+      p {
+        font-size: 16px;
+      }
       padding-top: 15px;
       padding-bottom: 15px;
       padding-right: 0 !important;
@@ -61,6 +595,9 @@
       }
     }
     &__serving {
+      p {
+        font-size: 16px;
+      }
       padding-top: 15px;
       padding-bottom: 15px;
       padding-right: 0 !important;
@@ -73,13 +610,13 @@
     }
   }
   ul {
-    margin: 0;
+    margin: 0 0 25px 20px;
     padding: 0;
     list-style: none;
     line-height: 1.5em;
   }
   ol {
-    margin: 0 0 0 15px;
+    margin: 0 0 25px 15px;
     padding: 0;
     li {
       margin-bottom: 15px;
@@ -89,7 +626,7 @@
     a {
       background: $blforange;
       color: #fff;
-      padding: 5px 15px;
+      padding: 5px 25px;
       font-weight: $soleilBd;
       display: inline-block;
       margin-top: 15px;
@@ -102,11 +639,12 @@
     }
   }
   &__ingredients {
-    font-weight: $soleilSb;
+    // font-weight: $soleilSb;
     margin-bottom: 25px;
     h4 {
       color: $blfpink;
-      font-weight: $soleilSb
+      font-weight: $soleilSb;
+      font-size: 24px;
     }
   }
   &__tips {
@@ -125,26 +663,80 @@
 }
 
 .related-recipes {
-  padding-top: 25px;
+  // padding-top: 25px;
   padding-bottom: 25px;
+  @include md {
+    padding-left: 75px !important;
+    padding-right: 75px !important;
+  }
   h3 {
     font-family: $font__headings;
     text-align: center;
     color: #000;
     font-weight: $soleilBd;
-    font-size: 32px;
+    font-size: 28px;
+		@include md {
+			font-size: 40px;
+		}
     margin-bottom: 25px;
   }
   &__cat {
     text-transform: uppercase;
-    margin-bottom: 0;
+    margin-bottom: 5px;
+    font-size: .75em;
+  }
+
+  button.alm-load-more-btn {
+    *:after {
+      display: none;
+    }
+      background: #fdb71a;
+      font-size: 18px;
+      font-weight: 700;
+      width: auto;
+      height: auto;
+      line-height: 1;
+      -webkit-box-shadow: 0;
+      box-shadow: 0;
+      color: #fff;
+      border: none;
+      border-radius: 0;
+      margin: 0 0 15px 0;
+      padding: 10px 25px;
+      display: inline-block;
+      position: relative;
+      -webkit-transition: all .3s ease;
+      transition: all .3s ease;
+      text-align: center;
+      text-decoration: none;
+      -webkit-appearance: none;
+      -moz-appearance: none;
+      appearance: none;
+      -webkit-user-select: none;
+      -moz-user-select: none;
+      -ms-user-select: none;
+      user-select: none;
+      cursor: pointer;
+      &:hover {
+        background: $blfpink;
+      }
+  }
+
+
+
+
+  span {
+    display: block;
+    height: 55px;
   }
   &__recipe {
     margin-bottom: 15px;
+    padding-right: 10px !important;
+    padding-left: 10px !important;
     img {
       text-align: center;
       display: block;
-      // width: 100%;
+      width: 100%;
       margin-bottom: 15px;
       // height: 400px;
       transition: .5s;

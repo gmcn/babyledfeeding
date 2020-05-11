@@ -17,7 +17,7 @@ $args = array( 'post_type' => 'recipes', 'posts_per_page' => 3, 'meta_key' => 'p
 <?php if($query->have_posts()) : ?>
 
 <div class="container-fluid">
- <div class="container recipes">
+ <div class="container recipes_main">
    <div class="row">
 
      <h2>MOST Popular <?php single_cat_title(); ?> Recipies</h2>
@@ -30,7 +30,7 @@ $args = array( 'post_type' => 'recipes', 'posts_per_page' => 3, 'meta_key' => 'p
 
      ?>
 
-    <article <?php post_class(array('col-xs-6', 'col-md-4', 'recipes__recipe', 'matchheight')); ?>>
+    <article class="col-xs-6 col-md-4 recipes__recipe matchheight" <?php //post_class(array('col-xs-6', 'col-md-4', 'recipes__recipe', 'matchheight')); ?>>
       <div class="row">
         <div class="col-sm-6 col-md-12">
           <a href="<?php the_permalink(); ?>">
@@ -41,7 +41,6 @@ $args = array( 'post_type' => 'recipes', 'posts_per_page' => 3, 'meta_key' => 'p
           <div class="recipes__recipe__cat">
             <?php single_cat_title(); ?>
           </div>
-          <p class="recipes__cat"><?php echo $product_cat; ?></p>
           <a href="<?php the_permalink(); ?>"><?php echo the_title(); ?></a>
         </div>
       </div>

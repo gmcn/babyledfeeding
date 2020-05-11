@@ -31,15 +31,15 @@ $weaning_categories = get_terms( 'weaning-categories', 'orderby=count&hide_empty
       </div>
       <div class="col-md-5 filter_search">
 
-        <div class="col-md-12">
+        <!-- <div class="col-md-12"> -->
           <form role="search" method="get" class="search-form" action="/">
     				<label>
     					<span class="screen-reader-text">Search for:</span>
-    					<input type="search" class="search-field" placeholder="Search…" value="" name="s">
+    					<input type="search" class="search-field" value="" name="s">
     				</label>
     				<input <?php if($catColour) : ?>style="background-color: <?php echo $catColour ?>" <?php endif; ?> type="submit" class="search-submit" value="Search">
     			</form>
-        </div>
+        <!-- </div> -->
 
       </div>
     </div>

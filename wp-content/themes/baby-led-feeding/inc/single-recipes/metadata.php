@@ -12,11 +12,11 @@
 
  ?>
 
- <div class="container">
+ <!-- <div class="container"> -->
    <div class="row">
-     <div class="col-md-8">
+     <div class="col-md-7 col-md-offset-1">
        <h3><?php the_title(); ?></h3>
-       <div class="row single-recipe__metadata">
+       <div class="single-recipe__metadata">
 
          <?php if ($prep_time): ?>
            <div class="col-sm-4 col-md-2 single-recipe__metadata__prep">
@@ -67,14 +67,14 @@
          </div>
        </div>
      </div>
-     <div class="col-md-4">
+     <div class="col-md-3">
        <?php echo get_the_post_thumbnail( get_the_ID(), 'custom-size', array('itemprop' => 'image')); ?>
      </div>
    </div>
 
    <div class="row single-recipe__actions">
-     <div class="col-md-8">
-       <a href="#">Add to shopping list</a>
+     <div class="col-md-7 col-md-offset-1">
+       <a href="mailto:?subject=I wanted you to see this site&amp;body=<?php echo the_permalink(); ?>.">Send to Email</a>
        <a onclick="javascript:window.print();" href="#">Print Recipe</a>
      </div>
      <div class="col-md-4">
@@ -84,7 +84,7 @@
 
    <?php if ($ingredients_list): ?>
      <div itemprop="recipeIngredient" class="row single-recipe__ingredients">
-       <div class="col-md-12">
+       <div class="col-md-10 col-md-offset-1">
          <h4>Ingredients</h4>
          <?php echo $ingredients_list ?>
        </div>
@@ -93,18 +93,18 @@
 
    <?php if ($how_to_make): ?>
      <div itemprop="recipeInstructions" class="row single-recipe__ingredients">
-      <div class="col-md-12">
+      <div class="col-md-10 col-md-offset-1">
         <h4>Method</h4>
         <?php echo $how_to_make ?>
       </div>
      </div>
    <?php endif; ?>
 
- </div>
+ <!-- </div> -->
 
  <?php if($add_helpful_tip) : ?>
 
- <div class="container single-recipe__tips">
+ <div class="row single-recipe__tips">
    <div class="col-md-12">
      <h4>
 

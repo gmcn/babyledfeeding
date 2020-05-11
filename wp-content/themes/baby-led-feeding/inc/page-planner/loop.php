@@ -12,7 +12,7 @@ if ( have_posts() ) : ?>
 
   ?>
 
-  <article <?php post_class(array('col-xs-6', 'col-md-3', 'recipes__recipe', 'matchheight')); ?>>
+  <article class="col-xs-6 col-md-3 recipes__recipe matchheight" <?php //post_class(array('col-xs-6', 'col-md-3', 'recipes__recipe', 'matchheight')); ?>>
     <div class="row">
       <div class="col-sm-6 col-md-12">
         <a href="<?php the_permalink(); ?>">

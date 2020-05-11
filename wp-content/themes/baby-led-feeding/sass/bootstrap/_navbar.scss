@@ -278,8 +278,8 @@
     > li {
       float: left;
       > a {
-        padding-top:    $navbar-padding-vertical;
-        padding-bottom: $navbar-padding-vertical;
+        padding-top:    0;
+        padding-bottom: 3px;
       }
     }
   }
@@ -422,6 +422,16 @@
       color: #000;
       font-weight: $soleilBd;
 
+      font-size: 18px;
+
+      @include md {
+        font-size: 14px;
+      }
+
+      @include lg {
+        font-size: 19px;
+      }
+
       &:hover,
       &:focus {
         color: $navbar-default-link-hover-color;
@@ -471,7 +481,7 @@
       &:focus {
         // background-color: $navbar-default-link-active-bg;
         color: $navbar-default-link-active-color;
-        border-bottom: 3px solid #E36386;
+        border-bottom: 3px solid $blfpink;
       }
     }
 
@@ -483,7 +493,7 @@
           &:hover,
           &:focus {
             color: $navbar-default-link-hover-color;
-            border-bottom: 3px solid #E36386;
+            border-bottom: 3px solid $blfpink;
           }
 
         }

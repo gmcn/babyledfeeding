@@ -9,6 +9,10 @@
   // width: 0;
   // height: 0;
   margin-left: 8px;
+  @include lg {
+    margin-left: 10px;
+  }
+
   vertical-align: middle;
   // border-top:   $caret-width-base dashed;
   // border-top:   $caret-width-base solid \9; // IE8
@@ -16,7 +20,7 @@
   // border-left:  $caret-width-base solid transparent;
   transition: .5s;
   img {
-    width: 15px;
+    width: 20px;
   }
 }
 

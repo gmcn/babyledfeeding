@@ -19,6 +19,7 @@
 <link rel="shortcut icon" href="<?php echo get_template_directory_uri(); ?>/images/favicon.svg">
 <link type="text/plain" rel="robots" href="<?php echo get_template_directory_uri(); ?>/humans.txt" />
 <link type="text/plain" rel="author" href="<?php echo get_template_directory_uri(); ?>/robots.txt" />
+<link rel="canonical" href="<?php $current_url="https://".$_SERVER['HTTP_HOST'].$_SERVER['REQUEST_URI']; echo $current_url ?>" />
 <?php wp_head(); ?>
 <script type="text/javascript">
   (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
@@ -54,6 +55,10 @@
 
 	<header id="masthead" class="site-header navbar-fixed-top" role="banner">
 
+    <div class="container">
+
+    </div>
+
 		<div class="row header_mobile__nav hidden-md hidden-lg">
 			<div class="col-xs-3">
 				<button class="navbar-toggle" type="button" data-toggle="collapse" data-target="#navbar-collapse-grid">
@@ -69,20 +74,22 @@
 			</div>
 
 			<div class="col-xs-3">
-				<a href="/">
+        <a class="dropdown-toggle search hidden-xs hidden-sm" onclick="openSearch()">
+          <img src="<?php echo get_template_directory_uri() ?>/images/search.svg" alt="Search Baby Led Feeding">
+        </a>
+				<a class="search" onclick="openSearch()">
 					<img class="header_mobile__nav__search" src="<?php echo get_template_directory_uri() ?>/images/search.svg" alt="Search Baby Led Feeding">
 				</a>
 			</div>
 		</div>
-
-
 
 		<div class="container navbar navbar-default yamm">
           <div class="navbar-header hidden-xs hidden-sm">
 
 
 						<a href="/" class="site-branding">
-							<img src="<?php echo get_template_directory_uri() ?>/images/logo.svg" alt="Baby Led Feeding">
+							<img class="fulllogo" src="<?php echo get_template_directory_uri() ?>/images/logo.svg" alt="Baby Led Feeding">
+              <img class="halflogo hidden" src="<?php echo get_template_directory_uri() ?>/images/babyledfeeding-branding_footer.svg" alt="Baby Led Feeding">
 						</a>
 
 
@@ -91,7 +98,7 @@
             <ul class="nav navbar-nav navbar-right header_social hidden-sm hidden-xs">
 
 
-								<li class="header_social__wrapper">Let's be Best friends
+								<li class="header_social__wrapper">Let's be Best Friends
 
 									<img class="header_social__divide" src="<?php echo get_template_directory_uri(); ?>/images/social-divide.svg" alt="Baby Led Feeding" />
 
@@ -129,20 +136,24 @@
 
 
 								</li>
-								<li class="header_social__free"><a  href="#freerecipes">FREE Recipes</a></li>
+								<li class="header_social__free"><a  href="#freerecipes">Free Recipes</a></li>
 
             </ul>
 						<div style="clear: right;"></div>
           <div class="navbar-collapse collapse" id="navbar-collapse-grid">
-            <ul class="nav navbar-nav navbar-right">
+            <ul class="nav navbar-nav primary navbar-right">
               <!-- Grid 12 Menu -->
-              <li class="dropdown yamm-fw"><a class="dropdown-toggle" href="#" data-toggle="dropdown">Recipes<b class="caret"><img src="<?php echo get_template_directory_uri(); ?>/images/caret.svg" alt="Dropdown Arrow"></b></a>
-                <ul class="dropdown-menu">
-                  <li class="container-fluid">
+              <li class="dropdown yamm-fw"><a class="dropdown-toggle" href="/recipes">Recipes<b class="caret hidden-xs hidden-sm"><img src="<?php echo get_template_directory_uri(); ?>/images/caret.svg" alt="Dropdown Arrow"></b></a>
+                  <div class="menu_overlay">
+
+                  </div>
+                <ul class="dropdown-menu hidden-xs hidden-sm">
+
+                  <li class="container">
                     <div class="row">
                       <div class="col-sm-3">
 
-                        <h3 class="hidden-xs hidden-sm"><a href="/recipes">Recipes</a></h3>
+                        <h3 class="hidden-xs hidden-sm">Recipes</h3>
 
                         <?php wp_nav_menu( array(
                           'theme_location' => 'recipe',
@@ -200,13 +211,16 @@
               <li><a class="dropdown-toggle" href="/videos">Videos</a></li>
 
 
-              <li class="dropdown yamm-fw"><a class="dropdown-toggle" href="#" data-toggle="dropdown" aria-expanded="false">Baby Led Weaning<b class="caret"><img src="<?php echo get_template_directory_uri(); ?>/images/caret.svg" alt="Dropdown Arrow"></b></a>
-                <ul class="dropdown-menu">
-                  <li class="container-fluid">
+              <li class="dropdown yamm-fw"><a class="dropdown-toggle" href="/baby-led-weaning">Baby Led Weaning<b class="caret hidden-xs hidden-sm"><img src="<?php echo get_template_directory_uri(); ?>/images/caret.svg" alt="Dropdown Arrow"></b></a>
+                <div class="menu_overlay">
+
+                </div>
+                <ul class="dropdown-menu hidden-xs hidden-sm">
+                  <li class="container">
                     <div class="row">
 											<div class="col-sm-3">
 
-                        <h3 class="hidden-xs hidden-sm"><a href="/baby-led-weaning">Baby Led Feeding</a></h3>
+                        <h3 class="hidden-xs hidden-sm">Weaning</h3>
 
                         <?php wp_nav_menu( array(
                           'theme_location' => 'baby-led-feeding',
@@ -263,10 +277,42 @@
 							<li><a class="dropdown-toggle" href="/my-weekly-meal-plan">FREE Meal Planner</a></li>
 							<li><a class="dropdown-toggle" href="/about">About</a></li>
 							<li><a class="dropdown-toggle" href="/work-with-me">Work with Me</a></li>
+              <li>
+                <a class="dropdown-toggle search hidden-xs hidden-sm" onclick="openSearch()">
+									<img src="<?php echo get_template_directory_uri() ?>/images/search.svg" alt="Search Baby Led Feeding">
+                </a>
+              </li>
 
             </ul>
           </div>
         </div>
+
+        <!-- Search overlay -->
+        	<div id="mySearch" class="overlay">
+
+        		<!-- Button to close the overlay navigation -->
+        		<a href="javascript:void(0)" class="closebtn" onclick="closeSearch()" >&times;</a>
+
+        		<!-- Overlay content -->
+        		<div class="container overlay-content">
+        			<h2>What are you looking for?</h2>
+        				<form method="get" id="searchform" class="searchform" action="/" role="search">
+
+        					<div class="row">
+        						<div class="col-md-12">
+        							<input class="search-input-box" type="text" name="s" value="" placeholder="Search" maxlength="50" required="required" />
+                      <button type="submit"><img src="<?php echo get_template_directory_uri() ?>/images/search_submit.svg" alt="Search Baby Led Feeding"></button>
+        						</div>
+        						<div class="col-md-2">
+
+        						</div>
+        					</div>
+
+        				</form>
+
+        		</div>
+
+        	</div>
 
 
 
@@ -278,7 +324,7 @@
       <ul class="nav navbar-nav navbar-right header_social hidden-sm hidden-xs">
 
 
-          <li class="header_social__wrapper">
+          <li class="header_social__wrapper gary">
 
             <a class="header_social__icon" href="https://www.youtube.com/channel/UCyp_TJ38ejW-_pMWGOheF0Q/" target="_blank">
 

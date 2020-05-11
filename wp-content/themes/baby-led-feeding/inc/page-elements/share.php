@@ -1,5 +1,5 @@
-<div class="container share">
-  <div class="row">
+<!-- <div class="container share"> -->
+  <div class="row share">
     <div class="col-md-12">
 
       <span>Share this recipe on:</span>
@@ -21,6 +21,5 @@
       </a>
 
     </div>
-
   </div>
-</div>
+<!-- </div> -->

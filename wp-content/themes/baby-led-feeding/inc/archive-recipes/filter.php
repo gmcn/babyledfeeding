@@ -14,7 +14,7 @@ $recipe_types = get_terms( 'recipe-type', 'orderby=count&hide_empty=1' );
         <div class="col-md-4">
           <div class="dropdown show">
             <a class="btn btn-secondary dropdown-toggle" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-              Filter by Course <img src="<?php echo get_template_directory_uri(); ?>/images/caret.svg" alt="Dropdown Arrow">
+              Meal/Course <img src="<?php echo get_template_directory_uri(); ?>/images/caret.svg" alt="Dropdown Arrow">
             </a>
 
             <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
@@ -34,7 +34,7 @@ $recipe_types = get_terms( 'recipe-type', 'orderby=count&hide_empty=1' );
         <div class="col-md-4">
           <div class="dropdown show">
             <a class="btn btn-secondary dropdown-toggle" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-              Filter by Diet <img src="<?php echo get_template_directory_uri(); ?>/images/caret.svg" alt="Dropdown Arrow">
+              Special Diets <img src="<?php echo get_template_directory_uri(); ?>/images/caret.svg" alt="Dropdown Arrow">
             </a>
 
             <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
@@ -54,7 +54,7 @@ $recipe_types = get_terms( 'recipe-type', 'orderby=count&hide_empty=1' );
         <div class="col-md-4">
           <div class="dropdown show">
             <a class="btn btn-secondary dropdown-toggle" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-              Filter by Type <img src="<?php echo get_template_directory_uri(); ?>/images/caret.svg" alt="Dropdown Arrow">
+              Recipe Type <img src="<?php echo get_template_directory_uri(); ?>/images/caret.svg" alt="Dropdown Arrow">
             </a>
 
             <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
@@ -74,15 +74,15 @@ $recipe_types = get_terms( 'recipe-type', 'orderby=count&hide_empty=1' );
       </div>
       <div class="col-md-5 filter_search">
 
-        <div class="col-md-12">
+        <!-- <div class="col-md-12"> -->
           <form role="search" method="get" class="search-form" action="/">
     				<label>
     					<span class="screen-reader-text">Search for:</span>
-    					<input type="search" class="search-field" placeholder="Search…" value="" name="s">
+    					<input type="search" class="search-field" value="" name="s">
     				</label>
     				<input <?php if($catColour) : ?>style="background-color: <?php echo $catColour ?>" <?php endif; ?> type="submit" class="search-submit" value="Search">
     			</form>
-        </div>
+        <!-- </div> -->
 
 
       </div>

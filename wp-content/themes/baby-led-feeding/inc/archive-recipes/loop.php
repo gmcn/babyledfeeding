@@ -3,7 +3,7 @@
 $categories = get_terms( 'recipe-categories' ); ?>
 
 <div class="container-fluid">
-	<div class="container recipes">
+	<div class="container recipes_main">
 		<h1>Meals/Courses</h1>
 			<div class="row">
 
@@ -16,7 +16,7 @@ $categories = get_terms( 'recipe-categories' ); ?>
 
 					?>
 
-				<article itemscope itemtype="http://schema.org/Recipe" <?php post_class(array('col-xs-6', 'col-md-4', 'recipes__recipe', 'matchheight')); ?>>
+				<article itemscope itemtype="http://schema.org/Recipe" class="col-xs-6 col-md-4 recipes_main__recipe matchheight">
 					<div class="row">
 						<div class="col-sm-6 col-md-12">
 							<a itemprop="url" href="/recipe-categories/<?php echo $category->slug ?>">
@@ -45,7 +45,7 @@ $categories = get_terms( 'recipe-categories' ); ?>
 $diets = get_terms( 'recipe-diets' ); ?>
 
 <div class="container-fluid">
-	<div class="container recipes">
+	<div class="container recipes_main">
 		<h1>Special Diets</h1>
 			<div class="row">
 
@@ -56,7 +56,7 @@ $diets = get_terms( 'recipe-diets' ); ?>
 
 					?>
 
-				<article <?php post_class(array('col-xs-6', 'col-md-4', 'recipes__recipe', 'matchheight')); ?>>
+				<article class="col-xs-6 col-md-4 recipes_main__recipe matchheight">
 					<div class="row">
 						<div class="col-sm-6 col-md-12">
 							<a href="/recipe-diets/<?php echo $diet->slug ?>">
@@ -85,8 +85,8 @@ $diets = get_terms( 'recipe-diets' ); ?>
 $types = get_terms( 'recipe-type' ); ?>
 
 <div class="container-fluid">
-	<div class="container recipes">
-		<h1>Special Diets</h1>
+	<div class="container recipes_main">
+		<h1>Recipe Types</h1>
 			<div class="row">
 
 				<?php // Loop through all the returned terms
@@ -96,7 +96,7 @@ $types = get_terms( 'recipe-type' ); ?>
 
 					?>
 
-				<article <?php post_class(array('col-xs-6', 'col-md-4', 'recipes__recipe', 'matchheight')); ?>>
+				<article class="col-xs-6 col-md-4 recipes_main__recipe matchheight" <?php //post_class(array('col-xs-6', 'col-md-4', 'recipes_main__recipe', 'matchheight')); ?>>
 					<div class="row">
 						<div class="col-sm-6 col-md-12">
 							<a href="/recipe-type/<?php echo $type->slug ?>">

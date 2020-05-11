@@ -3,7 +3,9 @@
   <div class="container single-recipe__comments">
     <a id="review"></a>
     <div itemprop="comment" class="row">
-      <?php echo comments_template(); ?>
+      <div class="col-md-10 col-md-offset-1">
+        <?php echo comments_template(); ?>
+      </div>
     </div>
   </div>
 

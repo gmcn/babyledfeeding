@@ -8,7 +8,7 @@
 
  ?>
 
-<div class="container recipes planner">
+<div class="container planner">
   <div class="row">
     <h1><?php the_title(); ?></h1>
     <h2><?php echo $week_beginning; ?></h2>
@@ -221,8 +221,8 @@
 
     <br />
 
-  <div class="row single-recipe__tips">
-   <div class="col-md-12">
+  <div class="row">
+   <div class="col-md-10 col-md-offset-1 single-recipe__tips">
      <h4>Meal Plan Notes</h4>
 
      <p><?php echo $meal_plan_notes ?></p>

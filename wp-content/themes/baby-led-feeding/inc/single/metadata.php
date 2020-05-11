@@ -17,7 +17,7 @@
      <div class="col-md-8">
        <h3><?php the_title(); ?></h3>
        <div class="row single-recipe__metadata">
-         
+
          <?php if ($prep_time): ?>
            <div class="col-sm-4 col-md-2 single-recipe__metadata__prep">
              <div itemprop="prepTime" class="single-recipe__metadata__wrap">
@@ -73,7 +73,7 @@
 
    <div class="row single-recipe__actions">
      <div class="col-md-8">
-       <a href="#">Add to shopping list</a>
+       <a href="mailto:?subject=I wanted you to see this site&amp;body=<?php echo the_permalink(); ?>.">Send to Email</a>
        <a onclick="javascript:window.print();" href="#">Print Recipe</a>
      </div>
      <div class="col-md-4">
@@ -98,7 +98,7 @@
 
  <?php if($add_helpful_tip) : ?>
 
- <div class="container single-recipe__tips">
+ <div class="row single-recipe__tips">
    <div class="col-md-12">
      <h4><?php echo $helpful_tip_header ?></h4>
      <?php echo $helpful_tip ?>

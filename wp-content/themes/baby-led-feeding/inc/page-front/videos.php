@@ -63,13 +63,13 @@
 
 
             <article itemscope itemtype="http://schema.org/MusicVideoObject" class="row fpvideos_feat">
-              <div class="col-sm-6 col-md-4 matchheight">
+              <div class="col-sm-7 col-md-4 matchheight">
                 <a itemprop="url" class="fancybox" data-fancybox-type="iframe" href="https://www.youtube.com/embed/<?php echo $video_url ?>">
                   <?php echo $thumb; ?>
                 </a>
                 <?php echo $i ?>
               </div>
-              <div class="col-sm-6 col-md-8 matchheight">
+              <div class="col-sm-5 col-md-8 matchheight">
                 <div class="vert-align">
                   <span itemprop="name">
                     <?php echo the_title(); ?>
@@ -113,7 +113,7 @@
 
     <div class="row" style="text-align: center">
       <a class="watch" href="/videos">
-        Watch all Videos
+        View all Video
       </a>
     </div>
 

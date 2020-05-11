@@ -26,7 +26,7 @@ get_header(); ?>
  	<?php while( have_rows('flexible_front_page') ): the_row(); ?>
  			<?php if( get_row_layout() == 'advert' ): ?>
 
- 					<?php include(locate_template("inc/page-front/advert.php")); ?>
+				<?php include(locate_template("inc/page-front/advert.php")); ?>
 
  			<?php elseif( get_row_layout() == 'posts' ): ?>
 

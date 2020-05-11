@@ -1,31 +1,45 @@
 .fpvideos {
+  background: url(images/boat_bg.svg) no-repeat bottom right;
   padding-top: 25px;
   padding-bottom: 25px;
 	&_wrapper {
-		margin-bottom: 50px;
+		margin-bottom: 10px;
 	}
+  &_main {
+    img {
+      margin-bottom: 5px;
+      width: 100%;
+    }
+    margin-bottom: 15px;
+  }
 	&_feat {
 		margin-bottom: 15px;
+    font-weight: 600;
 	}
   h3 {
     font-family: $font__headings;
     text-align: center;
     color: #000;
     font-weight: $soleilBd;
-    font-size: 32px;
+    font-size: 28px;
+		@include md {
+			font-size: 40px;
+		}
     margin-bottom: 25px;
   }
 	p {
-		margin: 0 0 10px;
+		margin: 0 40px 10px ;
+    font-weight: 600;
 	}
   a.watch {
 		text-align: center;
 		background: #000;
     color: #fff;
-    padding: 5px 15px;
-    font-weight: 700;
+    padding: 5px 35px;
+    margin-left: 40px;
+    font-weight: 600;
     display: inline-block;
-    margin-top: 15px;
+    margin-top: 25px;
     margin-bottom: 15px;
     text-decoration: none;
 		@include sm {
@@ -80,7 +94,10 @@
       font-family: $font__headings;
       color: #fff;
       font-weight: $soleilBd;
-      font-size: 32px;
+      font-size: 28px;
+  		@include md {
+  			font-size: 40px;
+  		}
       margin-bottom: 25px;
       text-align: left;
       strong {
@@ -107,11 +124,14 @@
 
 .videos {
   margin-bottom: 50px;
-  h3 {
+  h2, h3 {
     font-family: $font__headings;
     color: #000;
     font-weight: $soleilBd;
-    font-size: 32px;
+    font-size: 28px;
+		@include md {
+			font-size: 40px;
+		}
     margin-bottom: 25px;
     text-align: left;
     span {

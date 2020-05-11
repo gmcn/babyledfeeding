@@ -2,51 +2,59 @@
 <!-- BX Slider with Caption & Read More Link -->
 <div id="bxslider">
 
-	<?php if(have_rows('slides')): ?>
+	
 
 		<ul class="bxslider">
 
-			<?php while(have_rows('slides')) : the_row();
-					// ACF Sub fields
-      		$slide_image = get_sub_field('slide_image');
-      		$slide_content_type = get_sub_field('slide_content_type');
-					$slide_content_heading = get_sub_field('slide_content_heading');
-					$slide_content_paragraph = get_sub_field('slide_content_paragraph');
-          $slide_background_colour = get_sub_field('slide_background_colour');
-					$slide_link = get_sub_field('slide_link');
-					?>
+			<?php
 
-				<li class="slide" style="background:<?php echo $slide_background_colour; ?>">
+				/*
+				*  Loop through post objects (assuming this is a multi-select field) ( setup postdata )
+				*  Using this method, you can use all the normal WP functions as the $post object is temporarily initialized within the loop
+				*  Read more: http://codex.wordpress.org/Template_Tags/get_posts#Reset_after_Postlists_with_offset
+				*/
 
-          <div class="container">
-
-            <div class="col-sm-5 slide_content__wrapper hidden-xs wow fadeInLeft">
-              <p class="slide_content__cat"><?php echo $slide_content_type ?></p>
-              <h1><?php echo $slide_content_heading; ?></h1>
-              <p><?php echo $slide_content_paragraph ?></p>
-							<a href="<?php echo $slide_link ?>" class="wow fadeInRight">
-								View <?php echo $slide_content_type ?>
-							</a>
-            </div>
-
-            <img class="desk hidden-xs wow fadeInRight" src="<?php echo $slide_image; ?>" alt="<?php echo $slide_content_heading ?>">
-
-            <a href="<?php echo $slide_link ?>" class="mod hidden-sm hidden-md hidden-lg">
-              <img class=" wow fadeIn" src="<?php echo $slide_image; ?>" alt="<?php echo $slide_content_heading ?>">
-            </a>
-
-            <div class="col-sm-5 slide_content__wrapper hidden-sm hidden-md hidden-lg wow fadeInLeft">
-              <h1><?php echo $slide_content_heading; ?></h1>
-            </div>
+				$post_objects = get_field('slide_object');
 
 
 
-          </div>
+				if( $post_objects ): ?>
+				    <?php foreach( $post_objects as $post): // variable must be called $post (IMPORTANT) ?>
+				        <?php setup_postdata($post); ?>
 
-				</li>
 
-			<?php endwhile; ?>
+								<li class="slide" style="background: <?php echo the_field('slider_background_colour', $post_object->ID); ?>">
+
+				          <div class="container">
+
+				            <div class="col-sm-5 slide_content__wrapper hidden-xs wow fadeIn">
+				              <p class="slide_content__cat">Recipe</p>
+				              <h1><?php the_field('slider_title', $post_object->ID); ?></h1>
+				              <p><?php the_field('slide_content_paragraph', $post_object->ID); ?></p>
+											<a href="<?php echo the_permalink(); ?>" class="wow fadeIn">
+												View Recipe
+											</a>
+				            </div>
+
+										<img class="desk hidden-xs wow fadeIn" src="<?php the_field('slider_image', $post_object->ID); ?>" alt="<?php the_field('slider_title', $post_object->ID); ?>">
+
+										<a href="<?php echo $slide_link ?>" class="mod hidden-sm hidden-md hidden-lg">
+				              <img class=" wow fadeIn" src="<?php the_field('slider_image', $post_object->ID); ?>" alt="<?php the_field('slider_title', $post_object->ID); ?>">
+				            </a>
+
+				            <div class="col-sm-5 slide_content__wrapper hidden-sm hidden-md hidden-lg wow fadeInLeft">
+				              <h1><?php the_field('slider_title', $post_object->ID); ?></h1>
+				            </div>
+
+
+
+				          </div>
+
+								</li>
+				    <?php endforeach; ?>
+				    <?php wp_reset_postdata(); // IMPORTANT - reset the $post object so the rest of the page works correctly ?>
+				<?php endif;?>
 
 		</ul>
-  <?php endif; ?>
+  
 </div>

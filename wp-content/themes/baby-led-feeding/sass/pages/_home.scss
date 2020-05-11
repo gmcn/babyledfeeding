@@ -2,7 +2,7 @@
   .slide {
     @include md {
       padding-top: 30px;
-      padding-bottom: 100px;
+      padding-bottom: 140px;
     }
     .container {
       position: relative;
@@ -11,7 +11,14 @@
     }
     &_content {
       &__wrapper {
-        padding: 30px !important;
+        padding: 20px 30px 20px 30px !important;
+        @include md {
+          padding: 40px 30px 30px 30px !important;
+          width: 37%;
+          margin-left: 25px;
+          margin-right: 25px;
+        }
+
         z-index: 1;
         // margin-top: 15px;
         background: $blfpink;
@@ -23,11 +30,12 @@
         p {
           font-weight: $soleilBd;
           margin-bottom: 15px;
+          line-height: 1.35em;
         }
         a {
           background: $blforange;
           color: #fff;
-          padding: 5px 15px;
+          padding: 9px 15px;
           font-weight: $soleilBd;
           display: inline-block;
           margin-top: 15px;
@@ -54,19 +62,20 @@
       line-height: 1.25em;
       @include md {
         color: #000;
-        font-size: 36px;
+        font-size: 32px;
         text-align: left;
-        line-height: 1em;
+        line-height: 1.25em;
       }
       span {
-        color: #F99700;
+        color: $blforange;
       }
     }
     img.desk {
       position: absolute;
       right: 0;
       z-index: 0;
-      height: 115%;
+      width: 76%;
+      // height: 121%;
     }
 
     a.mob {
@@ -80,26 +89,37 @@
 
 .fp_row-bg {
   background: #91C964;
-  @include md {
-    background: url(images/green_bg.svg) repeat-x;
-  }
-
   color: #fff;
+  position: relative;
+  z-index: 1;
+  margin-top: -6px;
+  @include md {
+    padding-bottom: 50px;
+  }
   .recipes {
-    padding-bottom: 75px;
+    @include md {
+
+    }
     h3 {
+      color: #fff;
+    }
+    &__recipe__cat {
       color: #fff;
     }
     a {
       color: #fff;
+      &:hover {
+        color: #000;
+      }
     }
   }
 }
 
-.fp_row-four {
+.general {
   background: #10CFC9;
   @include md {
     background: url(images/lightgreen_bg.svg) repeat-x;
+    background-size: cover;
   }
   color: #fff;
   padding: 50px 0 75px;
@@ -108,5 +128,8 @@
     @include md {
       margin-bottom: 0
     }
+  }
+  p {
+    padding-left: 40px;
   }
 }
